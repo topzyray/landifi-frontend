@@ -11,14 +11,14 @@ const EmailVerification = () => {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    AxiosInstance.post("/auth/emailverification", formData)
+    AxiosInstance.post("/auth/email-verification", formData)
       .then((res) => {
         toast.success(res.data, {
           position: "top-right" as ToastPosition,
         });
         setTimeout(() => {
           navigate("/auth/login");
-        }, 2000);
+        }, 5000);
       })
       .catch((err) => {
         if (typeof err.response.data.errorDetails.message == "string") {

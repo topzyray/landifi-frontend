@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AxiosInstance from "../../api/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastPosition } from "react-toastify";
@@ -24,7 +24,7 @@ const Register = () => {
         });
         setTimeout(() => {
           navigate("/auth/emailverification");
-        }, 2000);
+        }, 5000);
       })
       .catch((err) => {
         if (typeof err.response.data.errorDetails.message == "string") {

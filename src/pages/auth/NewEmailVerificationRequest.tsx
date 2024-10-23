@@ -3,7 +3,7 @@ import AxiosInstance from "../../api/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastPosition } from "react-toastify";
 
-const ForgotPassword = () => {
+const NewEmailVerificationRequest = () => {
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -12,14 +12,23 @@ const ForgotPassword = () => {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    AxiosInstance.post("/auth/forgot-password", formData)
+    AxiosInstance.post("/auth/new-verification-request", formData)
       .then((res) => {
-        toast.success(res.data.message, {
+        toast.success(res.data, {
           position: "top-right" as ToastPosition,
         });
-        setTimeout(() => {
-          navigate("/auth/resetpassword");
-        }, 5000);
+        if (
+          res.data ==
+          "User with email: topzyray@yahoo.com already verified. Please login."
+        ) {
+          setTimeout(() => {
+            navigate("/auth/login");
+          }, 5000);
+        } else {
+          setTimeout(() => {
+            navigate("/auth/emailverification");
+          }, 5000);
+        }
       })
       .catch((err) => {
         if (typeof err.response.data.errorDetails.message == "string") {
@@ -44,7 +53,9 @@ const ForgotPassword = () => {
     <div className="flex justify-center w-full pt-16 px-3 lg:px-[5rem]">
       <div className="bg-white w-full max-w-[18rem] lg:max-w-[22rem] px-4 py-6 rounded">
         <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
-          <p className="font-medium text-center text-lg">Forgot password</p>
+          <p className="font-medium text-center text-lg">
+            Get new verification OTP
+          </p>
           <input
             type="email"
             placeholder="Enter email"
@@ -61,7 +72,7 @@ const ForgotPassword = () => {
             className="border px-3 py-1.5 md:py-2 rounded bg-gray-400 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={!validateFormInput()}
           >
-            Send password reset
+            Resend OTP
           </button>
         </form>
         <p className="w-max text-sm font-light pt-4 text-left hover:underline">
@@ -72,4 +83,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default NewEmailVerificationRequest;

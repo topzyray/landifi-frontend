@@ -20,7 +20,7 @@ const ResetPassword = () => {
         });
         setTimeout(() => {
           navigate("/auth/login");
-        }, 2000);
+        }, 5000);
       })
       .catch((err) => {
         if (typeof err.response.data.errorDetails.message == "string") {

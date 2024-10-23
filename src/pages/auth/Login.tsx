@@ -21,7 +21,7 @@ const Login = () => {
         setTimeout(() => {
           // TODO: Navigate to Dashboard depending on the role
           // navigate("/auth/login");
-        }, 2000);
+        }, 5000);
       })
       .catch((err) => {
         if (typeof err.response.data.errorDetails.message == "string") {
@@ -90,6 +90,15 @@ const Login = () => {
             Don't have an account{" "}
             <Link to="../auth/register" className="underline">
               Register
+            </Link>
+          </p>
+          <p className="text-center font-light text-sm cursor-pointer">
+            Request new verification OTP{" "}
+            <Link
+              to="../auth/newemailverificationrequest"
+              className="underline"
+            >
+              Here
             </Link>
           </p>
         </form>
