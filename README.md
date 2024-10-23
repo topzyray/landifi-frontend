@@ -2,6 +2,6 @@
 
 This is the frontend to Landifi, a real estate platform
 
-## Expanding the ESLint configuration
+## Technology Used
 
 Built in React, Tailwind, Typescript
