@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AxiosInstance from "../../api/axiosInstance";
+import AxiosInstance from "../../services/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastPosition } from "react-toastify";
 
@@ -69,7 +69,7 @@ const Register = () => {
                 userType: e.target.value,
               })
             }
-            className="border border-gray-400 px-2 py-1.5 md:py-2 rounded outline-none"
+            className="select"
           >
             <option>Select Role</option>
             <option value="landlord">Landlord</option>

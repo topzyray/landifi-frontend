@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AxiosInstance from "../../api/axiosInstance";
+import AxiosInstance from "../../services/axiosInstance";
 import { toast, ToastPosition } from "react-toastify";
 
 const Login = () => {
@@ -14,16 +14,20 @@ const Login = () => {
     e.preventDefault();
     AxiosInstance.post("/auth/login", formData)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
+        localStorage.setItem("userId", res.data.userId);
         toast.success(res.data, {
           position: "top-right" as ToastPosition,
         });
         setTimeout(() => {
           // TODO: Navigate to Dashboard depending on the role
-          // navigate("/auth/login");
+          navigate("/dashboard/landlord/addproperty");
         }, 5000);
       })
       .catch((err) => {
+        console.log(err.response.data.errorDetails.message);
         if (typeof err.response.data.errorDetails.message == "string") {
           toast.error(err.response.data.errorDetails.message, {
             position: "top-right" as ToastPosition,

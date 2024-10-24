@@ -11,6 +11,9 @@ import Notification from "./components/Notification.tsx";
 import Login from "./pages/auth/Login.tsx";
 import Register from "./pages/auth/Register.tsx";
 import NewEmailVerificationRequest from "./pages/auth/NewEmailVerificationRequest.tsx";
+import LandlordDashboard from "./pages/dashboards/landlord/LandlordDashboard.tsx";
+import AddProperty from "./pages/dashboards/landlord/AddProperty.tsx";
+import Overview from "./pages/dashboards/landlord/Overview.tsx";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +47,20 @@ const router = createBrowserRouter([
       {
         path: "auth/newemailverificationrequest",
         element: <NewEmailVerificationRequest />,
+      },
+    ],
+  },
+  {
+    path: "dashboard/landlord",
+    element: <LandlordDashboard />,
+    children: [
+      {
+        path: "overview",
+        element: <Overview />,
+      },
+      {
+        path: "addproperty",
+        element: <AddProperty />,
       },
     ],
   },
