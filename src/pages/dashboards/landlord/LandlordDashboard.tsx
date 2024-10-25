@@ -2,8 +2,11 @@ import { BiLogOut, BiSolidDashboard } from "react-icons/bi";
 import { RiFundsFill } from "react-icons/ri";
 import { TbWorldUp } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const LandlordDashboard = () => {
+  const { logout } = useAuth();
+
   return (
     <div className="md:flex w-full h-screen">
       <div className="hidden md:block sticky z-50 shrink-0 h-full pt-8 px-4 bg-white text-primary">
@@ -11,7 +14,7 @@ const LandlordDashboard = () => {
           <div className="relative flex flex-col gap-4">
             <ul className="flex flex-col gap-1.5 font-semibold">
               <NavLink
-                to="/dashboard/landlord/overview"
+                to="/dashboard/landlord"
                 className={({ isActive }) =>
                   isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
                 }
@@ -45,7 +48,7 @@ const LandlordDashboard = () => {
                 </li>
               </NavLink>
               <li
-                // onClick={handleSignOut}
+                onClick={logout}
                 className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large text-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
               >
                 <BiLogOut /> <span className="md:hidden lg:block">Logout</span>
@@ -64,7 +67,7 @@ const LandlordDashboard = () => {
           <div className="relative flex flex-col gap-4">
             <ul className="flex flex-col gap-1.5 font-semibold">
               <NavLink
-                to="/dashboard/landlord/overview"
+                to="/dashboard/landlord"
                 className={({ isActive }) =>
                   isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
                 }

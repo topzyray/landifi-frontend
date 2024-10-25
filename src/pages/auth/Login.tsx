@@ -1,43 +1,39 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AxiosInstance from "../../services/axiosInstance";
-import { toast, ToastPosition } from "react-toastify";
+import { useLogin } from "../../utils/hooks";
 
 const Login = () => {
+  const { login } = useLogin();
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    AxiosInstance.post("/auth/login", formData)
-      .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("accessToken", res.data.accessToken);
-        localStorage.setItem("refreshToken", res.data.refreshToken);
-        localStorage.setItem("userId", res.data.userId);
-        toast.success(res.data, {
-          position: "top-right" as ToastPosition,
-        });
-        setTimeout(() => {
-          // TODO: Navigate to Dashboard depending on the role
-          navigate("/dashboard/landlord/addproperty");
-        }, 5000);
-      })
-      .catch((err) => {
-        console.log(err.response.data.errorDetails.message);
-        if (typeof err.response.data.errorDetails.message == "string") {
-          toast.error(err.response.data.errorDetails.message, {
-            position: "top-right" as ToastPosition,
-          });
-        } else if (typeof err.response.data.errorDetails.message == "object") {
-          toast.error(err.response.data.errorDetails.message[0], {
-            position: "top-right" as ToastPosition,
-          });
+
+    try {
+      const response = await login({ ...formData });
+      setError(null);
+      setTimeout(() => {
+        // TODO: Navigate to Dashboard depending on the role
+        if (response.userType === "landlord") {
+          navigate("/dashboard/landlord");
+        } else if (response.userType === "tenant") {
+          navigate("/dashboard/tenant");
+        } else if (response.userType === "admin") {
+          navigate("/dashboard/admin");
+        } else {
+          return;
         }
-      });
+      }, 2000);
+      // Redirect or perform other post-login actions
+    } catch (err) {
+      console.log(err);
+      setError("Invalid email or password");
+    }
   };
 
   const validateFormInput = () => {
@@ -115,3 +111,41 @@ const Login = () => {
 };
 
 export default Login;
+
+// login({ ...formData })
+//   .then((res) => setError(null))
+//   .catch((err) => {
+//     console.log(err);
+
+//     setError("Something went wrong!");
+//     toast.error(error, {
+//       position: "top-right" as ToastPosition,
+//     });
+//   });
+
+// AxiosInstance.post("/auth/login", formData)
+//   .then((res) => {
+//     console.log(res.data);
+//     localStorage.setItem("accessToken", res.data.accessToken);
+//     localStorage.setItem("refreshToken", res.data.refreshToken);
+//     localStorage.setItem("userId", res.data.userId);
+//     toast.success(res.data, {
+//       position: "top-right" as ToastPosition,
+//     });
+//     setTimeout(() => {
+//       // TODO: Navigate to Dashboard depending on the role
+//       navigate("/dashboard/landlord/addproperty");
+//     }, 5000);
+//   })
+//   .catch((err) => {
+//     console.log(err.response.data.errorDetails.message);
+//     if (typeof err.response.data.errorDetails.message == "string") {
+//       toast.error(err.response.data.errorDetails.message, {
+//         position: "top-right" as ToastPosition,
+//       });
+//     } else if (typeof err.response.data.errorDetails.message == "object") {
+//       toast.error(err.response.data.errorDetails.message[0], {
+//         position: "top-right" as ToastPosition,
+//       });
+//     }
+//   });

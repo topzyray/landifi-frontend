@@ -14,6 +14,10 @@ import NewEmailVerificationRequest from "./pages/auth/NewEmailVerificationReques
 import LandlordDashboard from "./pages/dashboards/landlord/LandlordDashboard.tsx";
 import AddProperty from "./pages/dashboards/landlord/AddProperty.tsx";
 import Overview from "./pages/dashboards/landlord/Overview.tsx";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
+import ProtectedRoute from "./components/Protected.tsx";
+import UnprotectedRoute from "./components/UnprotectedRoute.tsx";
+import { GlobalProvider } from "./contexts/GlobalContext.tsx";
 
 const router = createBrowserRouter([
   {
@@ -26,11 +30,19 @@ const router = createBrowserRouter([
       },
       {
         path: "auth/login",
-        element: <Login />,
+        element: (
+          <UnprotectedRoute>
+            <Login />
+          </UnprotectedRoute>
+        ),
       },
       {
         path: "auth/register",
-        element: <Register />,
+        element: (
+          <UnprotectedRoute>
+            <Register />
+          </UnprotectedRoute>
+        ),
       },
       {
         path: "auth/forgotpassword",
@@ -52,10 +64,14 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard/landlord",
-    element: <LandlordDashboard />,
+    element: (
+      <ProtectedRoute requiredRole="landlord">
+        <LandlordDashboard />
+      </ProtectedRoute>
+    ),
     children: [
       {
-        path: "overview",
+        index: true,
         element: <Overview />,
       },
       {
@@ -68,7 +84,11 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
-    <Notification />
+    <AuthProvider>
+      <GlobalProvider>
+        <RouterProvider router={router} />
+        <Notification />
+      </GlobalProvider>
+    </AuthProvider>
   </StrictMode>
 );
