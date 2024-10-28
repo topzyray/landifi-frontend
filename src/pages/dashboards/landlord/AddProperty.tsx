@@ -1,9 +1,8 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AxiosInstance from "../../../services/axiosInstance";
 import { toast, ToastPosition } from "react-toastify";
 import { amenities } from "../../../utils/index";
-import { IoIosImages } from "react-icons/io";
 import { GlobalContext } from "../../../contexts/GlobalContext";
 import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoader";
 
