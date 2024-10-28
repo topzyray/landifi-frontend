@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AxiosInstance from "../../../services/axiosInstance";
 import { toast, ToastPosition } from "react-toastify";
 import { amenities } from "../../../utils/index";
 import { IoIosImages } from "react-icons/io";
+import { GlobalContext } from "../../../contexts/GlobalContext";
+import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoader";
 
 interface FormData {
   type: string;
@@ -13,17 +15,24 @@ interface FormData {
   images: File[];
 }
 
+const initialFormData = {
+  type: "",
+  location: "",
+  price: "",
+  amenities: [],
+  images: [],
+};
+
 const AddProperty = () => {
-  const [formData, setFormData] = useState<FormData>({
-    type: "",
-    location: "",
-    price: "0",
-    amenities: [],
-    images: [],
-  });
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const { componentLevelLoader, setComponentLevelLoader } =
+    useContext(GlobalContext);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setComponentLevelLoader({ loading: true, id: "" });
 
     const data = new FormData();
     data.append("type", formData.type);
@@ -35,13 +44,12 @@ const AddProperty = () => {
     formData.images.forEach((image) => data.append("images", image));
 
     AxiosInstance.post("/properties", data)
-      .then((res) => {
-        console.log(res.data);
-        toast.success(res.data, {
+      .then((_) => {
+        toast.success("Property added successfully.", {
           position: "top-right" as ToastPosition,
         });
         setTimeout(() => {
-          // navigate("/auth/emailverification");
+          navigate("/dashboard/landlord");
         }, 5000);
       })
       .catch((err) => {
@@ -53,7 +61,15 @@ const AddProperty = () => {
           toast.error(err.response.data.errorDetails.message[0], {
             position: "top-right" as ToastPosition,
           });
+        } else {
+          toast.error("Something went wrong!", {
+            position: "top-right" as ToastPosition,
+          });
         }
+      })
+      .finally(() => {
+        setFormData(initialFormData);
+        setComponentLevelLoader({ loading: false, id: "" });
       });
   };
 
@@ -272,10 +288,18 @@ const AddProperty = () => {
 
           <button
             type="submit"
-            className="border px-3 py-1.5 md:py-2 rounded bg-gray-400 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="border px-3 py-1.5 md:py-2 rounded bg-gray-600 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={!validateFormInput()}
           >
-            Add property
+            {componentLevelLoader && componentLevelLoader.loading ? (
+              <ComponentLevelLoader
+                text="Adding Property"
+                color="#ffffff"
+                loading={componentLevelLoader && componentLevelLoader.loading}
+              />
+            ) : (
+              "Add Property"
+            )}
           </button>
         </form>
       </div>

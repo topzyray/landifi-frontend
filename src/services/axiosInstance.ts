@@ -20,7 +20,7 @@ AxiosInstance.interceptors.request.use(
 
 // Handle token refresh and accesstoken regeneration
 AxiosInstance.interceptors.response.use(
-  (response) => response, // Directly return successful responses.
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
@@ -50,7 +50,9 @@ AxiosInstance.interceptors.response.use(
         console.error("Token refresh failed:", refreshError);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        window.location.href = "/auth/login";
+        setTimeout(() => {
+          window.location.href = "/auth/login";
+        }, 3000);
         return Promise.reject(refreshError);
       }
     }

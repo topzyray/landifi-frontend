@@ -27,7 +27,6 @@ export const useLogin = () => {
         "/auth/login",
         credentials
       );
-      console.log(authResponse.data);
 
       const { userId, accessToken, refreshToken } = authResponse.data;
 
@@ -42,17 +41,18 @@ export const useLogin = () => {
       // Save user to localStorage and update context
       localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
-      toast.success("Login successful. Redirecting to dashboard.", {
+
+      toast.success("Success. Redirecting to dashboard shortly!", {
         position: "top-right" as ToastPosition,
       });
 
       return userData;
     } catch (err: any) {
-      console.log(err);
-      toast.error("Login failed. Please check credentials.", {
+      // console.log(err);
+      toast.error("Something went wrong!", {
         position: "top-right" as ToastPosition,
       });
-      throw new Error("Failed to log in.");
+      throw new Error("Something went wrong!");
     }
   };
 

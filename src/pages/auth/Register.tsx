@@ -1,23 +1,32 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AxiosInstance from "../../services/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastPosition } from "react-toastify";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import ComponentLevelLoader from "../../components/loaders/ComponentLevelLoader";
+
+const initialFormData = {
+  email: "",
+  password: "",
+  firstName: "",
+  lastName: "",
+  userType: "",
+};
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    userType: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
+  const { componentLevelLoader, setComponentLevelLoader } =
+    useContext(GlobalContext);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+  let registrationEndpoint: string = formData.userType;
 
-    AxiosInstance.post("/users", formData)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setComponentLevelLoader({ loading: true, id: "" });
+
+    AxiosInstance.post(`/${registrationEndpoint}s`, formData)
       .then((res) => {
         toast.success(res.data, {
           position: "top-right" as ToastPosition,
@@ -25,6 +34,8 @@ const Register = () => {
         setTimeout(() => {
           navigate("/auth/emailverification");
         }, 5000);
+
+        setFormData(initialFormData);
       })
       .catch((err) => {
         if (typeof err.response.data.errorDetails.message == "string") {
@@ -35,7 +46,15 @@ const Register = () => {
           toast.error(err.response.data.errorDetails.message[0], {
             position: "top-right" as ToastPosition,
           });
+        } else {
+          toast.error("Something went wrong!", {
+            position: "top-right" as ToastPosition,
+          });
         }
+      })
+      .finally(() => {
+        setFormData(initialFormData);
+        setComponentLevelLoader({ loading: false, id: "" });
       });
   };
 
@@ -50,7 +69,9 @@ const Register = () => {
       formData.lastName &&
       formData.lastName.trim() &&
       formData.userType &&
-      formData.userType.trim()
+      formData.userType.trim() &&
+      registrationEndpoint &&
+      registrationEndpoint.trim()
       ? true
       : false;
   };
@@ -63,6 +84,7 @@ const Register = () => {
           <select
             name="userType"
             id=""
+            value={formData.userType}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -79,6 +101,7 @@ const Register = () => {
             type="text"
             placeholder="First name"
             className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+            value={formData.firstName}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -90,6 +113,7 @@ const Register = () => {
             type="text"
             placeholder="Last Name"
             className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+            value={formData.lastName}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -101,6 +125,7 @@ const Register = () => {
             type="email"
             placeholder="Enter email"
             className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+            value={formData.email}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -112,6 +137,7 @@ const Register = () => {
             type="password"
             placeholder="Enter password"
             className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+            value={formData.password}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -121,10 +147,18 @@ const Register = () => {
           />
           <button
             type="submit"
-            className="border px-3 py-1.5 md:py-2 rounded bg-gray-400 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="border px-3 py-1.5 md:py-2 rounded bg-gray-600 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={!validateFormInput()}
           >
-            Register
+            {componentLevelLoader && componentLevelLoader.loading ? (
+              <ComponentLevelLoader
+                text="Loading"
+                color="#ffffff"
+                loading={componentLevelLoader && componentLevelLoader.loading}
+              />
+            ) : (
+              "Register"
+            )}
           </button>
 
           <p className="text-center font-light text-sm cursor-pointer">

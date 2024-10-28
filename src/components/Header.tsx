@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { FaRegCircleUser } from "react-icons/fa6";
+import { MdLogout } from "react-icons/md";
 
 const Header = () => {
+  const { logout, user } = useAuth();
+
   return (
     <header className="bg-white shadow sticky top-0 flex justify-between px-3 py-4 lg:px-[5rem]">
       <h1>
@@ -9,9 +14,20 @@ const Header = () => {
         </Link>
       </h1>
       <nav>
-        <p>
-          <Link to="auth/login">Login</Link>
-        </p>
+        {user ? (
+          <div className="flex items-center justify-center gap-8 w-[4rem] h-auto">
+            <Link to={`/dashboard/${user.userType}`}>
+              <FaRegCircleUser className="text-orange-500 text-2xl hover:shadow" />
+            </Link>
+            <p onClick={logout}>
+              <MdLogout className="text-red-700 text-2xl hover:shadow hover:cursor-pointer" />
+            </p>
+          </div>
+        ) : (
+          <p>
+            <Link to="auth/login">Login</Link>
+          </p>
+        )}
       </nav>
     </header>
   );

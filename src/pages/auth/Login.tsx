@@ -1,24 +1,35 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../utils/hooks";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import ComponentLevelLoader from "../../components/loaders/ComponentLevelLoader";
+
+const initialFormData = {
+  email: "",
+  password: "",
+};
 
 const Login = () => {
   const { login } = useLogin();
   const [error, setError] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
+  const { componentLevelLoader, setComponentLevelLoader } =
+    useContext(GlobalContext);
+
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setComponentLevelLoader({ loading: true, id: "" });
+    setError(null);
 
     try {
       const response = await login({ ...formData });
-      setError(null);
+      setComponentLevelLoader({ loading: false, id: "" });
+      setFormData(initialFormData);
+
       setTimeout(() => {
-        // TODO: Navigate to Dashboard depending on the role
+        // Navigate to Dashboard depending on the role
         if (response.userType === "landlord") {
           navigate("/dashboard/landlord");
         } else if (response.userType === "tenant") {
@@ -29,10 +40,12 @@ const Login = () => {
           return;
         }
       }, 2000);
+
       // Redirect or perform other post-login actions
-    } catch (err) {
-      console.log(err);
-      setError("Invalid email or password");
+    } catch (err: any) {
+      setError(err.message);
+      setFormData(initialFormData);
+      setComponentLevelLoader({ loading: false, id: "" });
     }
   };
 
@@ -55,6 +68,7 @@ const Login = () => {
             type="email"
             placeholder="Enter email"
             className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+            value={formData.email}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -66,6 +80,7 @@ const Login = () => {
             type="password"
             placeholder="Enter password"
             className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+            value={formData.password}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -80,10 +95,18 @@ const Login = () => {
           </p>
           <button
             type="submit"
-            className="border px-3 py-1.5 md:py-2 rounded bg-gray-400 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="border px-3 py-1.5 md:py-2 rounded bg-gray-600 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={!validateFormInput()}
           >
-            Login
+            {componentLevelLoader && componentLevelLoader.loading ? (
+              <ComponentLevelLoader
+                text="Loading"
+                color="#ffffff"
+                loading={componentLevelLoader && componentLevelLoader.loading}
+              />
+            ) : (
+              "Login"
+            )}
           </button>
 
           <p className="text-center font-light text-sm cursor-pointer">

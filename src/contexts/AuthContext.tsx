@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("refreshToken");
 
     // Redirect to login page
-    window.location.href = "/auth/login";
+    window.location.href = "/";
   };
 
   if (loading) return <div>Loading...</div>; // Loading state for initial load

@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AxiosInstance from "../../services/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastPosition } from "react-toastify";
+import ComponentLevelLoader from "../../components/loaders/ComponentLevelLoader";
+import { GlobalContext } from "../../contexts/GlobalContext";
+
+const initialFormData = {
+  resetOTP: "",
+  newPassword: "",
+};
 
 const ResetPassword = () => {
-  const [formData, setFormData] = useState({
-    resetOTP: "",
-    newPassword: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
+  const { componentLevelLoader, setComponentLevelLoader } =
+    useContext(GlobalContext);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setComponentLevelLoader({ loading: true, id: "" });
+
     AxiosInstance.put("/auth/reset-password", formData)
       .then((res) => {
         toast.success(res.data, {
@@ -31,7 +39,15 @@ const ResetPassword = () => {
           toast.error(err.response.data.errorDetails.message[0], {
             position: "top-right" as ToastPosition,
           });
+        } else {
+          toast.error("Something went wrong!", {
+            position: "top-right" as ToastPosition,
+          });
         }
+      })
+      .finally(() => {
+        setFormData(initialFormData);
+        setComponentLevelLoader({ loading: false, id: "" });
       });
   };
 
@@ -54,6 +70,7 @@ const ResetPassword = () => {
             type="text"
             placeholder="Enter OTP"
             className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+            value={formData.resetOTP}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -65,6 +82,7 @@ const ResetPassword = () => {
             type="password"
             placeholder="Enter new password"
             className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+            value={formData.newPassword}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -74,10 +92,18 @@ const ResetPassword = () => {
           />
           <button
             type="submit"
-            className="border px-3 py-1.5 md:py-2 rounded bg-gray-400 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="border px-3 py-1.5 md:py-2 rounded bg-gray-600 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={!validateFormInput()}
           >
-            Submit
+            {componentLevelLoader && componentLevelLoader.loading ? (
+              <ComponentLevelLoader
+                text="Loading"
+                color="#ffffff"
+                loading={componentLevelLoader && componentLevelLoader.loading}
+              />
+            ) : (
+              "Submit"
+            )}
           </button>
         </form>
         <p className="w-max text-sm font-light pt-4 text-left hover:underline">

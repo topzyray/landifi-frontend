@@ -46,19 +46,35 @@ const router = createBrowserRouter([
       },
       {
         path: "auth/forgotpassword",
-        element: <ForgotPassword />,
+        element: (
+          <UnprotectedRoute>
+            <ForgotPassword />
+          </UnprotectedRoute>
+        ),
       },
       {
         path: "auth/resetpassword",
-        element: <ResetPassword />,
+        element: (
+          <UnprotectedRoute>
+            <ResetPassword />
+          </UnprotectedRoute>
+        ),
       },
       {
         path: "auth/emailverification",
-        element: <EmailVerification />,
+        element: (
+          <UnprotectedRoute>
+            <EmailVerification />
+          </UnprotectedRoute>
+        ),
       },
       {
         path: "auth/newemailverificationrequest",
-        element: <NewEmailVerificationRequest />,
+        element: (
+          <UnprotectedRoute>
+            <NewEmailVerificationRequest />
+          </UnprotectedRoute>
+        ),
       },
     ],
   },

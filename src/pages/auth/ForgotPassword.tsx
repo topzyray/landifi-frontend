@@ -1,17 +1,25 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AxiosInstance from "../../services/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastPosition } from "react-toastify";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import ComponentLevelLoader from "../../components/loaders/ComponentLevelLoader";
+
+const initialFormData = {
+  email: "",
+};
 
 const ForgotPassword = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
+  const { componentLevelLoader, setComponentLevelLoader } =
+    useContext(GlobalContext);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setComponentLevelLoader({ loading: true, id: "" });
+
     AxiosInstance.post("/auth/forgot-password", formData)
       .then((res) => {
         toast.success(res.data.message, {
@@ -31,6 +39,10 @@ const ForgotPassword = () => {
             position: "top-right" as ToastPosition,
           });
         }
+      })
+      .finally(() => {
+        setFormData(initialFormData);
+        setComponentLevelLoader({ loading: false, id: "" });
       });
   };
 
@@ -49,6 +61,7 @@ const ForgotPassword = () => {
             type="email"
             placeholder="Enter email"
             className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+            value={formData.email}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -58,10 +71,18 @@ const ForgotPassword = () => {
           />
           <button
             type="submit"
-            className="border px-3 py-1.5 md:py-2 rounded bg-gray-400 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="border px-3 py-1.5 md:py-2 rounded bg-gray-600 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={!validateFormInput()}
           >
-            Send password reset
+            {componentLevelLoader && componentLevelLoader.loading ? (
+              <ComponentLevelLoader
+                text="Loading"
+                color="#ffffff"
+                loading={componentLevelLoader && componentLevelLoader.loading}
+              />
+            ) : (
+              "Send password reset"
+            )}
           </button>
         </form>
         <p className="w-max text-sm font-light pt-4 text-left hover:underline">
