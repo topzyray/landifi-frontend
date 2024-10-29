@@ -1,14 +1,11 @@
-import { useState } from "react";
-import Login from "./Login";
-import Register from "./Register";
+import { Outlet } from "react-router-dom";
 
-const Auth = () => {
-  const [toggle, setToggle] = useState(true);
+const AuthLayout = () => {
   return (
     <div className="w-full pt-16 px-3 lg:px-[5rem]">
-      {toggle ? <Login /> : <Register />}
+      <Outlet />
     </div>
   );
 };
 
-export default Auth;
+export default AuthLayout;

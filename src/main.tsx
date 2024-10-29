@@ -12,12 +12,13 @@ import Login from "./pages/auth/Login.tsx";
 import Register from "./pages/auth/Register.tsx";
 import NewEmailVerificationRequest from "./pages/auth/NewEmailVerificationRequest.tsx";
 import LandlordDashboard from "./pages/dashboards/landlord/LandlordDashboard.tsx";
-import AddProperty from "./pages/dashboards/landlord/AddProperty.tsx";
+import AddProperty from "./pages/dashboards/landlord/AddLeaseProperty.tsx";
 import Overview from "./pages/dashboards/landlord/Overview.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import ProtectedRoute from "./components/Protected.tsx";
 import UnprotectedRoute from "./components/UnprotectedRoute.tsx";
 import { GlobalProvider } from "./contexts/GlobalContext.tsx";
+import AuthLayout from "./pages/auth/Auth.tsx";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +29,14 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+    ],
+  },
+  {
+    path: "auth",
+    element: <AuthLayout />,
+    children: [
       {
-        path: "auth/login",
+        path: "login",
         element: (
           <UnprotectedRoute>
             <Login />
@@ -37,7 +44,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "auth/register",
+        path: "register",
         element: (
           <UnprotectedRoute>
             <Register />
@@ -45,7 +52,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "auth/forgotpassword",
+        path: "forgotpassword",
         element: (
           <UnprotectedRoute>
             <ForgotPassword />
@@ -53,7 +60,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "auth/resetpassword",
+        path: "resetpassword",
         element: (
           <UnprotectedRoute>
             <ResetPassword />
@@ -61,7 +68,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "auth/emailverification",
+        path: "emailverification",
         element: (
           <UnprotectedRoute>
             <EmailVerification />
@@ -69,7 +76,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "auth/newemailverificationrequest",
+        path: "newemailverificationrequest",
         element: (
           <UnprotectedRoute>
             <NewEmailVerificationRequest />

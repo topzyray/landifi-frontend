@@ -1,30 +1,15 @@
 import { createContext, useState } from "react";
-
-type GlobalContextType = {
-  showNavModal: boolean;
-  setShowNavModal: React.Dispatch<React.SetStateAction<boolean>>;
-  pageLevelLoader: boolean;
-  setPageLevelLoader: React.Dispatch<React.SetStateAction<boolean>>;
-  componentLevelLoader: {
-    loading: boolean;
-    id: string;
-  };
-  setComponentLevelLoader: React.Dispatch<
-    React.SetStateAction<{
-      loading: boolean;
-      id: string;
-    }>
-  >;
-};
-
-type GlobalContextProviderProps = {
-  children: React.ReactNode;
-};
+import {
+  GlobalContextProviderProps,
+  GlobalContextType,
+  Property,
+} from "../utils/types";
 
 export const GlobalContext = createContext({} as GlobalContextType);
 
 export const GlobalProvider = ({ children }: GlobalContextProviderProps) => {
   const [showNavModal, setShowNavModal] = useState<boolean>(false);
+  const [allProperties, setAllProperties] = useState<Property[] | []>([]);
   const [pageLevelLoader, setPageLevelLoader] = useState<boolean>(true);
   const [componentLevelLoader, setComponentLevelLoader] = useState({
     loading: false,
@@ -36,6 +21,8 @@ export const GlobalProvider = ({ children }: GlobalContextProviderProps) => {
       value={{
         showNavModal,
         setShowNavModal,
+        allProperties,
+        setAllProperties,
         pageLevelLoader,
         setPageLevelLoader,
         componentLevelLoader,

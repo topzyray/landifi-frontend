@@ -1,4 +1,4 @@
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth, User } from "../contexts/AuthContext";
 import AxiosInstance from "../services/axiosInstance";
 import { toast, ToastPosition } from "react-toastify";
 
@@ -11,11 +11,6 @@ interface AuthResponse {
   userId: string;
   accessToken: string;
   refreshToken: string;
-}
-
-interface User {
-  userId: string;
-  userType: "landlord" | "tenant" | "admin";
 }
 
 export const useLogin = () => {
@@ -48,8 +43,7 @@ export const useLogin = () => {
 
       return userData;
     } catch (err: any) {
-      // console.log(err);
-      toast.error("Something went wrong!", {
+      toast.error(err?.response?.data?.errorDetails?.message, {
         position: "top-right" as ToastPosition,
       });
       throw new Error("Something went wrong!");

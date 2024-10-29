@@ -7,9 +7,12 @@ const Header = () => {
   const { logout, user } = useAuth();
 
   return (
-    <header className="bg-white shadow sticky top-0 flex justify-between px-3 py-4 lg:px-[5rem]">
+    <header className="bg-white shadow sticky top-0 flex justify-between items-center px-3 py-4 lg:px-[5rem]">
       <h1>
-        <Link to="/" className="text-orange-700 font-bold text-lg">
+        <Link
+          to="/"
+          className="text-orange-700 font-bold text-lg hover:underline"
+        >
           Landifi
         </Link>
       </h1>
@@ -24,7 +27,7 @@ const Header = () => {
             </p>
           </div>
         ) : (
-          <p>
+          <p className="bg-orange-700 text-white px-4 py-1.5 rounded hover:opacity-70">
             <Link to="auth/login">Login</Link>
           </p>
         )}

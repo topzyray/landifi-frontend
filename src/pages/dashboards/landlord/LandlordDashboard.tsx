@@ -8,7 +8,7 @@ const LandlordDashboard = () => {
   return (
     <div className="md:flex w-full h-screen">
       <DashboardHeader />
-      <div className="border-x-4 h-full w-full flex flex-col gap-4 md:gap-8 py-3 lg:py-8 mb-10 pl-4 pr-0 md:pl-6 lg:pl-6">
+      <div className="border-x-4 h-full w-full flex flex-col gap-4 md:gap-8 py-3 lg:py-8 mb-10 px-3 md:pl-6 lg:pl-6">
         <div className="overflow-auto h-full pb-0">
           <Outlet />
         </div>
@@ -18,7 +18,7 @@ const LandlordDashboard = () => {
           <div className="relative flex flex-col gap-4">
             <ul className="flex flex-col gap-1.5 font-semibold">
               <NavLink
-                to="/dashboard/landlord"
+                to="_"
                 className={({ isActive }) =>
                   isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
                 }
@@ -26,29 +26,29 @@ const LandlordDashboard = () => {
               >
                 <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
                   <BiSolidDashboard />{" "}
-                  <span className="md:hidden lg:block">Overview</span>
+                  <span className="md:hidden lg:block">Placeholder 1</span>
                 </li>
               </NavLink>
               <NavLink
-                to="/dashboard/landlord/addproperty"
+                to="_"
                 className={({ isActive }) =>
                   isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
                 }
               >
                 <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
                   <RiFundsFill />{" "}
-                  <span className="md:hidden lg:block">Add property</span>
+                  <span className="md:hidden lg:block">Placeholder 2</span>
                 </li>
               </NavLink>
               <NavLink
-                to="/"
+                to="_"
                 className={({ isActive }) =>
                   isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
                 }
               >
                 <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
                   <TbWorldUp />{" "}
-                  <span className="md:hidden lg:block">Main Site</span>
+                  <span className="md:hidden lg:block">Placeholder 3</span>
                 </li>
               </NavLink>
               <li

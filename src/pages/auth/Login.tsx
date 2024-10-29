@@ -60,8 +60,13 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center w-full pt-16 px-3 lg:px-[5rem]">
-      <div className="bg-white w-full max-w-[18rem] lg:max-w-[22rem] px-4 py-6 rounded">
+    <div className="flex justify-center w-full pt-16 px-2 lg:px-[5rem]">
+      <div className="bg-white w-full max-w-[18rem] lg:max-w-[22rem] py-6 rounded">
+        <Link to="/" className="">
+          <p className="mb-2 text-orange-700 text-center font-bold md:text-lg hover:underline">
+            Landifi
+          </p>
+        </Link>
         <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
           <p className="font-medium text-center text-lg">Welcome back</p>
           <input
@@ -89,7 +94,7 @@ const Login = () => {
             }
           />
           <p className="font-light text-sm cursor-pointer">
-            <Link to="../auth/forgotpassword" className="underline">
+            <Link to="/auth/forgotpassword" className="underline">
               Forgot password
             </Link>
           </p>
@@ -111,23 +116,20 @@ const Login = () => {
 
           <p className="text-center font-light text-sm cursor-pointer">
             Don't have an account{" "}
-            <Link to="../auth/register" className="underline">
+            <Link to="/auth/register" className="underline">
               Register
             </Link>
           </p>
           <p className="text-center font-light text-sm cursor-pointer">
             Request new verification OTP{" "}
-            <Link
-              to="../auth/newemailverificationrequest"
-              className="underline"
-            >
+            <Link to="/auth/newemailverificationrequest" className="underline">
               Here
             </Link>
           </p>
         </form>
-        <p className="w-max text-sm font-light pt-4 text-left hover:underline">
+        {/* <p className="w-max text-sm font-light pt-4 text-left hover:underline">
           <Link to="/">Back Home</Link>
-        </p>
+        </p> */}
       </div>
     </div>
   );

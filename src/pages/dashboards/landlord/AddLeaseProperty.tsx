@@ -7,19 +7,33 @@ import { GlobalContext } from "../../../contexts/GlobalContext";
 import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoader";
 
 interface FormData {
-  type: string;
-  location: string;
-  price: string;
-  amenities: string[];
   images: File[];
+  title: string;
+  description: string;
+  type: string;
+  category: string;
+  status: string;
+  address: string;
+  location: string;
+  amenities: string[];
+  annualRent: string;
+  securityDeposit: string;
+  isFurnished: string;
 }
 
 const initialFormData = {
-  type: "",
-  location: "",
-  price: "",
-  amenities: [],
   images: [],
+  title: "",
+  description: "",
+  type: "",
+  category: "",
+  status: "",
+  address: "",
+  location: "",
+  amenities: [],
+  annualRent: "",
+  securityDeposit: "",
+  isFurnished: "",
 };
 
 const AddProperty = () => {
@@ -36,8 +50,8 @@ const AddProperty = () => {
     const data = new FormData();
     data.append("type", formData.type);
     data.append("location", formData.location);
-    data.append("price", formData.price.toString());
-    formData.amenities.forEach((amenity) =>
+    data.append("price", formData.annualRent.toString());
+    formData?.amenities?.forEach((amenity) =>
       data.append("amenities[]", amenity)
     );
     formData.images.forEach((image) => data.append("images", image));
@@ -80,8 +94,8 @@ const AddProperty = () => {
       formData.images.length > 0 &&
       formData.location &&
       formData.location.trim() !== "" &&
-      formData.price &&
-      formData.price.trim() &&
+      formData.annualRent &&
+      formData.annualRent.trim() &&
       formData.type &&
       formData.type.trim()
       ? true
@@ -142,28 +156,29 @@ const AddProperty = () => {
         >
           <p className="">Add property form</p>
 
-          {/* <input
+          <input
             type="text"
             name="title"
             id="property-title"
             placeholder="Property Title"
             className="input"
-          /> */}
+          />
 
-          {/* <textarea
+          <textarea
             id="description"
             name="description"
             placeholder="Property Description"
             required
             rows={4}
             className="input"
-          /> */}
+          />
 
           <select
             name="type"
             id="type"
             className="select"
             onChange={handleChange}
+            value={formData.type}
           >
             <option value="">Listing Type</option>
             <option value="rent">Rent</option>
@@ -256,7 +271,7 @@ const AddProperty = () => {
             id="price"
             placeholder="Price"
             className="input"
-            value={formData.price}
+            value={formData.annualRent}
             onChange={handleChange}
           />
 
