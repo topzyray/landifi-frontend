@@ -26,6 +26,7 @@ const ProductDetailsComponent = ({
                 <div className="overflow-x-auto flex flex-row items-start lg:flex-col gap-2 w-full">
                   {data?.images.map((img) => (
                     <button
+                      key={img.public_id}
                       type="button"
                       className="flex-0 h-20 w-20 lg:w-full overflow-hidden rounded-lg border-2 border-gray-300 text-center"
                     >

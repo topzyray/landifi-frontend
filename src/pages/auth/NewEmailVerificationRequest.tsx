@@ -66,7 +66,7 @@ const NewEmailVerificationRequest = () => {
 
   return (
     <div className="flex justify-center w-full pt-16 px-2 lg:px-[5rem]">
-      <div className="bg-white w-full max-w-[18rem] lg:max-w-[22rem] py-6 rounded">
+      <div className="bg-white w-full max-w-[18rem] lg:max-w-[22rem] py-6 px-4 rounded">
         <Link to="/" className="">
           <p className="mb-2 text-orange-700 text-center font-bold md:text-lg hover:underline">
             Landifi
@@ -104,9 +104,9 @@ const NewEmailVerificationRequest = () => {
             )}
           </button>
         </form>
-        {/* <p className="w-max text-sm font-light pt-4 text-left hover:underline">
-          <Link to="/">Back Home</Link>
-        </p> */}
+        <p className="text-center font-light text-sm cursor-pointer mt-3 hover:underline">
+          <Link to="/auth/login">Back Login</Link>
+        </p>
       </div>
     </div>
   );

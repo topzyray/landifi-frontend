@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import AxiosInstance from "../../../services/axiosInstance";
 import { toast, ToastPosition } from "react-toastify";
 import { GlobalContext } from "../../../contexts/GlobalContext";
 import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoader";

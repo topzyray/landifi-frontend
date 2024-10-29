@@ -43,7 +43,7 @@ export const updateProperty = async (
   }
 };
 
-export const deleteProperty = async (id: string) => {
+export const deletePropertyById = async (id: string) => {
   try {
     const response = await AxiosInstance.delete(`/properties/${id}`);
     return response.data;

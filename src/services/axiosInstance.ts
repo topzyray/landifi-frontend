@@ -155,7 +155,11 @@ AxiosInstance.interceptors.response.use(
 
       try {
         const refreshToken = localStorage.getItem("refreshToken");
-        if (!refreshToken) throw new Error("No refresh token available");
+        if (!refreshToken) {
+          localStorage.clear();
+          // window.location.href = "/auth/login";
+          throw new Error("No refresh token available");
+        }
 
         // Attempt to refresh the token
         const response = await axios.post(
@@ -178,11 +182,10 @@ AxiosInstance.interceptors.response.use(
         return AxiosInstance(originalRequest);
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError);
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        setTimeout(() => {
-          window.location.href = "/auth/login";
-        }, 3000);
+        localStorage.clear();
+        // setTimeout(() => {
+        //   window.location.href = "/auth/login";
+        // }, 3000);
         return Promise.reject(refreshError);
       }
     }

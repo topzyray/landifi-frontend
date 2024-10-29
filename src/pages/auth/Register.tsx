@@ -78,7 +78,7 @@ const Register = () => {
 
   return (
     <div className="flex justify-center w-full pt-16 px-2 lg:px-[5rem]">
-      <div className="bg-white w-full max-w-[18rem] lg:max-w-[22rem] py-6 rounded">
+      <div className="bg-white w-full max-w-[18rem] lg:max-w-[22rem] py-6 px-4 rounded">
         <Link to="/" className="">
           <p className="mb-2 text-orange-700 text-center font-bold md:text-lg hover:underline">
             Landifi

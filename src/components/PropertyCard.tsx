@@ -1,8 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { LeaseProperty, SaleProperty } from "../utils/types";
+import ComponentLevelLoader from "./loaders/ComponentLevelLoader";
 
 interface PropertyCardProps {
   data: LeaseProperty | SaleProperty;
+  componentLevelLoader: {
+    loading: boolean;
+    id: string;
+  };
   isLandlord?: boolean;
   onUpdate?: () => void;
   onDelete?: () => void;
@@ -10,6 +15,7 @@ interface PropertyCardProps {
 
 const PropertyCard = ({
   data,
+  componentLevelLoader,
   isLandlord,
   onUpdate,
   onDelete,
@@ -93,7 +99,17 @@ const PropertyCard = ({
               className="w-full mx-2 text-white bg-red-500 hover:bg-red-600 px-2 py-1 "
               onClick={onDelete}
             >
-              Delete
+              {componentLevelLoader &&
+              componentLevelLoader.loading &&
+              componentLevelLoader.id === data._id ? (
+                <ComponentLevelLoader
+                  text=""
+                  color="#ffffff"
+                  loading={componentLevelLoader && componentLevelLoader.loading}
+                />
+              ) : (
+                "Delete"
+              )}
             </button>
           </div>
         )}
