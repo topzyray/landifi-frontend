@@ -1,10 +1,11 @@
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import AxiosInstance from "../../../services/axiosInstance";
-import { toast, ToastPosition } from "react-toastify";
-import { amenities } from "../../../utils/index";
-import { GlobalContext } from "../../../contexts/GlobalContext";
-import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoader";
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AxiosInstance from '../../../services/axiosInstance';
+import { toast, ToastPosition } from 'react-toastify';
+import { amenities } from '../../../utils/index';
+import { GlobalContext } from '../../../contexts/GlobalContext';
+import ComponentLevelLoader from '../../../components/loaders/ComponentLevelLoader';
+import { IoIosRemoveCircle } from 'react-icons/io';
 
 interface FormData {
   images: File[];
@@ -18,25 +19,27 @@ interface FormData {
   amenities: string[];
   annualRent: string;
   securityDeposit: string;
-  isFurnished: string;
+  isFurnished: boolean;
 }
 
 const initialFormData = {
   images: [],
-  title: "",
-  description: "",
-  type: "",
-  category: "",
-  status: "",
-  address: "",
-  location: "",
+  title: '',
+  description: '',
+  type: '',
+  category: '',
+  status: '',
+  address: '',
+  location: '',
   amenities: [],
-  annualRent: "",
-  securityDeposit: "",
-  isFurnished: "",
+  annualRent: '',
+  securityDeposit: '',
+  isFurnished: false,
 };
 
-const AddProperty = () => {
+// TODO: Add leaseStartDate and leaseEndDate when updating
+
+const AddLeaseProperty = () => {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const { componentLevelLoader, setComponentLevelLoader } =
     useContext(GlobalContext);
@@ -45,47 +48,55 @@ const AddProperty = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setComponentLevelLoader({ loading: true, id: "" });
+    setComponentLevelLoader({ loading: true, id: '' });
 
     const data = new FormData();
-    data.append("type", formData.type);
-    data.append("location", formData.location);
-    data.append("price", formData.annualRent.toString());
+    data.append('title', formData.title);
+    data.append('description', formData.description);
+    data.append('type', formData.type);
+    data.append('category', formData.category);
+    data.append('status', formData.status);
+    data.append('address', formData.address);
+    data.append('location', formData.location);
     formData?.amenities?.forEach((amenity) =>
-      data.append("amenities[]", amenity)
+      data.append('amenities[]', amenity)
     );
-    formData.images.forEach((image) => data.append("images", image));
+    data.append('annualRent', formData.annualRent.toString());
+    data.append('securityDeposit', formData.securityDeposit.toString());
+    data.append('isFurnished', formData.isFurnished.toString());
+    formData.images.forEach((image) => data.append('images', image));
 
-    AxiosInstance.post("/properties", data)
-      .then((_) => {
-        toast.success("Property added successfully.", {
-          position: "top-right" as ToastPosition,
+    AxiosInstance.post('/properties/lease', data)
+      .then(() => {
+        toast.success('Property added successfully.', {
+          position: 'top-right' as ToastPosition,
         });
         setTimeout(() => {
-          navigate("/dashboard/landlord");
+          navigate('/dashboard/landlord');
         }, 5000);
       })
       .catch((err) => {
-        if (typeof err.response.data.errorDetails.message == "string") {
+        if (typeof err.response.data.errorDetails.message == 'string') {
           toast.error(err.response.data.errorDetails.message, {
-            position: "top-right" as ToastPosition,
+            position: 'top-right' as ToastPosition,
           });
-        } else if (typeof err.response.data.errorDetails.message == "object") {
+        } else if (typeof err.response.data.errorDetails.message == 'object') {
           toast.error(err.response.data.errorDetails.message[0], {
-            position: "top-right" as ToastPosition,
+            position: 'top-right' as ToastPosition,
           });
         } else {
-          toast.error("Something went wrong!", {
-            position: "top-right" as ToastPosition,
+          toast.error('Something went wrong!', {
+            position: 'top-right' as ToastPosition,
           });
         }
       })
       .finally(() => {
         setFormData(initialFormData);
-        setComponentLevelLoader({ loading: false, id: "" });
+        setComponentLevelLoader({ loading: false, id: '' });
       });
   };
 
+  // TODO: Update this function to accommodate new feilds
   const validateFormInput = () => {
     return formData &&
       formData.amenities &&
@@ -93,7 +104,7 @@ const AddProperty = () => {
       formData.images &&
       formData.images.length > 0 &&
       formData.location &&
-      formData.location.trim() !== "" &&
+      formData.location.trim() !== '' &&
       formData.annualRent &&
       formData.annualRent.trim() &&
       formData.type &&
@@ -104,24 +115,33 @@ const AddProperty = () => {
 
   // Unified handleChange function
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value, type } = e.target;
 
     // Check if the target is an input element to safely access checked
-    if (type === "checkbox") {
-      const checked = (e.target as HTMLInputElement).checked; // Type assertion here
+    if (type === 'checkbox') {
+      const isChecked = (e.target as HTMLInputElement).checked;
 
-      setFormData((prev) => {
-        const amenities = checked
-          ? [...prev.amenities, value]
-          : prev.amenities.filter((amenity) => amenity !== value);
-        return { ...prev, amenities };
-      });
+      if (name === 'amenities') {
+        setFormData((prev) => {
+          const amenities = isChecked
+            ? [...prev.amenities, value]
+            : prev.amenities.filter((amenity) => amenity !== value);
+          return { ...prev, amenities };
+        });
+      } else if (name === 'isFurnished') {
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: isChecked,
+        }));
+      }
     } else {
       setFormData((prev) => ({
         ...prev,
-        [name]: type === "number" ? Number(value) : value,
+        [name]: type === 'number' ? Number(value) : value,
       }));
     }
   };
@@ -154,7 +174,7 @@ const AddProperty = () => {
           onSubmit={handleSubmit}
           encType="multipart/form-data"
         >
-          <p className="">Add property form</p>
+          <p className="">Lease Property Form</p>
 
           <input
             type="text"
@@ -162,6 +182,8 @@ const AddProperty = () => {
             id="property-title"
             placeholder="Property Title"
             className="input"
+            value={formData.title}
+            onChange={handleChange}
           />
 
           <textarea
@@ -171,6 +193,8 @@ const AddProperty = () => {
             required
             rows={4}
             className="input"
+            value={formData.description}
+            onChange={handleChange}
           />
 
           <select
@@ -181,17 +205,46 @@ const AddProperty = () => {
             value={formData.type}
           >
             <option value="">Listing Type</option>
-            <option value="rent">Rent</option>
-            <option value="sale">Sale</option>
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Land">Commercial</option>
           </select>
 
-          {/* <select name="status" id="status" className="select">
-            <option value="">Select status</option>
-            <option value="available">Available</option>
-            <option value="rented">Rented</option>
-            <option value="sold">Sold</option>
-            <option value="booked">Booked</option>
-          </select> */}
+          <select
+            name="category"
+            id="category"
+            className="select"
+            onChange={handleChange}
+            value={formData.category}
+          >
+            <option value="">Listing Category</option>
+            <option value="Lease">Lease</option>
+            <option value="Sale">Sale</option>
+          </select>
+
+          <select
+            name="status"
+            id="status"
+            className="select"
+            onChange={handleChange}
+            value={formData.status}
+          >
+            <option value="">Listing Status</option>
+            <option value="Available">Available</option>
+            <option value="Leased">Leased</option>
+            <option value="Sold">Sold</option>
+          </select>
+
+          <input
+            type="text"
+            name="address"
+            id="address"
+            placeholder="Address"
+            className="input"
+            value={formData.address}
+            onChange={handleChange}
+            required
+          />
 
           <input
             type="text"
@@ -203,26 +256,6 @@ const AddProperty = () => {
             onChange={handleChange}
             required
           />
-
-          {/* <input
-            type="text"
-            name="city"
-            id="city"
-            placeholder="City"
-            required
-            autoComplete="city"
-            className="input"
-          /> */}
-
-          {/* <input
-            type="text"
-            name="state"
-            id="state"
-            placeholder="State"
-            required
-            autoComplete="state"
-            className="input"
-          /> */}
 
           <section className="grid sm:grid-cols-2 gap-2 sm:gap-4">
             <section className="col-span-full input">
@@ -253,8 +286,10 @@ const AddProperty = () => {
                           alt={`preview-${index}`}
                           className="w-full h-full"
                         />
+                        <button onClick={() => removeImage(index)}>
+                          <IoIosRemoveCircle className="text-xl text-red-600 border border-white" />
+                        </button>
                       </div>
-                      <button onClick={() => removeImage(index)}>Remove</button>
                     </li>
                   ))}
                 </ul>
@@ -267,15 +302,25 @@ const AddProperty = () => {
 
           <input
             type="text"
-            name="price"
-            id="price"
-            placeholder="Price"
+            name="annualRent"
+            id="annualRent"
+            placeholder="Annual rent"
             className="input"
             value={formData.annualRent}
             onChange={handleChange}
           />
 
-          <p>Amenities</p>
+          <input
+            type="text"
+            name="securityDeposit"
+            id="securityDeposit"
+            placeholder="Security deposit"
+            className="input"
+            value={formData.securityDeposit}
+            onChange={handleChange}
+          />
+
+          <p>Amenities/Facilities</p>
 
           <section className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3">
             {/* Amenities Checkboxes */}
@@ -300,6 +345,21 @@ const AddProperty = () => {
             ))}
           </section>
 
+          <section className="md:flex md:items-center md:gap-0.5 mt-1">
+            <input
+              id="isFurnished"
+              name="isFurnished"
+              type="checkbox"
+              className="accent-gray-600 mr-1"
+              // value={formData.isFurnished}
+              checked={formData.isFurnished}
+              onChange={handleChange}
+            />
+            <label htmlFor="isFurnished" className="text-justify leading-0">
+              Furnished
+            </label>
+          </section>
+
           <button
             type="submit"
             className="border px-3 py-1.5 md:py-2 rounded bg-gray-600 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
@@ -312,7 +372,7 @@ const AddProperty = () => {
                 loading={componentLevelLoader && componentLevelLoader.loading}
               />
             ) : (
-              "Add Property"
+              'Add Property'
             )}
           </button>
         </form>
@@ -321,4 +381,4 @@ const AddProperty = () => {
   );
 };
 
-export default AddProperty;
+export default AddLeaseProperty;
