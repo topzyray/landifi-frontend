@@ -5,6 +5,8 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { MdAddBox } from "react-icons/md";
+import { FaSellcast } from "react-icons/fa6";
 
 const DashboardHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,18 +27,28 @@ const DashboardHeader = () => {
               >
                 <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
                   <BiSolidDashboard />{" "}
-                  <span className="md:hidden lg:block">Overview</span>
+                  <span className=" lg:block">Overview</span>
                 </li>
               </NavLink>
               <NavLink
-                to="/dashboard/landlord/addproperty"
+                to="/dashboard/landlord/leaseproperty"
                 className={({ isActive }) =>
                   isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
                 }
               >
                 <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
-                  <RiFundsFill />{" "}
-                  <span className="md:hidden lg:block">Add property</span>
+                  <MdAddBox /> <span className=" lg:block">Lease property</span>
+                </li>
+              </NavLink>
+              <NavLink
+                to="/dashboard/landlord/sellproperty"
+                className={({ isActive }) =>
+                  isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
+                }
+              >
+                <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
+                  <FaSellcast />{" "}
+                  <span className=" lg:block">Sell property</span>
                 </li>
               </NavLink>
               <NavLink
@@ -46,23 +58,22 @@ const DashboardHeader = () => {
                 }
               >
                 <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
-                  <TbWorldUp />{" "}
-                  <span className="md:hidden lg:block">Main Site</span>
+                  <TbWorldUp /> <span className=" lg:block">Main Site</span>
                 </li>
               </NavLink>
-              <li
+              {/* <li
                 onClick={logout}
                 className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large text-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
               >
                 <BiLogOut /> <span className="md:hidden lg:block">Logout</span>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
       </div>
 
       {/* Navbar for small screens */}
-      <div className="md:hidden sticky top-0 z-50 flex justify-between p-3 border-b shadow bg-white opacity-100">
+      <div className="md:hidden sticky top-0 z-50 flex justify-between py-2 px-3 border-b shadow bg-white opacity-100">
         <h1>
           <Link
             to="/dashboard/landlord"
@@ -96,7 +107,7 @@ const DashboardHeader = () => {
             onClick={() => setMenuOpen(false)}
             className={
               menuOpen
-                ? `md:hidden absolute h-screen w-full top-[3.5rem] left-0  overflow-y-auto shadow-xl   ease-in duration-500 bg-black/40 backdrop-blur-none`
+                ? `md:hidden absolute h-screen w-full top-[2.9rem] left-0  overflow-y-auto shadow-xl   ease-in duration-500 bg-black/40 backdrop-blur-none`
                 : `left-[-100%] ease-out duration-500`
             }
           >
@@ -116,11 +127,20 @@ const DashboardHeader = () => {
               </NavLink>
               <NavLink
                 onClick={() => setMenuOpen(false)}
-                to="/dashboard/landlord/addproperty"
+                to="/dashboard/landlord/leaseproperty"
                 className={({ isActive }) => (isActive ? "underline" : "")}
               >
                 <li className="dashboard-link dashboard-link-small">
-                  <RiFundsFill /> Add property
+                  <RiFundsFill /> Lease property
+                </li>
+              </NavLink>
+              <NavLink
+                onClick={() => setMenuOpen(false)}
+                to="/dashboard/landlord/sellproperty"
+                className={({ isActive }) => (isActive ? "underline" : "")}
+              >
+                <li className="dashboard-link dashboard-link-small">
+                  <RiFundsFill /> Sell property
                 </li>
               </NavLink>
               <NavLink
@@ -132,12 +152,12 @@ const DashboardHeader = () => {
                   <TbWorldUp /> Main Site
                 </li>
               </NavLink>
-              <li
+              {/* <li
                 onClick={logout}
                 className="dashboard-link dashboard-link-small text-red-500 hover:text-red-500 cursor-pointer"
               >
                 <BiLogOut /> Logout
-              </li>
+              </li> */}
             </ul>
           </div>
         )}

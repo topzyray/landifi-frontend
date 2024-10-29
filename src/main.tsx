@@ -19,6 +19,10 @@ import ProtectedRoute from "./components/Protected.tsx";
 import UnprotectedRoute from "./components/UnprotectedRoute.tsx";
 import { GlobalProvider } from "./contexts/GlobalContext.tsx";
 import AuthLayout from "./pages/auth/Auth.tsx";
+import Properties from "./pages/Properties.tsx";
+import PropertyDetails from "./pages/PropertyDetails.tsx";
+import AddLeaseProperty from "./pages/dashboards/landlord/AddLeaseProperty.tsx";
+import AddSalesProperty from "./pages/dashboards/landlord/AddSalesProperty.tsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +32,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "properties",
+        element: <Properties />,
+      },
+      {
+        path: "properties/:propertyId",
+        element: <PropertyDetails />,
       },
     ],
   },
@@ -98,8 +110,12 @@ const router = createBrowserRouter([
         element: <Overview />,
       },
       {
-        path: "addproperty",
-        element: <AddProperty />,
+        path: "leaseproperty",
+        element: <AddLeaseProperty />,
+      },
+      {
+        path: "sellproperty",
+        element: <AddSalesProperty />,
       },
     ],
   },

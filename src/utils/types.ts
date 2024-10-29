@@ -12,19 +12,33 @@ type OwnerObjectType = {
   _id: string;
 };
 
-export type Property = {
-  //   title: string;
-  //   description: string;
+export interface Property {
   _id: string;
-  location: string;
-  price: number;
-  type: string;
-  amenities: string[];
-  owner: OwnerObjectType;
   images: ImageObjectType[];
+  title: string;
+  description: string;
+  type: string;
+  category: string;
+  status: string;
+  address: string;
+  location: string;
+  landlord: OwnerObjectType;
   createdAt: string;
-  updateAt: string;
-};
+  updatedAt: string;
+}
+
+export interface LeaseProperty extends Property {
+  amenities: string[];
+  annualRent: number;
+  securityDeposit: string;
+  isFurnished: boolean;
+}
+
+export interface SaleProperty extends Property {
+  salePrice: number;
+  isNegotiable: boolean;
+  ownershipHistory: string;
+}
 
 export type GlobalContextType = {
   showNavModal: boolean;

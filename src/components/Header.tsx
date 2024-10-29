@@ -18,7 +18,7 @@ const Header = () => {
       </h1>
       <nav>
         {user ? (
-          <div className="flex items-center justify-center gap-8 w-[4rem] h-auto">
+          <div className="flex items-center justify-center gap-4 w-[4rem] h-auto">
             <Link to={`/dashboard/${user.userType}`}>
               <FaRegCircleUser className="text-orange-500 text-2xl hover:shadow" />
             </Link>
