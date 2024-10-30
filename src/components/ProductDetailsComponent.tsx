@@ -1,11 +1,11 @@
-import { Link, NavLink } from "react-router-dom";
 import { LeaseProperty, SaleProperty } from "../utils/types";
+import PropertyDetailLayout from "../pages/property_details/PropertyDetailLayout";
+import Navbar from "../pages/property_details/Navbar";
+import { usePropertyContext } from "../contexts/PropertyContext";
 
-const ProductDetailsComponent = ({
-  data,
-}: {
-  data: LeaseProperty | SaleProperty;
-}) => {
+const ProductDetailsComponent = () => {
+  const { propertyDetailsData: data } = usePropertyContext();
+
   return (
     <section className="bg-gray-100 w-full">
       <div className="max-w-screen-xl mx-auto lg:bg-white my-8 lg:my-12 p-6 rounded-lg">
@@ -15,8 +15,8 @@ const ProductDetailsComponent = ({
               <div className="lg:order-2 lg:ml-5 h-[20rem] md:h-[25rem] lg:h-[40rem] w-full">
                 <div className="w-full h-full overflow-hidden rounded-lg border border-gray-300">
                   <img
-                    src={data?.images[0].secure_url}
-                    alt={data?.images[0].public_id}
+                    src={data?.images[0]?.secure_url}
+                    alt={data?.images[0]?.public_id}
                     className="h-full w-full max-w-full object-cover"
                   />
                 </div>
@@ -37,16 +37,6 @@ const ProductDetailsComponent = ({
                       />
                     </button>
                   ))}
-                  {/* <button
-                    type="button"
-                    className="flex-0 h-20 w-20 lg:w-full overflow-hidden rounded-lg border-2 border-gray-100 text-center"
-                  >
-                    <img
-                      src={data.imageUrl}
-                      alt={data.name}
-                      className="h-full w-full object-cover"
-                    />
-                  </button> */}
                 </div>
               </div>
             </div>
@@ -95,29 +85,14 @@ const ProductDetailsComponent = ({
               </li>
             </ul> */}
             <div className="lg:col-span-3 ">
-              <div className="border-b border-gray-400">
-                <nav className="flex gap-4">
-                  {["Description", "Owner"].map((link) => (
-                    <NavLink
-                      key={link}
-                      to={link}
-                      className={({ isActive }) =>
-                        isActive
-                          ? "border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900"
-                          : "py-4 text-sm font-medium text-gray-900"
-                      }
-                    >
-                      <span className="hover:underline">{link}</span>
-                    </NavLink>
-                  ))}
-                </nav>
+              <div className="border-y border-gray-400">
+                <Navbar />
               </div>
-              <div className="mt-8 flow-root sm:mt-12">{data?.description}</div>
+              <PropertyDetailLayout />
             </div>
           </div>
         </div>
       </div>
-      {/* <Notification /> */}
     </section>
   );
 };

@@ -88,15 +88,15 @@ const PropertyCard = ({
 
         {/* Update and Delete Buttons */}
         {isLandlord && isInLandlordDashboard && (
-          <div className="mt-2 flex justify-between border-t pt-2">
+          <div className="mt-2 flex gap-3 border-t pt-2">
             <button
-              className="btn btn-blue"
+              className="btn btn-blue w-full"
               onClick={onUpdate}
             >
               Update
             </button>
             <button
-              className="btn btn-danger "
+              className="btn btn-danger w-full"
               onClick={onDelete}
             >
               {componentLevelLoader &&

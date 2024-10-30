@@ -5,6 +5,7 @@ import { LeaseProperty, SaleProperty } from "../utils/types";
 import { useParams } from "react-router-dom";
 import PageLevelLoader from "../components/loaders/PageLevelLoader";
 import ProductDetailsComponent from "../components/ProductDetailsComponent";
+import { PropertyProvider } from "../contexts/PropertyContext";
 
 const PropertyDetails = () => {
   const [propertyDetailsData, setPropertyDetailsData] = useState<
@@ -40,14 +41,13 @@ const PropertyDetails = () => {
       {pageLevelLoader ? (
         <PageLevelLoader loading={pageLevelLoader} />
       ) : (
-        <div className="">
+        <PropertyProvider
+          data={propertyDetailsData as LeaseProperty | SaleProperty}
+        >
           <div className="px-6 flex justify-center items-center flex-wrap gap-3">
-            I
-            <ProductDetailsComponent
-              data={propertyDetailsData as LeaseProperty | SaleProperty}
-            />
+            <ProductDetailsComponent />
           </div>
-        </div>
+        </PropertyProvider>
       )}
     </div>
   );
