@@ -53,6 +53,21 @@
 }
 
 @layer components {
+  .btn {
+    @apply px-4 py-1.5 rounded opacity-80 font-semibold;
+  }
+  .btn-primary {
+    @apply bg-orange-700 text-white hover:opacity-100;
+  }
+  .btn-danger {
+    @apply bg-red-600 text-white hover:opacity-100;
+  }
+  .btn-success {
+    @apply bg-green-700 text-white hover:opacity-100;
+  }
+  .btn-blue {
+    @apply bg-blue-700 text-white hover:opacity-100;
+  }
   .error {
     @apply ring-1 ring-inset ring-red-600 focus:ring-1 focus:ring-inset focus:ring-red-600;
   }

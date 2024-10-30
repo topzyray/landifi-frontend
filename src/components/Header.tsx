@@ -27,7 +27,7 @@ const Header = () => {
             </p>
           </div>
         ) : (
-          <p className="bg-orange-700 text-white px-4 py-1.5 rounded hover:opacity-70">
+          <p className="btn btn-primary">
             <Link to="auth/login">Login</Link>
           </p>
         )}

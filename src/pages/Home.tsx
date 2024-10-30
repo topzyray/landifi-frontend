@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import PropertyCard from "../components/PropertyCard";
 import { GlobalContext } from "../contexts/GlobalContext";
 import { getAllProperties } from "../services/property";
@@ -42,20 +42,20 @@ const Home = () => {
           Available Properties
         </p>
         <div className="px-6 flex justify-center items-center flex-wrap gap-3">
-          {allProperties.length === 0 && pageLevelLoader && (
+          {pageLevelLoader ? (
             <PageLevelLoader
               loading={pageLevelLoader && allProperties.length === 0}
             />
-          )}
-          {allProperties && allProperties.length > 0 ? (
+          ) : allProperties && allProperties.length > 0 ? (
             allProperties.map((property) => (
-              <PropertyCard
-                key={property._id}
-                data={property as LeaseProperty | SaleProperty}
-              />
+              <Fragment key={property._id}>
+                <PropertyCard data={property as LeaseProperty | SaleProperty} />
+              </Fragment>
             ))
           ) : (
-            <p>No property found!</p>
+            <p className="font-semibold text-lg sm:text-xl input">
+              No property added yet.
+            </p>
           )}
         </div>
       </div>

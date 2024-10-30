@@ -1,11 +1,17 @@
 import { AiOutlineClose } from "react-icons/ai";
 
-const ModalComponent = ({ open, onClose, children }) => {
+type ModalComponentProps = {
+  open: boolean;
+  onClose?: () => void;
+  children: React.ReactNode;
+};
+
+const NodalComponent = ({ open, onClose, children }: ModalComponentProps) => {
   return (
     <div
       onClick={onClose}
-      className={`fixed inset-0 flex justify-center items-center transition-colors ${
-        open ? "bg-black/50 backdrop-blur-none" : "invisible"
+      className={`fixed z-50 inset-0 flex justify-center items-center transition-colors ${
+        open ? "bg-black/30 backdrop-blur-none" : "invisible"
       }`}
     >
       <div
@@ -31,4 +37,4 @@ const ModalComponent = ({ open, onClose, children }) => {
   );
 };
 
-export default ModalComponent;
+export default NodalComponent;

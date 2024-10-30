@@ -4,7 +4,7 @@ import ComponentLevelLoader from "./loaders/ComponentLevelLoader";
 
 interface PropertyCardProps {
   data: LeaseProperty | SaleProperty;
-  componentLevelLoader: {
+  componentLevelLoader?: {
     loading: boolean;
     id: string;
   };
@@ -28,40 +28,40 @@ const PropertyCard = ({
   return (
     <div className="w-full sm:w-max shadow hover:shadow-orange-600 hover:cursor-pointer">
       <div className="w-full">
-        <Link to={`/properties/${data._id}`}>
+        <Link to={`/properties/${data?._id}`}>
           <div className="h-44 w-full sm:w-60 relative">
             <img
-              src={data.images[0].secure_url}
-              alt={data.images[0].public_id}
+              src={data?.images[0].secure_url}
+              alt={data?.images[0].public_id}
               width={100}
               height={100}
               className="h-full w-full object-cover transition-all ease-in-out duration-300 group-hover:scale-125"
             />
 
-            <div className="absolute z-10 top-0 m-2 rounded-full bg-dark-blue">
+            <div className="absolute top-0 m-2 rounded-full bg-dark-blue">
               <p
                 className={`rounded-full px-2 p-1 text-[9px] font-bold uppercase tracking-wide text-white sm:py-1 sm:px-3 ${
-                  data.category === "Sale" ? "bg-orange-600" : "bg-blue-600"
+                  data?.category === "Sale" ? "bg-orange-600" : "bg-blue-600"
                 }`}
               >
-                {data.category}
+                {data?.category}
               </p>
             </div>
 
             <div
               className={`absolute top-2 right-2 px-2 py-1 rounded-full text-[9px] font-semibold text-white uppercase ${
-                data.status === "Available"
+                data?.status === "Available"
                   ? "bg-green-500"
-                  : data.status === "Leased"
+                  : data?.status === "Leased"
                   ? "bg-yellow-500"
                   : "bg-red-500"
               }`}
             >
-              {data.status}
+              {data?.status}
             </div>
           </div>
 
-          {data.category && (
+          {data?.category && (
             <div className="space-y-2 px-2 py-4">
               <h2 className="text-xl font-bold text-gray-800">{data.title}</h2>
               <div className="flex justify-between items-center text-sm text-gray-700">
@@ -90,18 +90,18 @@ const PropertyCard = ({
         {isLandlord && isInLandlordDashboard && (
           <div className="mt-2 flex justify-between border-t pt-2">
             <button
-              className="w-full mx-2 text-white bg-blue-500 hover:bg-blue-600 px-2 py-1 "
+              className="btn btn-blue"
               onClick={onUpdate}
             >
               Update
             </button>
             <button
-              className="w-full mx-2 text-white bg-red-500 hover:bg-red-600 px-2 py-1 "
+              className="btn btn-danger "
               onClick={onDelete}
             >
               {componentLevelLoader &&
               componentLevelLoader.loading &&
-              componentLevelLoader.id === data._id ? (
+              componentLevelLoader.id === data?._id ? (
                 <ComponentLevelLoader
                   text=""
                   color="#ffffff"
