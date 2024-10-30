@@ -153,6 +153,7 @@ const AddSalesProperty = () => {
       images: prev.images.filter((_, i) => i !== index),
     }));
   };
+  
   return (
     <div className="">
       <div className="space-y-4 md:space-y-6">

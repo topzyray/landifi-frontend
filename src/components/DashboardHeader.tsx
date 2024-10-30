@@ -17,7 +17,7 @@ const DashboardHeader = () => {
       <div className="hidden md:block sticky z-50 shrink-0 h-full pt-8 px-4 bg-white text-primary">
         <div className="flex">
           <div className="relative flex flex-col gap-4">
-            <ul className="flex flex-col gap-1.5 font-semibold">
+            <ul className="flex flex-col gap-1.5 font-semibold uppercase">
               <NavLink
                 to="/dashboard/landlord"
                 className={({ isActive }) =>
@@ -37,18 +37,18 @@ const DashboardHeader = () => {
                 }
               >
                 <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
-                  <MdAddBox /> <span className=" lg:block">Lease property</span>
+                  <MdAddBox /> <span className=" lg:block">Lease Property</span>
                 </li>
               </NavLink>
               <NavLink
-                to="/dashboard/landlord/sellproperty"
+                to="/dashboard/landlord/saleproperty"
                 className={({ isActive }) =>
                   isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
                 }
               >
                 <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
                   <FaSellcast />{" "}
-                  <span className=" lg:block">Sell property</span>
+                  <span className=" lg:block">Sell Property</span>
                 </li>
               </NavLink>
               <NavLink
@@ -113,7 +113,7 @@ const DashboardHeader = () => {
           >
             <ul
               onClick={(e) => e.stopPropagation()}
-              className="h-full max-w-max flex flex-col pl-4 pr-10 py-6 space-y-4 bg-[#ECECEC]"
+              className="h-full max-w-max flex flex-col pl-4 pr-10 py-6 space-y-4 bg-[#ECECEC] uppercase"
             >
               <NavLink
                 onClick={() => setMenuOpen(false)}
@@ -131,16 +131,16 @@ const DashboardHeader = () => {
                 className={({ isActive }) => (isActive ? "underline" : "")}
               >
                 <li className="dashboard-link dashboard-link-small">
-                  <RiFundsFill /> Lease property
+                  <RiFundsFill /> Lease Property
                 </li>
               </NavLink>
               <NavLink
                 onClick={() => setMenuOpen(false)}
-                to="/dashboard/landlord/sellproperty"
+                to="/dashboard/landlord/saleproperty"
                 className={({ isActive }) => (isActive ? "underline" : "")}
               >
                 <li className="dashboard-link dashboard-link-small">
-                  <RiFundsFill /> Sell property
+                  <RiFundsFill /> Sell Property
                 </li>
               </NavLink>
               <NavLink

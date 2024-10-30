@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { toast, ToastPosition } from "react-toastify";
-import { amenities } from "../../../utils/data";
 import { GlobalContext } from "../../../contexts/GlobalContext";
 import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoader";
 import { SlCloudUpload } from "react-icons/sl";
@@ -9,7 +8,7 @@ import {
   getPropertyById,
   updatePropertyById,
 } from "../../../services/property";
-import { LeaseProperty } from "../../../utils/types";
+import { SaleProperty } from "../../../utils/types";
 import { useParams } from "react-router-dom";
 import PageLevelLoader from "../../../components/loaders/PageLevelLoader";
 
@@ -22,12 +21,9 @@ interface FormData {
   status: string;
   address: string;
   location: string;
-  amenities: string[];
-  annualRent: string;
-  securityDeposit: string;
-  isFurnished: boolean;
-  leaseStartDate?: string;
-  leaseEndDate?: string;
+  salePrice: string;
+  isNegotiable: boolean;
+  ownershipHistory: string;
 }
 
 const initialFormData = {
@@ -39,17 +35,14 @@ const initialFormData = {
   status: "",
   address: "",
   location: "",
-  amenities: [],
-  annualRent: "",
-  securityDeposit: "",
-  isFurnished: false,
-  leaseStartDate: "",
-  leaseEndDate: "",
+  salePrice: "",
+  isNegotiable: false,
+  ownershipHistory: "",
 };
 
-const UpdateLeaseProperty = () => {
+const UpdateSaleProperty = () => {
   const [propertyDetailsData, setPropertyDetailsData] =
-    useState<LeaseProperty | null>(null);
+    useState<SaleProperty | null>(null);
 
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const {
@@ -75,19 +68,12 @@ const UpdateLeaseProperty = () => {
         status: response.status,
         address: response.address,
         location: response.location,
-        amenities: response.amenities || [],
 
         // Check for null/undefined before calling toString()
-        annualRent:
-          response.annualRent != null ? response.annualRent.toString() : "",
-        securityDeposit:
-          response.securityDeposit != null
-            ? response.securityDeposit.toString()
-            : "",
-
-        isFurnished: response.isFurnished,
-        leaseStartDate: response.leaseStartDate?.split("T")[0] || "",
-        leaseEndDate: response.leaseEndDate?.split("T")[0] || "",
+        salePrice:
+          response.salePrice != null ? response.salePrice.toString() : "",
+        isNegotiable: response.isNegotiable,
+        ownershipHistory: response.ownershipHistory,
       });
       setPageLevelLoader(false);
     } else {
@@ -112,14 +98,7 @@ const UpdateLeaseProperty = () => {
     if (type === "checkbox") {
       const isChecked = (e.target as HTMLInputElement).checked;
 
-      if (name === "amenities") {
-        setFormData((prev) => {
-          const amenities = isChecked
-            ? [...prev.amenities, value]
-            : prev.amenities.filter((amenity) => amenity !== value);
-          return { ...prev, amenities };
-        });
-      } else if (name === "isFurnished") {
+      if (name === "isNegotiable") {
         setFormData((prevData) => ({
           ...prevData,
           [name]: isChecked,
@@ -174,16 +153,12 @@ const UpdateLeaseProperty = () => {
     Object.keys(formData).forEach((key) => {
       if (key === "images") {
         formData.images.forEach((image) => data.append("images", image));
-      } else if (key === "amenities") {
-        formData.amenities.forEach((amenity) =>
-          data.append("amenities[]", amenity)
-        );
       } else {
         data.append(key, (formData as any)[key]);
       }
     });
 
-    updatePropertyById("leases", propertyId as string, data)
+    updatePropertyById("sales", propertyId as string, data)
       .then(() => {
         toast.success("Property updated successfully.", {
           position: "top-right" as ToastPosition,
@@ -229,9 +204,7 @@ const UpdateLeaseProperty = () => {
       formData.address &&
       formData.address.trim() !== "" &&
       formData.location &&
-      formData.location.trim() !== "" &&
-      formData.annualRent &&
-      formData.annualRent.trim()
+      formData.location.trim() !== ""
       ? true
       : false;
   };
@@ -239,13 +212,14 @@ const UpdateLeaseProperty = () => {
   if (pageLevelLoader) {
     return <PageLevelLoader loading={pageLevelLoader} />;
   }
+
   return (
     <>
       {propertyDetailsData !== null && !pageLevelLoader && (
         <div className="">
           <div className="space-y-4 md:space-y-6">
             <h1 className="font-medium text-lg uppercase rounded border px-2 py-0.5 w-max">
-              Update lease property page
+              Update selling property page
             </h1>
 
             <div className="flex justify-center">
@@ -255,7 +229,7 @@ const UpdateLeaseProperty = () => {
                 encType="multipart/form-data"
               >
                 <p className="font-semibold text-left md:text-center uppercase">
-                  Update Property Lease Form
+                  Update Property Sale Form
                 </p>
 
                 <p className="text-sm font-semibold text-left md:text-center uppercase">
@@ -304,7 +278,7 @@ const UpdateLeaseProperty = () => {
                   disabled
                 >
                   <option value="">Listing Category</option>
-                  <option value="Lease">Lease</option>
+                  <option value="Sale">Sale</option>
                 </select>
 
                 <select
@@ -316,7 +290,7 @@ const UpdateLeaseProperty = () => {
                 >
                   <option value="">Listing Status</option>
                   <option value="Available">Available</option>
-                  <option value="Leased">Leased</option>
+                  <option value="Sold">Sold</option>
                 </select>
 
                 <input
@@ -420,98 +394,40 @@ const UpdateLeaseProperty = () => {
 
                 <input
                   type="text"
-                  name="annualRent"
-                  id="annualRent"
-                  placeholder="Annual rent"
+                  name="salePrice"
+                  id="salePrice"
+                  placeholder="Sale price"
                   className="input"
-                  value={formData.annualRent}
+                  value={formData.salePrice}
                   onChange={handleChange}
                 />
-
-                <input
-                  type="text"
-                  name="securityDeposit"
-                  id="securityDeposit"
-                  placeholder="Security deposit"
-                  className="input"
-                  value={formData.securityDeposit}
-                  onChange={handleChange}
-                />
-
-                <section className="input">
-                  <p className="font-semibold mb-1 text-lg underline">
-                    Amenities/Facilities
-                  </p>
-                  <section className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3 ">
-                    {amenities.map((amenity: string) => (
-                      <section
-                        key={amenity}
-                        className="md:flex md:items-center md:gap-0.5 mt-1"
-                      >
-                        <input
-                          id={amenity}
-                          name="amenities"
-                          type="checkbox"
-                          className="accent-gray-600 mr-1"
-                          value={amenity}
-                          checked={formData.amenities.includes(amenity)}
-                          onChange={handleChange}
-                        />
-                        <label
-                          htmlFor={amenity}
-                          className="text-justify leading-0"
-                        >
-                          {amenity}
-                        </label>
-                      </section>
-                    ))}
-                  </section>
-                </section>
 
                 <section className="md:flex md:items-center md:gap-0.5 mt-1">
                   <input
-                    id="isFurnished"
-                    name="isFurnished"
+                    id="isNegotiable"
+                    name="isNegotiable"
                     type="checkbox"
                     className="accent-gray-600 mr-1"
-                    checked={formData.isFurnished}
+                    checked={formData.isNegotiable}
                     onChange={handleChange}
                   />
                   <label
-                    htmlFor="isFurnished"
-                    className="text-justify leading-0"
+                    htmlFor="isNegotiable"
+                    className="text-justify leading-0 font-semibold"
                   >
-                    Furnished
+                    Sale price negotiable
                   </label>
                 </section>
 
-                <section className="flex flex-col gap-1">
-                  <label htmlFor="leaseStartDate" className="font-medium">
-                    Lease Start Date
-                  </label>
-                  <input
-                    id="leaseStartDate"
-                    type="date"
-                    name="leaseStartDate"
-                    className="input"
-                    value={formData.leaseStartDate}
-                    onChange={handleChange}
-                  />
-                </section>
-
-                <section className="flex flex-col gap-1">
-                  <label htmlFor="leaseEndDate" className="font-medium">
-                    Lease End Date
-                  </label>
-                  <input
-                    id="leaseEndDate"
-                    type="date"
-                    name="leaseEndDate"
-                    className="input"
-                    value={formData.leaseEndDate}
-                    onChange={handleChange}
-                  />
-                </section>
+                <textarea
+                  id="ownershipHistory"
+                  name="ownershipHistory"
+                  placeholder="Owners history (if any)"
+                  rows={4}
+                  className="input"
+                  value={formData.ownershipHistory}
+                  onChange={handleChange}
+                />
 
                 <button
                   type="submit"
@@ -541,4 +457,4 @@ const UpdateLeaseProperty = () => {
   );
 };
 
-export default UpdateLeaseProperty;
+export default UpdateSaleProperty;

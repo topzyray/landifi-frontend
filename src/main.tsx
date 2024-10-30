@@ -23,6 +23,7 @@ import PropertyDetails from "./pages/PropertyDetails.tsx";
 import AddLeaseProperty from "./pages/dashboards/landlord/AddLeaseProperty.tsx";
 import AddSalesProperty from "./pages/dashboards/landlord/AddSalesProperty.tsx";
 import UpdateLeaseProperty from "./pages/dashboards/landlord/UpdateLeaseProperty.tsx";
+import UpdateSaleProperty from "./pages/dashboards/landlord/UpdateSaleProperty.tsx";
 
 const router = createBrowserRouter([
   {
@@ -118,8 +119,12 @@ const router = createBrowserRouter([
         element: <UpdateLeaseProperty />,
       },
       {
-        path: "sellproperty",
+        path: "saleproperty",
         element: <AddSalesProperty />,
+      },
+      {
+        path: "saleproperty/update/:propertyId",
+        element: <UpdateSaleProperty />,
       },
     ],
   },

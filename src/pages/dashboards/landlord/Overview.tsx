@@ -67,11 +67,6 @@ const Overview = () => {
       });
   };
 
-  // // Get property id and open update form
-  // const toggleUpdateForm = (propertyId: string) => {
-  //   console.log(propertyId);
-  // };
-
   return (
     <div className="">
       <div className="space-y-4 md:space-y-6">
@@ -98,7 +93,9 @@ const Overview = () => {
                   onDelete={() => handleDeleteProperty(property._id)}
                   onUpdate={() =>
                     navigate(
-                      `/dashboard/landlord/leaseproperty/update/${property._id}`
+                      `/dashboard/landlord/${property.category.toLowerCase()}property/update/${
+                        property._id
+                      }`
                     )
                   }
                   isLandlord
