@@ -10,6 +10,10 @@ export type UserRole = "landlord" | "tenant" | "admin";
 
 export interface User {
   userType: UserRole;
+  email: string;
+  firstName: string;
+  lastName: string;
+  _id: string;
 }
 
 interface AuthContextType {

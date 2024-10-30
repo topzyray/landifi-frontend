@@ -61,7 +61,7 @@ const PropertyCard = ({
             </div>
           </div>
 
-          {data?.category && (
+          {data && (
             <div className="space-y-2 px-2 py-4">
               <h2 className="text-xl font-bold text-gray-800">{data.title}</h2>
               <div className="flex justify-between items-center text-sm text-gray-700">

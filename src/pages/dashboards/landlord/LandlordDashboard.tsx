@@ -8,11 +8,12 @@ import { MdLogout } from "react-icons/md";
 import { useAuth } from "../../../contexts/AuthContext";
 
 const LandlordDashboard = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const date = new Date().toDateString();
+
   return (
     <div className="flex flex-col w-full h-screen overflow-hidden">
-      <div className="flex justify-between items-center py-3 lg:py-6 px-3 md:px-6 lg:px-6 border-gray-200 border-b-2 lg:border-b-4">
+      <div className="flex justify-between items-center py-3 lg:py-4 px-3 md:px-6 lg:px-6 border-gray-200 border-b-2 lg:border-b-4">
         <div className="flex items-center gap-5">
           <h1 className="hidden md:block">
             <Link
@@ -22,17 +23,20 @@ const LandlordDashboard = () => {
               Landifi
             </Link>
           </h1>
-          <div className="font-semibold border border-gray-400 px-1 py-0.5 rounded">
+          <div className="font-semibold border border-gray-400 px-1 rounded">
             {date}
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex items-center gap-4 lg:gap-8">
+          <p className="font-semibold lg:text-lg border border-gray-400 px-1 rounded">
+            {user?.firstName}
+          </p>
           <p>
-            <FaRegCircleUser className="text-orange-500 text-2xl hover:shadow" />
+            <FaRegCircleUser className="text-orange-500 text-2xl lg:text-3xl hover:shadow" />
           </p>
           <p onClick={logout}>
-            <MdLogout className="text-red-700 text-2xl hover:shadow hover:cursor-pointer" />
+            <MdLogout className="text-red-700 text-2xl lg:text-3xl hover:shadow hover:cursor-pointer" />
           </p>
         </div>
       </div>
