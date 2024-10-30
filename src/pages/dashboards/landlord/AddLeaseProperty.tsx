@@ -344,29 +344,31 @@ const AddLeaseProperty = () => {
               onChange={handleChange}
             />
 
-            <p>Amenities/Facilities</p>
-
-            <section className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3">
-              {/* Amenities Checkboxes */}
-              {amenities.map((amenity: string) => (
-                <section
-                  key={amenity}
-                  className="md:flex md:items-center md:gap-0.5 mt-1"
-                >
-                  <input
-                    id={amenity}
-                    name="amenities"
-                    type="checkbox"
-                    className="accent-gray-600 mr-1"
-                    value={amenity}
-                    checked={formData.amenities.includes(amenity)}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor={amenity} className="text-justify leading-0">
-                    {amenity}
-                  </label>
-                </section>
-              ))}
+            <section className="input">
+              <p className="font-semibold mb-1 text-lg underline">
+                Amenities/Facilities
+              </p>
+              <section className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3 ">
+                {amenities.map((amenity: string) => (
+                  <section
+                    key={amenity}
+                    className="md:flex md:items-center md:gap-0.5 mt-1"
+                  >
+                    <input
+                      id={amenity}
+                      name="amenities"
+                      type="checkbox"
+                      className="accent-gray-600 mr-1"
+                      value={amenity}
+                      checked={formData.amenities.includes(amenity)}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor={amenity} className="text-justify leading-0">
+                      {amenity}
+                    </label>
+                  </section>
+                ))}
+              </section>
             </section>
 
             <section className="md:flex md:items-center md:gap-0.5 mt-1">

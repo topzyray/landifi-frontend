@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { getAllLandlordProperties } from "../../../services/landlord";
+import { getAllLandlordProperties } from "../../../services/property";
 import { GlobalContext } from "../../../contexts/GlobalContext";
 import PageLevelLoader from "../../../components/loaders/PageLevelLoader";
 import PropertyCard from "../../../components/PropertyCard";
 import { LeaseProperty, SaleProperty } from "../../../utils/types";
 import { deletePropertyById } from "../../../services/property";
 import { toast, ToastPosition } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Overview = () => {
   const [landlordProperties, setLandlordProperties] = useState<
@@ -19,6 +20,8 @@ const Overview = () => {
     componentLevelLoader,
     setComponentLevelLoader,
   } = useContext(GlobalContext);
+
+  const navigate = useNavigate();
 
   const fetchAllPropertiesForLandlord = () => {
     setPageLevelLoader(true);
@@ -64,6 +67,11 @@ const Overview = () => {
       });
   };
 
+  // // Get property id and open update form
+  // const toggleUpdateForm = (propertyId: string) => {
+  //   console.log(propertyId);
+  // };
+
   return (
     <div className="">
       <div className="space-y-4 md:space-y-6">
@@ -72,8 +80,8 @@ const Overview = () => {
         </h1>
       </div>
 
-      <div className="py-10 md:py-20">
-        <p className="mb-8 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">
+      <div className="py-10 lg:py-20">
+        <p className="mb-8 font-bold text-2xl sm:text-3xl lg:text-4xl text-center">
           All My Listings ({landlordProperties.length})
         </p>
         <div className="px-6 flex justify-center items-center flex-wrap gap-3">
@@ -88,6 +96,11 @@ const Overview = () => {
                   key={property._id}
                   data={property as LeaseProperty | SaleProperty}
                   onDelete={() => handleDeleteProperty(property._id)}
+                  onUpdate={() =>
+                    navigate(
+                      `/dashboard/landlord/leaseproperty/update/${property._id}`
+                    )
+                  }
                   isLandlord
                   componentLevelLoader={componentLevelLoader}
                 />

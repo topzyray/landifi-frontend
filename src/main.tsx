@@ -12,7 +12,6 @@ import Login from "./pages/auth/Login.tsx";
 import Register from "./pages/auth/Register.tsx";
 import NewEmailVerificationRequest from "./pages/auth/NewEmailVerificationRequest.tsx";
 import LandlordDashboard from "./pages/dashboards/landlord/LandlordDashboard.tsx";
-import AddProperty from "./pages/dashboards/landlord/AddLeaseProperty.tsx";
 import Overview from "./pages/dashboards/landlord/Overview.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import ProtectedRoute from "./components/Protected.tsx";
@@ -23,6 +22,7 @@ import Properties from "./pages/Properties.tsx";
 import PropertyDetails from "./pages/PropertyDetails.tsx";
 import AddLeaseProperty from "./pages/dashboards/landlord/AddLeaseProperty.tsx";
 import AddSalesProperty from "./pages/dashboards/landlord/AddSalesProperty.tsx";
+import UpdateLeaseProperty from "./pages/dashboards/landlord/UpdateLeaseProperty.tsx";
 
 const router = createBrowserRouter([
   {
@@ -112,6 +112,10 @@ const router = createBrowserRouter([
       {
         path: "leaseproperty",
         element: <AddLeaseProperty />,
+      },
+      {
+        path: "leaseproperty/update/:propertyId",
+        element: <UpdateLeaseProperty />,
       },
       {
         path: "sellproperty",
