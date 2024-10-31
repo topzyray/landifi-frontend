@@ -1,13 +1,13 @@
-import { useContext, useState } from "react";
-import AxiosInstance from "../../services/axiosInstance";
-import { Link, useNavigate } from "react-router-dom";
-import { toast, ToastPosition } from "react-toastify";
-import ComponentLevelLoader from "../../components/loaders/ComponentLevelLoader";
-import { GlobalContext } from "../../contexts/GlobalContext";
+import { useContext, useState } from 'react';
+import AxiosInstance from '../../services/axiosInstance';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastPosition } from 'react-toastify';
+import ComponentLevelLoader from '../../components/loaders/ComponentLevelLoader';
+import { GlobalContext } from '../../contexts/GlobalContext';
 
 const initialFormData = {
-  resetOTP: "",
-  newPassword: "",
+  resetOTP: '',
+  newPassword: '',
 };
 
 const ResetPassword = () => {
@@ -19,44 +19,38 @@ const ResetPassword = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setComponentLevelLoader({ loading: true, id: "" });
+    setComponentLevelLoader({ loading: true, id: '' });
 
-    AxiosInstance.put("/auth/reset-password", formData)
+    AxiosInstance.put('/auth/reset-password', formData)
       .then((res) => {
         toast.success(res.data, {
-          position: "top-right" as ToastPosition,
+          position: 'top-right' as ToastPosition,
         });
         setTimeout(() => {
-          navigate("/auth/login");
+          navigate('/auth/login');
         }, 5000);
       })
       .catch((err) => {
-        if (typeof err.response.data.errorDetails.message == "string") {
-          toast.error(err.response.data.errorDetails.message, {
-            position: "top-right" as ToastPosition,
-          });
-        } else if (typeof err.response.data.errorDetails.message == "object") {
-          toast.error(err.response.data.errorDetails.message[0], {
-            position: "top-right" as ToastPosition,
-          });
-        } else {
-          toast.error("Something went wrong!", {
-            position: "top-right" as ToastPosition,
-          });
-        }
+        toast.error(
+          err.response.data.errorDetails.message ||
+            err.response.data.errorDetails.message[0] ||
+            'Something went wrong!',
+          {
+            position: 'top-right' as ToastPosition,
+          }
+        );
       })
       .finally(() => {
-        setFormData(initialFormData);
-        setComponentLevelLoader({ loading: false, id: "" });
+        setComponentLevelLoader({ loading: false, id: '' });
       });
   };
 
   const validateFormInput = () => {
     return formData &&
       formData.resetOTP &&
-      formData.resetOTP.trim() !== "" &&
+      formData.resetOTP.trim() !== '' &&
       formData.newPassword &&
-      formData.newPassword.trim() !== ""
+      formData.newPassword.trim() !== ''
       ? true
       : false;
   };
@@ -107,7 +101,7 @@ const ResetPassword = () => {
                 loading={componentLevelLoader && componentLevelLoader.loading}
               />
             ) : (
-              "Submit"
+              'Submit'
             )}
           </button>
         </form>

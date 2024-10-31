@@ -50,7 +50,6 @@ const Login = () => {
       // Redirect or perform other post-login actions
     } catch (err: any) {
       setError(err.message);
-      setFormData(initialFormData);
       setComponentLevelLoader({ loading: false, id: "" });
     }
   };

@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
-import AxiosInstance from "../../services/axiosInstance";
-import { Link, useNavigate } from "react-router-dom";
-import { toast, ToastPosition } from "react-toastify";
-import { GlobalContext } from "../../contexts/GlobalContext";
-import ComponentLevelLoader from "../../components/loaders/ComponentLevelLoader";
+import { useContext, useState } from 'react';
+import AxiosInstance from '../../services/axiosInstance';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastPosition } from 'react-toastify';
+import { GlobalContext } from '../../contexts/GlobalContext';
+import ComponentLevelLoader from '../../components/loaders/ComponentLevelLoader';
 
 const initialFormData = {
-  email: "",
+  email: '',
 };
 
 const ForgotPassword = () => {
@@ -18,36 +18,34 @@ const ForgotPassword = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setComponentLevelLoader({ loading: true, id: "" });
+    setComponentLevelLoader({ loading: true, id: '' });
 
-    AxiosInstance.post("/auth/forgot-password", formData)
+    AxiosInstance.post('/auth/forgot-password', formData)
       .then((res) => {
         toast.success(res.data.message, {
-          position: "top-right" as ToastPosition,
+          position: 'top-right' as ToastPosition,
         });
         setTimeout(() => {
-          navigate("/auth/resetpassword");
+          navigate('/auth/resetpassword');
         }, 5000);
       })
       .catch((err) => {
-        if (typeof err.response.data.errorDetails.message == "string") {
-          toast.error(err.response.data.errorDetails.message, {
-            position: "top-right" as ToastPosition,
-          });
-        } else if (typeof err.response.data.errorDetails.message == "object") {
-          toast.error(err.response.data.errorDetails.message[0], {
-            position: "top-right" as ToastPosition,
-          });
-        }
+        toast.error(
+          err.response.data.errorDetails.message ||
+            err.response.data.errorDetails.message[0] ||
+            'Something went wrong!',
+          {
+            position: 'top-right' as ToastPosition,
+          }
+        );
       })
       .finally(() => {
-        setFormData(initialFormData);
-        setComponentLevelLoader({ loading: false, id: "" });
+        setComponentLevelLoader({ loading: false, id: '' });
       });
   };
 
   const validateFormInput = () => {
-    return formData && formData.email && formData.email.trim() !== ""
+    return formData && formData.email && formData.email.trim() !== ''
       ? true
       : false;
   };
@@ -86,7 +84,7 @@ const ForgotPassword = () => {
                 loading={componentLevelLoader && componentLevelLoader.loading}
               />
             ) : (
-              "Send password reset"
+              'Send password reset'
             )}
           </button>
         </form>
