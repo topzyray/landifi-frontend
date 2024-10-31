@@ -1,24 +1,55 @@
-import { LeaseProperty, SaleProperty } from "../utils/types";
-import PropertyDetailLayout from "../pages/property_details/PropertyDetailLayout";
-import Navbar from "../pages/property_details/Navbar";
-import { usePropertyContext } from "../contexts/PropertyContext";
+import { LeaseProperty, SaleProperty } from '../utils/types';
+import PropertyDetailLayout from '../pages/property_details/PropertyDetailLayout';
+import Navbar from '../pages/property_details/Navbar';
+import { usePropertyContext } from '../contexts/PropertyContext';
+import ComponentLevelLoader from './loaders/ComponentLevelLoader';
+import { useContext, useState } from 'react';
+import { GlobalContext } from '../contexts/GlobalContext';
 
 const ProductDetailsComponent = () => {
   const { propertyDetailsData: data } = usePropertyContext();
+  const { componentLevelLoader } = useContext(GlobalContext);
+  const [productImage, setProductImage] = useState({
+    url: data?.images[0]?.secure_url,
+    id: data?.images[0]?.public_id,
+  });
 
   return (
-    <section className="bg-gray-100 w-full">
-      <div className="max-w-screen-xl mx-auto lg:bg-white my-8 lg:my-12 p-6 rounded-lg">
+    <section className=" w-full">
+      <div className="max-w-screen-xl mx-auto bg-white my-8 lg:my-12 p-6 rounded-lg">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8 ">
           <div className="lg:col-span-3 lg:row-end-1">
             <div className="lg:flex lg:items-start">
               <div className="lg:order-2 lg:ml-5 h-[20rem] md:h-[25rem] lg:h-[40rem] w-full">
-                <div className="w-full h-full overflow-hidden rounded-lg border border-gray-300">
+                <div className="relative w-full h-full overflow-hidden rounded-lg border border-gray-300">
                   <img
-                    src={data?.images[0]?.secure_url}
-                    alt={data?.images[0]?.public_id}
+                    src={productImage.url}
+                    alt={productImage.id}
                     className="h-full w-full max-w-full object-cover"
                   />
+                  <div className="absolute top-0 m-2 rounded-full bg-dark-blue">
+                    <p
+                      className={`rounded-full px-2 p-1 text-xs sm:text-sm lg:text-base font-bold uppercase tracking-wide text-white sm:py-1 sm:px-3 ${
+                        data?.category === 'Sale'
+                          ? 'bg-orange-600'
+                          : 'bg-blue-600'
+                      }`}
+                    >
+                      For {data?.category}
+                    </p>
+                  </div>
+
+                  <div
+                    className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs sm:text-sm lg:text-base font-semibold text-white uppercase ${
+                      data?.status === 'Available'
+                        ? 'bg-green-500'
+                        : data?.status === 'Leased'
+                        ? 'bg-yellow-500'
+                        : 'bg-red-500'
+                    }`}
+                  >
+                    {data?.status}
+                  </div>
                 </div>
               </div>
 
@@ -31,6 +62,13 @@ const ProductDetailsComponent = () => {
                       className="flex-0 h-20 w-20 lg:w-full overflow-hidden rounded-lg border-2 border-gray-300 text-center"
                     >
                       <img
+                        onClick={() =>
+                          setProductImage((prev) => ({
+                            ...prev,
+                            url: img.secure_url,
+                            id: img.public_id,
+                          }))
+                        }
                         src={img.secure_url}
                         alt={img.public_id}
                         className="h-full w-full object-cover"
@@ -52,18 +90,18 @@ const ProductDetailsComponent = () => {
               <div className="flex items-center gap-2">
                 <h1 className={`text-lg lg:text-2xl font-bold`}>
                   {(data as LeaseProperty)?.annualRent
-                    ? `$${(data as LeaseProperty)?.annualRent} / year`
+                    ? `$${(data as LeaseProperty)?.annualRent}/year`
                     : `$${(data as SaleProperty)?.salePrice}`}
                 </h1>
               </div>
-              {/* <button
-                onClick={() => handleAddToCart(data as any)}
+              <button
+                // onClick={() => handleAddToCart(data as any)}
                 type="button"
-                className="btn-small"
+                className="btn btn-primary"
               >
                 {componentLevelLoader &&
                 componentLevelLoader.loading &&
-                data._id === componentLevelLoader.id ? (
+                data?._id === componentLevelLoader.id ? (
                   <ComponentLevelLoader
                     text="Adding to Cart"
                     color="#ffffff"
@@ -72,18 +110,21 @@ const ProductDetailsComponent = () => {
                     }
                   />
                 ) : (
-                  "Add to Cart"
+                  <>{data?.category == 'Rent' ? 'Add to Cart' : 'Purchase'}</>
                 )}
-              </button> */}
+              </button>
             </div>
-            {/* <ul className="mt-3 space-y-2">
+            <ul className="mt-3 space-y-2">
               <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                {data.deliveryInfo}
+                {data?.address}
+              </li>
+              <li className="flex items-center text-left text-sm font-medium text-gray-600">
+                {data?.location}
               </li>
               <li className="flex items-center text-left text-sm font-medium text-gray-600">
                 Cancel anytime
               </li>
-            </ul> */}
+            </ul>
             <div className="lg:col-span-3 ">
               <div className="border-y border-gray-400">
                 <Navbar />

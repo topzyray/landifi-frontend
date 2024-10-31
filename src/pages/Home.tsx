@@ -37,7 +37,8 @@ const Home = () => {
           Welcome to Landifi
         </p>
       </div>
-      <div className="py-10 md:py-20">
+      <div className="">
+        <div className="bg-white py-10 md:py-20">
         <p className="mb-8 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">
           Available Properties
         </p>
@@ -57,6 +58,7 @@ const Home = () => {
               No property added yet.
             </p>
           )}
+        </div>
         </div>
       </div>
     </div>
