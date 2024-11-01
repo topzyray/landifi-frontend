@@ -210,14 +210,16 @@ const LandlordProfile = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-full md:max-w-md mx-auto">
-      <div className="flex items-center space-x-4">
+      <div className="w-full max-w-[25rem] flex items-center justify-start space-x-4">
         {/* Profile Picture */}
-        <div className="h-16 w-16 overflow-hidden rounded-full border border-gray-300">
-          <img
-            src={currentUser?.image?.secure_url || PlaceholderProfile}
-            alt="profile"
-            className="h-full w-full object-cover"
-          />
+        <div className='flex justify-center sm:justify-start'>
+          <div className="h-16 w-16 overflow-hidden rounded-full border border-gray-300">
+            <img
+              src={currentUser?.image?.secure_url || PlaceholderProfile}
+              alt="profile"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
 
         {/* Name and Email */}
@@ -229,7 +231,7 @@ const LandlordProfile = () => {
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex justify-center items-center">
         <form
           className="w-full max-w-[25rem] flex flex-col gap-4"
           onSubmit={handleSubmitUserRecord}
@@ -407,14 +409,16 @@ const LandlordProfile = () => {
         </form>
       </div>
 
-      <button
-        onClick={() => setOpenPasswordChangeModal(true)}
-        type="button"
-        className="mt-6 w-full
+      <div className="w-full max-w-[25rem]">
+        <button
+          onClick={() => setOpenPasswordChangeModal(true)}
+          type="button"
+          className="mt-6 w-full
          btn btn-blue"
-      >
-        Change Password
-      </button>
+        >
+          Change Password
+        </button>
+      </div>
 
       <ChangePasswordModal
         open={openPasswordChangeModal}

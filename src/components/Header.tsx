@@ -1,13 +1,14 @@
-import { Link, NavLink } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
-import { FaRegCircleUser } from "react-icons/fa6";
-import { MdLogout } from "react-icons/md";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { useContext, useState } from "react";
-import NavLinks from "./header/NavLinks";
-import { SiInstagram } from "react-icons/si";
-import { SlSocialFacebook, SlSocialLinkedin } from "react-icons/sl";
-import { GlobalContext } from "../contexts/GlobalContext";
+import { Link, NavLink } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { FaRegCircleUser } from 'react-icons/fa6';
+import { MdLogout } from 'react-icons/md';
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { useContext } from 'react';
+import NavLinks from './header/NavLinks';
+import { SiInstagram } from 'react-icons/si';
+import { SlSocialFacebook, SlSocialLinkedin } from 'react-icons/sl';
+import { GlobalContext } from '../contexts/GlobalContext';
+import PlaceholderProfile from '../assets/images/placeholder-profile.jpeg';
 
 const Header = () => {
   const { showNavModal, setShowNavModal } = useContext(GlobalContext);
@@ -51,10 +52,10 @@ const Header = () => {
             to="/"
             className={({ isActive, isPending }) =>
               isPending
-                ? "inline-flex flex-col items-center"
+                ? 'inline-flex flex-col items-center'
                 : isActive
-                ? "text-orange-600 inline-flex flex-col items-center"
-                : "inline-flex flex-col items-center"
+                ? 'text-orange-600 inline-flex flex-col items-center'
+                : 'inline-flex flex-col items-center'
             }
           >
             Home
@@ -67,10 +68,10 @@ const Header = () => {
             to="contact"
             className={({ isActive, isPending }) =>
               isPending
-                ? "inline-flex flex-col items-center"
+                ? 'inline-flex flex-col items-center'
                 : isActive
-                ? "text-orange-600 inline-flex flex-col items-center"
-                : "inline-flex flex-col items-center"
+                ? 'text-orange-600 inline-flex flex-col items-center'
+                : 'inline-flex flex-col items-center'
             }
           >
             Contact us
@@ -82,12 +83,17 @@ const Header = () => {
       {/* Medium and large screen */}
       <nav className="hidden md:flex items-center">
         {user ? (
-          <div className="flex items-center justify-center gap-4 w-[4rem] h-auto">
-            <Link to={`/dashboard/${user.userType}`}>
-              <FaRegCircleUser className="text-orange-600 text-2xl hover:shadow" />
+          <div className="flex items-center justify-center gap-7 h-auto">
+            <Link to={`/dashboard/${user.userType}`} className="w-8 h-8">
+              {/* <FaRegCircleUser className="text-orange-600 text-2xl hover:shadow" /> */}
+              <img
+                src={user.image?.secure_url || PlaceholderProfile}
+                alt={user.image?.public_id || 'Profile avatar'}
+                className="rounded-full w-full h-full border border-orange-700"
+              />
             </Link>
             <p onClick={logout}>
-              <MdLogout className="text-red-700 text-2xl hover:shadow hover:cursor-pointer" />
+              <MdLogout className="text-red-700 text-3xl hover:shadow hover:cursor-pointer" />
             </p>
           </div>
         ) : (
@@ -134,13 +140,21 @@ const Header = () => {
                     {user ? (
                       <div
                         onClick={() => setShowNavModal(false)}
-                        className="flex items-center justify-center gap-4 w-[4rem] h-auto"
+                        className="flex items-center justify-center gap-4 h-auto"
                       >
-                        <Link to={`/dashboard/${user.userType}`}>
-                          <FaRegCircleUser className="text-orange-600 text-2xl hover:shadow" />
+                        <Link
+                          to={`/dashboard/${user.userType}`}
+                          className="w-8 h-8"
+                        >
+                          {/* <FaRegCircleUser className="text-orange-600 text-2xl hover:shadow" /> */}
+                          <img
+                            src={user.image?.secure_url || PlaceholderProfile}
+                            alt={user.image?.public_id || 'Profile avatar'}
+                            className="rounded-full w-full h-full border border-orange-700"
+                          />
                         </Link>
                         <p onClick={logout}>
-                          <MdLogout className="text-red-700 text-2xl hover:shadow hover:cursor-pointer" />
+                          <MdLogout className="text-red-700 text-3xl hover:shadow hover:cursor-pointer" />
                         </p>
                       </div>
                     ) : (
