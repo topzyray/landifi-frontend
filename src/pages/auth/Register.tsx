@@ -1,16 +1,17 @@
-import { useContext, useState } from 'react';
-import AxiosInstance from '../../services/axiosInstance';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast, ToastPosition } from 'react-toastify';
-import { GlobalContext } from '../../contexts/GlobalContext';
-import ComponentLevelLoader from '../../components/loaders/ComponentLevelLoader';
+import { useContext, useState } from "react";
+import AxiosInstance from "../../services/axiosInstance";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastPosition } from "react-toastify";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import ComponentLevelLoader from "../../components/loaders/ComponentLevelLoader";
+import { getErrorMessage } from "../../utils/helpers";
 
 const initialFormData = {
-  email: '',
-  password: '',
-  firstName: '',
-  lastName: '',
-  userType: '',
+  email: "",
+  password: "",
+  firstName: "",
+  lastName: "",
+  userType: "",
 };
 
 const Register = () => {
@@ -24,40 +25,36 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setComponentLevelLoader({ loading: true, id: '' });
+    setComponentLevelLoader({ loading: true, id: "" });
 
     AxiosInstance.post(`/${registrationEndpoint}s`, formData)
       .then((res) => {
         toast.success(res.data, {
-          position: 'top-right' as ToastPosition,
+          position: "top-right" as ToastPosition,
         });
         setTimeout(() => {
-          navigate('/auth/emailverification');
+          navigate("/auth/emailverification");
         }, 5000);
 
         setFormData(initialFormData);
       })
       .catch((err) => {
-        toast.error(
-          err.response.data.errorDetails.message ||
-            err.response.data.errorDetails.message[0] ||
-            'Something went wrong!',
-          {
-            position: 'top-right' as ToastPosition,
-          }
-        );
+        const errorMessage = getErrorMessage(err);
+        toast.error(errorMessage, {
+          position: "top-right" as ToastPosition,
+        });
       })
       .finally(() => {
-        setComponentLevelLoader({ loading: false, id: '' });
+        setComponentLevelLoader({ loading: false, id: "" });
       });
   };
 
   const validateFormInput = () => {
     return formData &&
       formData.email &&
-      formData.email.trim() !== '' &&
+      formData.email.trim() !== "" &&
       formData.password &&
-      formData.password.trim() !== '' &&
+      formData.password.trim() !== "" &&
       formData.firstName &&
       formData.firstName.trim() &&
       formData.lastName &&
@@ -156,12 +153,12 @@ const Register = () => {
                 loading={componentLevelLoader && componentLevelLoader.loading}
               />
             ) : (
-              'Register'
+              "Register"
             )}
           </button>
 
           <p className="text-center font-light text-sm cursor-pointer">
-            Already have an account{' '}
+            Already have an account{" "}
             <Link to="/auth/login" className="underline">
               Login
             </Link>

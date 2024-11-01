@@ -1,13 +1,14 @@
-import { useContext, useState } from 'react';
-import AxiosInstance from '../../services/axiosInstance';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast, ToastPosition } from 'react-toastify';
-import ComponentLevelLoader from '../../components/loaders/ComponentLevelLoader';
-import { GlobalContext } from '../../contexts/GlobalContext';
+import { useContext, useState } from "react";
+import AxiosInstance from "../../services/axiosInstance";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastPosition } from "react-toastify";
+import ComponentLevelLoader from "../../components/loaders/ComponentLevelLoader";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import { getErrorMessage } from "../../utils/helpers";
 
 const initialFormData = {
-  resetOTP: '',
-  newPassword: '',
+  resetOTP: "",
+  newPassword: "",
 };
 
 const ResetPassword = () => {
@@ -19,38 +20,34 @@ const ResetPassword = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setComponentLevelLoader({ loading: true, id: '' });
+    setComponentLevelLoader({ loading: true, id: "" });
 
-    AxiosInstance.put('/auth/reset-password', formData)
+    AxiosInstance.put("/auth/reset-password", formData)
       .then((res) => {
         toast.success(res.data, {
-          position: 'top-right' as ToastPosition,
+          position: "top-right" as ToastPosition,
         });
         setTimeout(() => {
-          navigate('/auth/login');
+          navigate("/auth/login");
         }, 5000);
       })
       .catch((err) => {
-        toast.error(
-          err.response.data.errorDetails.message ||
-            err.response.data.errorDetails.message[0] ||
-            'Something went wrong!',
-          {
-            position: 'top-right' as ToastPosition,
-          }
-        );
+        const errorMessage = getErrorMessage(err);
+        toast.error(errorMessage, {
+          position: "top-right" as ToastPosition,
+        });
       })
       .finally(() => {
-        setComponentLevelLoader({ loading: false, id: '' });
+        setComponentLevelLoader({ loading: false, id: "" });
       });
   };
 
   const validateFormInput = () => {
     return formData &&
       formData.resetOTP &&
-      formData.resetOTP.trim() !== '' &&
+      formData.resetOTP.trim() !== "" &&
       formData.newPassword &&
-      formData.newPassword.trim() !== ''
+      formData.newPassword.trim() !== ""
       ? true
       : false;
   };
@@ -101,7 +98,7 @@ const ResetPassword = () => {
                 loading={componentLevelLoader && componentLevelLoader.loading}
               />
             ) : (
-              'Submit'
+              "Submit"
             )}
           </button>
         </form>

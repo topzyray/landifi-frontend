@@ -1,17 +1,17 @@
-import { useAuth, User } from '../../../contexts/AuthContext';
-import ChangePasswordModal from '../../../components/Modal';
-import { useContext, useEffect, useState } from 'react';
-import { GlobalContext } from '../../../contexts/GlobalContext';
-import ComponentLevelLoader from '../../../components/loaders/ComponentLevelLoader';
-import { toast, ToastPosition } from 'react-toastify';
+import { useAuth, User } from "../../../contexts/AuthContext";
+import ChangePasswordModal from "../../../components/Modal";
+import { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../../../contexts/GlobalContext";
+import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoader";
+import { toast, ToastPosition } from "react-toastify";
 import {
   getUserById,
   updateUserPassword,
   updateUserRecordById,
-} from '../../../services/user';
-import PageLevelLoader from '../../../components/loaders/PageLevelLoader';
-import { CiSquareRemove } from 'react-icons/ci';
-import PlaceholderProfile from '../../../assets/images/placeholder-profile.jpeg';
+} from "../../../services/user";
+import PageLevelLoader from "../../../components/loaders/PageLevelLoader";
+import { CiSquareRemove } from "react-icons/ci";
+import PlaceholderProfile from "../../../assets/images/placeholder-profile.jpeg";
 
 interface FormData {
   image: File | null;
@@ -27,25 +27,25 @@ interface FormData {
 }
 
 const initialChangePasswordFormData = {
-  oldPassword: '',
-  newPassword: '',
+  oldPassword: "",
+  newPassword: "",
 };
 
 const initialFormData: FormData = {
   image: null,
-  firstName: '',
-  lastName: '',
-  gender: '',
-  about: '',
-  phone: '',
-  age: '',
-  occupation: '',
-  address: '',
-  location: '',
+  firstName: "",
+  lastName: "",
+  gender: "",
+  about: "",
+  phone: "",
+  age: "",
+  occupation: "",
+  address: "",
+  location: "",
 };
 
 const LandlordProfile = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [updateUserFormData, setUpdateUserFormData] =
     useState<FormData>(initialFormData);
@@ -78,11 +78,12 @@ const LandlordProfile = () => {
         address: response.address,
         location: response.location,
       });
-      localStorage.setItem('user', JSON.stringify(response));
+      localStorage.setItem("user", JSON.stringify(response));
+      setUser(response);
       setPageLevelLoader(false);
     } else {
-      toast.error('Error fetching user data', {
-        position: 'top-right' as ToastPosition,
+      toast.error("Error fetching user data", {
+        position: "top-right" as ToastPosition,
       });
       setPageLevelLoader(false);
     }
@@ -118,13 +119,13 @@ const LandlordProfile = () => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    setComponentLevelLoader({ loading: true, id: '' });
+    setComponentLevelLoader({ loading: true, id: "" });
 
     const data = new FormData();
     Object.keys(updateUserFormData).forEach((key) => {
       const value = (updateUserFormData as any)[key];
       // Only append "image" if it has a valid file object
-      if (key === 'image' && value instanceof File) data.append('image', value);
+      if (key === "image" && value instanceof File) data.append("image", value);
       else data.append(key, value);
     });
 
@@ -133,15 +134,15 @@ const LandlordProfile = () => {
       data
     );
 
-    setComponentLevelLoader({ loading: false, id: '' });
+    setComponentLevelLoader({ loading: false, id: "" });
 
     if (response.error) {
       toast.error(response.errorDetails.message, {
-        position: 'top-right' as ToastPosition,
+        position: "top-right" as ToastPosition,
       });
     } else {
-      toast.success('Profile updated successfully!', {
-        position: 'top-right' as ToastPosition,
+      toast.success("Profile updated successfully!", {
+        position: "top-right" as ToastPosition,
       });
       fetchUserById(); // Refresh data after update
     }
@@ -175,20 +176,20 @@ const LandlordProfile = () => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    setComponentLevelLoader({ loading: true, id: '' });
+    setComponentLevelLoader({ loading: true, id: "" });
 
     const response = await updateUserPassword(changePasswordFormData);
     if (response.error) {
       toast.error(response.errorDetails.message, {
-        position: 'top-right' as ToastPosition,
+        position: "top-right" as ToastPosition,
       });
-      setComponentLevelLoader({ loading: false, id: '' });
+      setComponentLevelLoader({ loading: false, id: "" });
     } else {
       toast.success(response, {
-        position: 'top-right' as ToastPosition,
+        position: "top-right" as ToastPosition,
       });
       setChangePasswordFormData(initialChangePasswordFormData);
-      setComponentLevelLoader({ loading: false, id: '' });
+      setComponentLevelLoader({ loading: false, id: "" });
       setTimeout(() => {
         setOpenPasswordChangeModal(false);
       }, 5000);
@@ -272,7 +273,7 @@ const LandlordProfile = () => {
               )}
               <label
                 className={`w-full py-3 flex flex-col justify-center items-center text-gray-400 cursor-pointer ${
-                  updateUserFormData.image !== null && 'hidden'
+                  updateUserFormData.image !== null && "hidden"
                 }`}
               >
                 <span className="text-4xl">📸</span>
@@ -296,7 +297,7 @@ const LandlordProfile = () => {
             id="firstName"
             placeholder="📛 First name"
             className="input"
-            value={updateUserFormData.firstName ?? ''}
+            value={updateUserFormData.firstName ?? ""}
             onChange={handleUpdateDataChange}
           />
 
@@ -306,21 +307,21 @@ const LandlordProfile = () => {
             id="lastName"
             placeholder="📛 Last name"
             className="input"
-            value={updateUserFormData.lastName ?? ''}
+            value={updateUserFormData.lastName ?? ""}
             onChange={handleUpdateDataChange}
           />
 
           <input
-            type="text"
+            type="email"
             name="email"
-            id="lastName"
+            id="email"
             className="input disabled: cursor-not-allowed"
-            value={currentUser?.email ?? ''}
+            value={currentUser?.email ?? ""}
             disabled
           />
 
           <select
-            value={updateUserFormData.gender ?? ''}
+            value={updateUserFormData.gender ?? ""}
             onChange={handleUpdateDataChange}
             name="gender"
             id="gender"
@@ -338,7 +339,7 @@ const LandlordProfile = () => {
             placeholder="ℹ About me"
             rows={4}
             className="input"
-            value={updateUserFormData.about ?? ''}
+            value={updateUserFormData.about ?? ""}
             onChange={handleUpdateDataChange}
           />
 
@@ -348,7 +349,7 @@ const LandlordProfile = () => {
             id="phone"
             placeholder="📞 Phone number"
             className="input"
-            value={updateUserFormData.phone ?? ''}
+            value={updateUserFormData.phone ?? ""}
             onChange={handleUpdateDataChange}
           />
 
@@ -358,7 +359,7 @@ const LandlordProfile = () => {
             id="age"
             placeholder="🔢 Age"
             className="input"
-            value={updateUserFormData.age ?? ''}
+            value={updateUserFormData.age ?? ""}
             onChange={handleUpdateDataChange}
           />
 
@@ -368,7 +369,7 @@ const LandlordProfile = () => {
             id="occupation"
             placeholder="🏢 Occupation"
             className="input"
-            value={updateUserFormData.occupation ?? ''}
+            value={updateUserFormData.occupation ?? ""}
             onChange={handleUpdateDataChange}
           />
 
@@ -378,7 +379,7 @@ const LandlordProfile = () => {
             id="address"
             placeholder="📌 Address"
             className="input"
-            value={updateUserFormData.address ?? ''}
+            value={updateUserFormData.address ?? ""}
             onChange={handleUpdateDataChange}
           />
 
@@ -388,7 +389,7 @@ const LandlordProfile = () => {
             id="location"
             placeholder="🗺️ Location"
             className="input"
-            value={updateUserFormData.location ?? ''}
+            value={updateUserFormData.location ?? ""}
             onChange={handleUpdateDataChange}
           />
 
@@ -406,7 +407,7 @@ const LandlordProfile = () => {
                 loading={componentLevelLoader && componentLevelLoader.loading}
               />
             ) : (
-              'Update Profile'
+              "Update Profile"
             )}
           </button>
         </form>
@@ -475,7 +476,7 @@ const LandlordProfile = () => {
                   loading={componentLevelLoader && componentLevelLoader.loading}
                 />
               ) : (
-                'Update Password'
+                "Update Password"
               )}
             </button>
             <button

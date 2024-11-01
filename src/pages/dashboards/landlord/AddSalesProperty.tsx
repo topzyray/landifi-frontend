@@ -5,6 +5,7 @@ import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoad
 import { SlCloudUpload } from "react-icons/sl";
 import { CiSquareRemove } from "react-icons/ci";
 import { createProperty } from "../../../services/property";
+import { getErrorMessage } from "../../../utils/helpers";
 
 interface FormData {
   images: File[];
@@ -63,19 +64,10 @@ const AddSalesProperty = () => {
         });
       })
       .catch((err) => {
-        if (typeof err.response.data.errorDetails.message == "string") {
-          toast.error(err.response.data.errorDetails.message, {
-            position: "top-right" as ToastPosition,
-          });
-        } else if (typeof err.response.data.errorDetails.message == "object") {
-          toast.error(err.response.data.errorDetails.message[0], {
-            position: "top-right" as ToastPosition,
-          });
-        } else {
-          toast.error("Something went wrong!", {
-            position: "top-right" as ToastPosition,
-          });
-        }
+        const errorMessage = getErrorMessage(err);
+        toast.error(errorMessage, {
+          position: "top-right" as ToastPosition,
+        });
       })
       .finally(() => {
         setFormData(initialFormData);
@@ -153,7 +145,7 @@ const AddSalesProperty = () => {
       images: prev.images.filter((_, i) => i !== index),
     }));
   };
-  
+
   return (
     <div className="">
       <div className="space-y-4 md:space-y-6">

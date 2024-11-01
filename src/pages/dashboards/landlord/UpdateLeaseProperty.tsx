@@ -12,6 +12,7 @@ import {
 import { LeaseProperty } from "../../../utils/types";
 import { useParams } from "react-router-dom";
 import PageLevelLoader from "../../../components/loaders/PageLevelLoader";
+import { getErrorMessage } from "../../../utils/helpers";
 
 interface FormData {
   images: File[];
@@ -191,14 +192,10 @@ const UpdateLeaseProperty = () => {
         fetchPropertyById();
       })
       .catch((err) => {
-        toast.error(
-          err.response.data.errorDetails.message ||
-            err.response.data.errorDetails.message[0] ||
-            "Something went wrong!",
-          {
-            position: "top-right" as ToastPosition,
-          }
-        );
+        const errorMessage = getErrorMessage(err);
+        toast.error(errorMessage, {
+          position: "top-right" as ToastPosition,
+        });
       })
       .finally(() => {
         setComponentLevelLoader({ loading: false, id: "" });

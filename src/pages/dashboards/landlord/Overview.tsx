@@ -11,6 +11,7 @@ import { toast, ToastPosition } from "react-toastify";
 import PropertyDeleteAlert from "../../../components/Modal";
 import { CgDanger } from "react-icons/cg";
 import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoader";
+import { getErrorMessage } from "../../../utils/helpers";
 
 const Overview = () => {
   const [confirmPropertyDeletion, setConfirmPropertyDeletion] = useState({
@@ -68,19 +69,11 @@ const Overview = () => {
           status: false,
           propertyId: "",
         }));
-        if (typeof err.response.data.errorDetails.message == "string") {
-          toast.error(err.response.data.errorDetails.message, {
-            position: "top-right" as ToastPosition,
-          });
-        } else if (typeof err.response.data.errorDetails.message == "object") {
-          toast.error(err.response.data.errorDetails.message[0], {
-            position: "top-right" as ToastPosition,
-          });
-        } else {
-          toast.error("Something went wrong!", {
-            position: "top-right" as ToastPosition,
-          });
-        }
+
+        const errorMessage = getErrorMessage(err);
+        toast.error(errorMessage, {
+          position: "top-right" as ToastPosition,
+        });
       });
   };
 

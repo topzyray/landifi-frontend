@@ -7,6 +7,7 @@ import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoad
 import { SlCloudUpload } from "react-icons/sl";
 import { CiSquareRemove } from "react-icons/ci";
 import { createProperty } from "../../../services/property";
+import { getErrorMessage } from "../../../utils/helpers";
 
 interface FormData {
   images: File[];
@@ -73,19 +74,10 @@ const AddLeaseProperty = () => {
         setFormData(initialFormData);
       })
       .catch((err) => {
-        if (typeof err.response.data.errorDetails.message == "string") {
-          toast.error(err.response.data.errorDetails.message, {
-            position: "top-right" as ToastPosition,
-          });
-        } else if (typeof err.response.data.errorDetails.message == "object") {
-          toast.error(err.response.data.errorDetails.message[0], {
-            position: "top-right" as ToastPosition,
-          });
-        } else {
-          toast.error("Something went wrong!", {
-            position: "top-right" as ToastPosition,
-          });
-        }
+        const errorMessage = getErrorMessage(err);
+        toast.error(errorMessage, {
+          position: "top-right" as ToastPosition,
+        });
       })
       .finally(() => {
         setComponentLevelLoader({ loading: false, id: "" });

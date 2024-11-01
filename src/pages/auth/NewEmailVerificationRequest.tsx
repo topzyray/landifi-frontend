@@ -1,12 +1,13 @@
-import { useContext, useState } from 'react';
-import AxiosInstance from '../../services/axiosInstance';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast, ToastPosition } from 'react-toastify';
-import { GlobalContext } from '../../contexts/GlobalContext';
-import ComponentLevelLoader from '../../components/loaders/ComponentLevelLoader';
+import { useContext, useState } from "react";
+import AxiosInstance from "../../services/axiosInstance";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastPosition } from "react-toastify";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import ComponentLevelLoader from "../../components/loaders/ComponentLevelLoader";
+import { getErrorMessage } from "../../utils/helpers";
 
 const initialFormData = {
-  email: '',
+  email: "",
 };
 const NewEmailVerificationRequest = () => {
   const [formData, setFormData] = useState(initialFormData);
@@ -17,43 +18,39 @@ const NewEmailVerificationRequest = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setComponentLevelLoader({ loading: true, id: '' });
+    setComponentLevelLoader({ loading: true, id: "" });
 
-    AxiosInstance.post('/auth/new-verification-request', formData)
+    AxiosInstance.post("/auth/new-verification-request", formData)
       .then((res) => {
         toast.success(res.data, {
-          position: 'top-right' as ToastPosition,
+          position: "top-right" as ToastPosition,
         });
         if (
           res.data ==
-          'User with email: topzyray@yahoo.com already verified. Please login.'
+          "User with email: topzyray@yahoo.com already verified. Please login."
         ) {
           setTimeout(() => {
-            navigate('/auth/login');
+            navigate("/auth/login");
           }, 5000);
         } else {
           setTimeout(() => {
-            navigate('/auth/emailverification');
+            navigate("/auth/emailverification");
           }, 5000);
         }
       })
       .catch((err) => {
-        toast.error(
-          err.response.data.errorDetails.message ||
-            err.response.data.errorDetails.message[0] ||
-            'Something went wrong!',
-          {
-            position: 'top-right' as ToastPosition,
-          }
-        );
+        const errorMessage = getErrorMessage(err);
+        toast.error(errorMessage, {
+          position: "top-right" as ToastPosition,
+        });
       })
       .finally(() => {
-        setComponentLevelLoader({ loading: false, id: '' });
+        setComponentLevelLoader({ loading: false, id: "" });
       });
   };
 
   const validateFormInput = () => {
-    return formData && formData.email && formData.email.trim() !== ''
+    return formData && formData.email && formData.email.trim() !== ""
       ? true
       : false;
   };
@@ -94,7 +91,7 @@ const NewEmailVerificationRequest = () => {
                 loading={componentLevelLoader && componentLevelLoader.loading}
               />
             ) : (
-              'Resend OTP'
+              "Resend OTP"
             )}
           </button>
         </form>
