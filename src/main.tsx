@@ -29,6 +29,7 @@ import PropertyDescription from "./pages/property_details/Description.tsx";
 import PropertyOwner from "./pages/property_details/Owner.tsx";
 import ErrorBoundary from "./pages/ErrorBoundary.tsx";
 import LandlordProfile from "./pages/dashboards/landlord/LandlordProfile.tsx";
+import LandlordPropertyDetails from "./pages/dashboards/landlord/LandlordPropertyDetails.tsx";
 
 const router = createBrowserRouter([
   {
@@ -151,6 +152,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <LandlordProfile />,
+      },
+      {
+        path: "properties/:propertyId",
+        element: <LandlordPropertyDetails />,
       },
     ],
   },

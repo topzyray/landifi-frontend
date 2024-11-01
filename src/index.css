@@ -54,10 +54,13 @@
 
 @layer components {
   .btn {
-    @apply px-4 py-1.5 rounded opacity-80 font-semibold;
+    @apply text-center px-4 py-1.5 rounded opacity-80 font-semibold hover:cursor-pointer transition-all ease-in-out duration-300;
   }
   .btn-primary {
     @apply bg-orange-700 text-white hover:opacity-100;
+  }
+  .btn-primary-outline {
+    @apply bg-white text-orange-700 hover:opacity-100 border border-orange-300 hover:border-orange-600;
   }
   .btn-danger {
     @apply bg-red-600 text-white hover:opacity-100;

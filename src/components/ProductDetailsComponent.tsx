@@ -1,22 +1,44 @@
-import { LeaseProperty, SaleProperty } from '../utils/types';
-import PropertyDetailLayout from '../pages/property_details/PropertyDetailLayout';
-import Navbar from '../pages/property_details/Navbar';
-import { usePropertyContext } from '../contexts/PropertyContext';
-import ComponentLevelLoader from './loaders/ComponentLevelLoader';
-import { useContext, useState } from 'react';
-import { GlobalContext } from '../contexts/GlobalContext';
+import { LeaseProperty, SaleProperty } from "../utils/types";
+import PropertyDetailLayout from "../pages/property_details/PropertyDetailLayout";
+import Navbar from "../pages/property_details/Navbar";
+import { usePropertyContext } from "../contexts/PropertyContext";
+import ComponentLevelLoader from "./loaders/ComponentLevelLoader";
+import { useContext, useState } from "react";
+import { GlobalContext } from "../contexts/GlobalContext";
+import { useLocation } from "react-router-dom";
+import RentPropertyButton from "./action_buttons/RentPropertyButton";
+import PurchasePropertyButton from "./action_buttons/PurchasePropertyButton";
+import ApprovePurchaseButton from "./action_buttons/ApprovePurchaseButton";
+import ApproveLeaseButton from "./action_buttons/ApproveLeaseButton";
 
-const ProductDetailsComponent = () => {
-  const { propertyDetailsData: data } = usePropertyContext();
+export type PropertyDetailsDataType = {
+  data: LeaseProperty | SaleProperty;
+};
+
+type PropertyDetailComponentProps = {
+  dataProp?: PropertyDetailsDataType;
+};
+
+const ProductDetailsComponent = ({
+  dataProp,
+}: PropertyDetailComponentProps) => {
+  let data: LeaseProperty | SaleProperty;
+  const { propertyDetailsData: contextData } = usePropertyContext();
+  data = contextData || dataProp;
   const { componentLevelLoader } = useContext(GlobalContext);
   const [productImage, setProductImage] = useState({
     url: data?.images[0]?.secure_url,
     id: data?.images[0]?.public_id,
   });
 
+  const location = useLocation();
+  const isInLandlordDashboard = location.pathname.startsWith(
+    "/dashboard/landlord"
+  );
+
   return (
-    <section className=" w-full">
-      <div className="max-w-screen-xl mx-auto bg-white my-8 lg:my-12 p-6 rounded-lg">
+    <section className="w-full">
+      <div className="max-w-screen-xl mx-auto bg-white my-0 lg:my-12 p-6 rounded-lg">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8 ">
           <div className="lg:col-span-3 lg:row-end-1">
             <div className="lg:flex lg:items-start">
@@ -30,9 +52,9 @@ const ProductDetailsComponent = () => {
                   <div className="absolute top-0 m-2 rounded-full bg-dark-blue">
                     <p
                       className={`rounded-full px-2 p-1 text-xs sm:text-sm lg:text-base font-bold uppercase tracking-wide text-white sm:py-1 sm:px-3 ${
-                        data?.category === 'Sale'
-                          ? 'bg-orange-600'
-                          : 'bg-blue-600'
+                        data?.category === "Sale"
+                          ? "bg-orange-600"
+                          : "bg-blue-600"
                       }`}
                     >
                       For {data?.category}
@@ -41,11 +63,11 @@ const ProductDetailsComponent = () => {
 
                   <div
                     className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs sm:text-sm lg:text-base font-semibold text-white uppercase ${
-                      data?.status === 'Available'
-                        ? 'bg-green-500'
-                        : data?.status === 'Leased'
-                        ? 'bg-yellow-500'
-                        : 'bg-red-500'
+                      data?.status === "Available"
+                        ? "bg-green-500"
+                        : data?.status === "Leased"
+                        ? "bg-yellow-500"
+                        : "bg-red-500"
                     }`}
                   >
                     {data?.status}
@@ -94,25 +116,22 @@ const ProductDetailsComponent = () => {
                     : `$${(data as SaleProperty)?.salePrice}`}
                 </h1>
               </div>
-              <button
-                // onClick={() => handleAddToCart(data as any)}
-                type="button"
-                className="btn btn-primary"
-              >
-                {componentLevelLoader &&
-                componentLevelLoader.loading &&
-                data?._id === componentLevelLoader.id ? (
-                  <ComponentLevelLoader
-                    text="Adding to Cart"
-                    color="#ffffff"
-                    loading={
-                      componentLevelLoader && componentLevelLoader.loading
-                    }
-                  />
-                ) : (
-                  <>{data?.category == 'Rent' ? 'Add to Cart' : 'Purchase'}</>
+
+              {/* Action buttons */}
+              <div>
+                {!isInLandlordDashboard && data?.category == "Lease" && (
+                  <RentPropertyButton />
                 )}
-              </button>
+                {!isInLandlordDashboard && data?.category == "Sale" && (
+                  <PurchasePropertyButton />
+                )}
+                {isInLandlordDashboard && data?.category == "Sale" && (
+                  <ApprovePurchaseButton />
+                )}
+                {isInLandlordDashboard && data?.category == "Lease" && (
+                  <ApproveLeaseButton />
+                )}
+              </div>
             </div>
             <ul className="mt-3 space-y-2">
               <li className="flex items-center text-left text-sm font-medium text-gray-600">
@@ -125,12 +144,14 @@ const ProductDetailsComponent = () => {
                 Cancel anytime
               </li>
             </ul>
-            <div className="lg:col-span-3 ">
-              <div className="border-y border-gray-400">
-                <Navbar />
+            {!isInLandlordDashboard && (
+              <div className="lg:col-span-3 ">
+                <div className="border-y border-gray-400">
+                  <Navbar />
+                </div>
+                <PropertyDetailLayout />
               </div>
-              <PropertyDetailLayout />
-            </div>
+            )}
           </div>
         </div>
       </div>

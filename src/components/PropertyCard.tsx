@@ -9,6 +9,7 @@ interface PropertyCardProps {
     id: string;
   };
   isLandlord?: boolean;
+  isTenant?: boolean;
   onUpdate?: () => void;
   onDelete?: () => void;
 }
@@ -17,6 +18,7 @@ const PropertyCard = ({
   data,
   componentLevelLoader,
   isLandlord,
+  isTenant,
   onUpdate,
   onDelete,
 }: PropertyCardProps) => {
@@ -24,11 +26,18 @@ const PropertyCard = ({
   const isInLandlordDashboard = location.pathname.startsWith(
     "/dashboard/landlord"
   );
+  const isInTenantDashboard = location.pathname.startsWith("/dashboard/tenant");
+  const propertyDetailsLink =
+    isLandlord && isInLandlordDashboard
+      ? `/dashboard/landlord/properties/${data?._id}`
+      : isTenant && isInTenantDashboard
+      ? `/dashboard/tenant/properties/${data?._id}`
+      : `/properties/${data?._id}`;
 
   return (
     <div className="w-full sm:w-max shadow hover:shadow-orange-600 hover:cursor-pointer">
       <div className="w-full">
-        <Link to={`/properties/${data?._id}`}>
+        <Link to={propertyDetailsLink}>
           <div className="h-44 w-full sm:w-60 relative">
             <img
               src={data?.images[0].secure_url}
@@ -89,16 +98,10 @@ const PropertyCard = ({
         {/* Update and Delete Buttons */}
         {isLandlord && isInLandlordDashboard && (
           <div className="mt-2 flex gap-3 border-t pt-2">
-            <button
-              className="btn btn-blue w-full"
-              onClick={onUpdate}
-            >
+            <button className="btn btn-blue w-full" onClick={onUpdate}>
               Update
             </button>
-            <button
-              className="btn btn-danger w-full"
-              onClick={onDelete}
-            >
+            <button className="btn btn-danger w-full" onClick={onDelete}>
               {componentLevelLoader &&
               componentLevelLoader.loading &&
               componentLevelLoader.id === data?._id ? (

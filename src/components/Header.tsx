@@ -1,13 +1,13 @@
-import { Link, NavLink } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { MdLogout } from 'react-icons/md';
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
-import { useContext } from 'react';
-import NavLinks from './header/NavLinks';
-import { SiInstagram } from 'react-icons/si';
-import { SlSocialFacebook, SlSocialLinkedin } from 'react-icons/sl';
-import { GlobalContext } from '../contexts/GlobalContext';
-import PlaceholderProfile from '../assets/images/placeholder-profile.jpeg';
+import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { MdLogout } from "react-icons/md";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { Fragment, useContext } from "react";
+import NavLinks from "./header/NavLinks";
+import { SiInstagram } from "react-icons/si";
+import { SlSocialFacebook, SlSocialLinkedin } from "react-icons/sl";
+import { GlobalContext } from "../contexts/GlobalContext";
+import PlaceholderProfile from "../assets/images/placeholder-profile.jpeg";
 
 const Header = () => {
   const { showNavModal, setShowNavModal } = useContext(GlobalContext);
@@ -51,10 +51,10 @@ const Header = () => {
             to="/"
             className={({ isActive, isPending }) =>
               isPending
-                ? 'inline-flex flex-col items-center'
+                ? "inline-flex flex-col items-center"
                 : isActive
-                ? 'text-orange-600 inline-flex flex-col items-center'
-                : 'inline-flex flex-col items-center'
+                ? "text-orange-600 inline-flex flex-col items-center"
+                : "inline-flex flex-col items-center"
             }
           >
             Home
@@ -67,10 +67,10 @@ const Header = () => {
             to="contact"
             className={({ isActive, isPending }) =>
               isPending
-                ? 'inline-flex flex-col items-center'
+                ? "inline-flex flex-col items-center"
                 : isActive
-                ? 'text-orange-600 inline-flex flex-col items-center'
-                : 'inline-flex flex-col items-center'
+                ? "text-orange-600 inline-flex flex-col items-center"
+                : "inline-flex flex-col items-center"
             }
           >
             Contact us
@@ -87,7 +87,7 @@ const Header = () => {
               {/* <FaRegCircleUser className="text-orange-600 text-2xl hover:shadow" /> */}
               <img
                 src={user.image?.secure_url || PlaceholderProfile}
-                alt={user.image?.public_id || 'Profile avatar'}
+                alt={user.image?.public_id || "Profile avatar"}
                 className="rounded-full w-full h-full border border-orange-700"
               />
             </Link>
@@ -96,9 +96,14 @@ const Header = () => {
             </p>
           </div>
         ) : (
-          <p className="btn btn-primary">
-            <Link to="auth/login">Login</Link>
-          </p>
+          <div className="flex md:gap-2 lg:gap-4">
+            <Link to="auth/login">
+              <p className="btn btn-primary">Login</p>
+            </Link>
+            <Link to="auth/register">
+              <p className="btn btn-primary-outline">Register</p>
+            </Link>
+          </div>
         )}
       </nav>
 
@@ -148,7 +153,7 @@ const Header = () => {
                           {/* <FaRegCircleUser className="text-orange-600 text-2xl hover:shadow" /> */}
                           <img
                             src={user.image?.secure_url || PlaceholderProfile}
-                            alt={user.image?.public_id || 'Profile avatar'}
+                            alt={user.image?.public_id || "Profile avatar"}
                             className="rounded-full w-full h-full border border-orange-700"
                           />
                         </Link>
@@ -157,19 +162,31 @@ const Header = () => {
                         </p>
                       </div>
                     ) : (
-                      <p
-                        onClick={() => setShowNavModal(false)}
-                        className="btn btn-primary"
-                      >
-                        <Link to="auth/login">Login</Link>
-                      </p>
+                      <div className="space-y-2">
+                        <Link to="auth/login" className="block">
+                          <p
+                            onClick={() => setShowNavModal(false)}
+                            className="btn btn-primary"
+                          >
+                            Login
+                          </p>
+                        </Link>
+                        <Link to="auth/register" className="block">
+                          <p
+                            onClick={() => setShowNavModal(false)}
+                            className="btn btn-primary-outline"
+                          >
+                            Register
+                          </p>
+                        </Link>
+                      </div>
                     )}
                   </nav>
                 </div>
               </div>
 
               <div className="flex flex-col justify-center items-start gap-4">
-                <hr className="border border-gray-400 w-1/2" />
+                <hr className="border-1 border-gray-400 w-full" />
                 <div className="flex gap-4">
                   <div className="group">
                     <NavLink

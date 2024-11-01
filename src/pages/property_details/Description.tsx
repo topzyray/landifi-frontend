@@ -6,9 +6,7 @@ const PropertyDescription = () => {
   return (
     <div className="mt-4 flow-root sm:mt-12">
       <div className="bg-white p-6 rounded-lg shadow-md w-full md:max-w-md mx-auto">
-        <h2 className="font-normal text-gray-900 text-justify">
-          {data?.description}
-        </h2>
+        <h2 className="font-normal text-gray-900">{data?.description}</h2>
       </div>
     </div>
   );

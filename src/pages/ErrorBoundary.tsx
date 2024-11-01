@@ -60,8 +60,8 @@ const ErrorBoundary = () => {
   // }
 
   return (
-    <div className="h-screen flex justify-center items-center px-4">
-      <div className="flex flex-col justify-center items-center gap-4 w-full max-w-[25rem] text-center input">
+    <div className="h-screen w-full flex justify-center items-center px-4">
+      <div className="w-full max-w-[25rem] flex flex-col justify-center items-center gap-4 text-center input">
         <h1 className="text-center">
           <Link
             to="/"
@@ -73,11 +73,12 @@ const ErrorBoundary = () => {
         <span>
           <CgDanger className="text-4xl text-red-600" />
         </span>
-        <h1 className="text-xl sm:text-2xl font-bold">
-          Path:<code className="text-red-600"> {location.pathname}</code> not
-          found.
+        <h1 className="text-lg sm:text-xl font-semibold">
+          Path:
+          <span className="text-red-600 break-all"> {location.pathname}</span>{" "}
+          not found.
         </h1>
-        <h1 className="text-xl sm:text-2xl font-semibold">
+        <h1 className="text-lg sm:text-xl font-semibold">
           The page you are trying to access does not exist.
         </h1>
         <Link
