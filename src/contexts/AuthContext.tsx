@@ -5,15 +5,24 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import PageLevelLoader from "../components/loaders/PageLevelLoader";
+import { ImageObjectType } from "../utils/types";
 
 export type UserRole = "landlord" | "tenant" | "admin";
 
 export interface User {
-  userType: UserRole;
+  _id: string;
   email: string;
   firstName: string;
   lastName: string;
-  _id: string;
+  userType: UserRole;
+  about?: string;
+  phone?: string;
+  age?: number;
+  occupation?: string;
+  address?: string;
+  location?: string;
+  image?: ImageObjectType;
 }
 
 interface AuthContextType {
@@ -48,7 +57,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     window.location.href = "/";
   };
 
-  if (loading) return <div>Loading...</div>; // Loading state for initial load
+  if (loading)
+    return (
+      <div className="h-screen w-full flex justify-center items-center">
+        <PageLevelLoader loading={loading} />
+      </div>
+    ); // Loading state for initial load
 
   return (
     <AuthContext.Provider value={{ user, setUser, logout }}>

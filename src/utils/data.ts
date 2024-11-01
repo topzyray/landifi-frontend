@@ -1,3 +1,46 @@
+import { BiSolidDashboard } from "react-icons/bi";
+import { FaRegCircleUser, FaSellcast } from "react-icons/fa6";
+import { MdAddBox } from "react-icons/md";
+import { TbWorldUp } from "react-icons/tb";
+
+export const landlordDashboardNav = [
+  {
+    id: 1,
+    icon: BiSolidDashboard,
+    label: "Overview",
+    path: "/dashboard/landlord",
+    end: true,
+  },
+  {
+    id: 2,
+    icon: MdAddBox,
+    label: "Lease Property",
+    path: "/dashboard/landlord/leaseproperty",
+    end: false,
+  },
+  {
+    id: 3,
+    icon: FaSellcast,
+    label: "Sell Property",
+    path: "/dashboard/landlord/saleproperty",
+    end: false,
+  },
+  {
+    id: 4,
+    icon: FaRegCircleUser,
+    label: "Profile",
+    path: "/dashboard/landlord/profile",
+    end: false,
+  },
+  {
+    id: 5,
+    icon: TbWorldUp,
+    label: "Main Site",
+    path: "/",
+    end: false,
+  },
+];
+
 export const amenities = [
   // Indoor Amenities
   "Dishwasher",
@@ -54,5 +97,5 @@ export const amenities = [
   "Internet included",
 
   // Others
-  "Others"
+  "Others",
 ];

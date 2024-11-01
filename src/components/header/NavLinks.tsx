@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { links } from './MyLinks';
-import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { links } from "./MyLinks";
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
-const NavLinks = (props) => {
-  const [mainMenu, setMainMenu] = useState('');
+type NavLinksProp = {
+  handleMenu?: () => void;
+};
+
+const NavLinks = ({ handleMenu }: NavLinksProp) => {
+  const [mainMenu, setMainMenu] = useState("");
 
   return (
     <>
@@ -15,26 +19,26 @@ const NavLinks = (props) => {
             <div className="text-left md:cursor-pointer inline-flex flex-col group ">
               <NavLink
                 to={link.href}
-                // className='flex items-center gap-2 text-base font-medium hover:text-primary-light cursor-pointer group'
+                // className='flex items-center gap-2 text-base font-medium hover:text-orange-600 cursor-pointer group'
                 className={({ isActive, isPending }) =>
                   isPending
-                    ? 'flex items-center gap-2 text-base font-medium hover:text-primary-light cursor-pointer group'
+                    ? "flex items-center gap-2 text-sm md:text-base md:font-medium hover:text-orange-600 cursor-pointer group"
                     : isActive
-                    ? 'text-primary-light flex items-center gap-2 text-base font-medium hover:text-primary-light cursor-pointer group'
-                    : 'flex items-center gap-2 text-base font-medium hover:text-primary-light cursor-pointer group'
+                    ? "text-orange-600 flex items-center gap-2 text-sm md:text-base md:font-medium hover:text-orange-600 cursor-pointer group"
+                    : "flex items-center gap-2 text-sm md:text-base md:font-medium hover:text-orange-600 cursor-pointer group"
                 }
                 onClick={() =>
                   mainMenu !== link.name
                     ? setMainMenu(link.name)
-                    : setMainMenu('')
+                    : setMainMenu("")
                 }
               >
                 {link.name}
                 <span className="text-lg md:hidden inline">
                   {mainMenu === link.name ? (
-                    <IoIosArrowUp />
+                    <IoIosArrowUp className="" />
                   ) : (
-                    <IoIosArrowDown />
+                    <IoIosArrowDown className="" />
                   )}
                 </span>
                 <span className="text-lg md:mt-1 md:block hidden group-hover:rotate-180">
@@ -53,7 +57,7 @@ const NavLinks = (props) => {
                           >
                             <NavLink
                               to={subl.href}
-                              className="hover:text-primary-light cursor-pointer"
+                              className="hover:text-orange-600 cursor-pointer"
                             >
                               {subl.name}
                             </NavLink>
@@ -69,7 +73,11 @@ const NavLinks = (props) => {
             {/* Mobile submenu */}
             <div
               className={`
-                            ${mainMenu === link.name ? 'md:hidden' : 'hidden'}
+                            ${
+                              mainMenu === link.name
+                                ? "md:hidden mt-2"
+                                : "hidden"
+                            }
                         `}
             >
               {/* Sublinks */}
@@ -77,13 +85,10 @@ const NavLinks = (props) => {
                 <div key={i}>
                   <div>
                     <li
-                      className="md:hidden py-2 pl-5 font-medium md:pr-0 pr-5"
-                      onClick={props.handleMenu}
+                      className="md:hidden py-2 pl-5 text-sm md:pr-0 pr-5"
+                      onClick={handleMenu}
                     >
-                      <NavLink
-                        to={subl.href}
-                        className="hover:text-primary-light"
-                      >
+                      <NavLink to={subl.href} className="hover:text-orange-600">
                         {subl.name}
                       </NavLink>
                     </li>

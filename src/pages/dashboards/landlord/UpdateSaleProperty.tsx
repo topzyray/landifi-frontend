@@ -112,26 +112,6 @@ const UpdateSaleProperty = () => {
     }
   };
 
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value, type, checked } = event.target;
-
-  //   setFormData((prevFormData) => {
-  //     if (name === "amenities") {
-  //       // Toggle amenities: add if checked, remove if unchecked
-  //       const updatedAmenities = checked
-  //         ? [...(prevFormData.amenities || []), value]
-  //         : prevFormData.amenities.filter((item: string) => item !== value);
-
-  //       return { ...prevFormData, amenities: updatedAmenities };
-  //     } else if (type === "checkbox") {
-  //       // Handle other checkboxes like `isFurnished`
-  //       return { ...prevFormData, [name]: checked };
-  //     } else {
-  //       return { ...prevFormData, [name]: value };
-  //     }
-  //   });
-  // };
-
   // Handle image changes
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -188,7 +168,6 @@ const UpdateSaleProperty = () => {
     }));
   };
 
-  // TODO: Update this function to accommodate new feilds
   const validateFormInput = () => {
     return formData &&
       formData.title &&

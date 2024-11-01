@@ -27,11 +27,14 @@ import UpdateSaleProperty from "./pages/dashboards/landlord/UpdateSaleProperty.t
 import PropertyDetailLayout from "./pages/property_details/PropertyDetailLayout.tsx";
 import PropertyDescription from "./pages/property_details/Description.tsx";
 import PropertyOwner from "./pages/property_details/Owner.tsx";
+import ErrorBoundary from "./pages/ErrorBoundary.tsx";
+import LandlordProfile from "./pages/dashboards/landlord/LandlordProfile.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         index: true,
@@ -144,6 +147,10 @@ const router = createBrowserRouter([
       {
         path: "saleproperty/update/:propertyId",
         element: <UpdateSaleProperty />,
+      },
+      {
+        path: "profile",
+        element: <LandlordProfile />,
       },
     ],
   },

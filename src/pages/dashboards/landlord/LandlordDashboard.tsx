@@ -6,9 +6,12 @@ import DashboardHeader from "../../../components/DashboardHeader";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
 import { useAuth } from "../../../contexts/AuthContext";
+import { useContext } from "react";
+import { GlobalContext } from "../../../contexts/GlobalContext";
 
 const LandlordDashboard = () => {
   const { logout, user } = useAuth();
+  const { setShowNavModal } = useContext(GlobalContext);
   const date = new Date().toDateString();
 
   return (
@@ -18,7 +21,7 @@ const LandlordDashboard = () => {
           <h1 className="hidden md:block">
             <Link
               to="/dashboard/landlord"
-              className="text-orange-700 font-bold text-lg"
+              className="text-orange-700 font-bold text-lg uppercase"
             >
               Landifi
             </Link>
@@ -32,9 +35,11 @@ const LandlordDashboard = () => {
           <p className="font-semibold lg:text-lg border border-gray-400 px-1 rounded">
             {user?.firstName}
           </p>
-          <p>
-            <FaRegCircleUser className="text-orange-500 text-2xl lg:text-3xl hover:shadow" />
-          </p>
+          <NavLink to="/dashboard/landlord/profile">
+            <p onClick={() => setShowNavModal(false)}>
+              <FaRegCircleUser className="text-orange-500 text-2xl lg:text-3xl hover:shadow" />
+            </p>
+          </NavLink>
           <p onClick={logout}>
             <MdLogout className="text-red-700 text-2xl lg:text-3xl hover:shadow hover:cursor-pointer" />
           </p>
@@ -47,7 +52,7 @@ const LandlordDashboard = () => {
             <Outlet />
           </div>
         </div>
-        <div className="hidden lg:block sticky z-50 shrink-0 h-full pt-8 px-4 bg-white text-primary">
+        <div className="hidden lg:block sticky shrink-0 h-full pt-8 px-4 bg-white text-primary">
           <div className="flex">
             <div className="relative flex flex-col gap-4">
               <ul className="flex flex-col gap-1.5 font-semibold">
