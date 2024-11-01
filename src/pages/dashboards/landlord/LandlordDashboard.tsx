@@ -1,13 +1,13 @@
-import { BiLogOut, BiSolidDashboard } from "react-icons/bi";
-import { RiFundsFill } from "react-icons/ri";
-import { TbWorldUp } from "react-icons/tb";
-import { Link, NavLink, Outlet } from "react-router-dom";
-import DashboardHeader from "../../../components/DashboardHeader";
-import { FaRegCircleUser } from "react-icons/fa6";
-import { MdLogout } from "react-icons/md";
-import { useAuth } from "../../../contexts/AuthContext";
-import { useContext } from "react";
-import { GlobalContext } from "../../../contexts/GlobalContext";
+import { BiLogOut, BiSolidDashboard } from 'react-icons/bi';
+import { RiFundsFill } from 'react-icons/ri';
+import { TbWorldUp } from 'react-icons/tb';
+import { Link, NavLink, Outlet } from 'react-router-dom';
+import DashboardHeader from '../../../components/DashboardHeader';
+import { MdLogout } from 'react-icons/md';
+import { useAuth } from '../../../contexts/AuthContext';
+import { useContext } from 'react';
+import { GlobalContext } from '../../../contexts/GlobalContext';
+import PlaceholderProfile from '../../../assets/images/placeholder-profile.jpeg';
 
 const LandlordDashboard = () => {
   const { logout, user } = useAuth();
@@ -36,8 +36,16 @@ const LandlordDashboard = () => {
             {user?.firstName}
           </p>
           <NavLink to="/dashboard/landlord/profile">
-            <p onClick={() => setShowNavModal(false)}>
-              <FaRegCircleUser className="text-orange-500 text-2xl lg:text-3xl hover:shadow" />
+            <p
+              onClick={() => setShowNavModal(false)}
+              className="w-7 h-7 rounded-full"
+            >
+              {/* <FaRegCircleUser className="text-orange-500 text-2xl lg:text-3xl hover:shadow" /> */}
+              <img
+                src={user?.image?.secure_url || PlaceholderProfile}
+                alt={user?.image?.public_id || 'Profile avatar'}
+                className="rounded-full w-full h-full border border-orange-700"
+              />
             </p>
           </NavLink>
           <p onClick={logout}>
@@ -59,34 +67,34 @@ const LandlordDashboard = () => {
                 <NavLink
                   to="_"
                   className={({ isActive }) =>
-                    isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
+                    isActive ? 'bg-[#E4E4E4] text-text rounded-lg' : ''
                   }
                   end
                 >
                   <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
-                    <BiSolidDashboard />{" "}
+                    <BiSolidDashboard />{' '}
                     <span className="md:hidden lg:block">Placeholder 1</span>
                   </li>
                 </NavLink>
                 <NavLink
                   to="_"
                   className={({ isActive }) =>
-                    isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
+                    isActive ? 'bg-[#E4E4E4] text-text rounded-lg' : ''
                   }
                 >
                   <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
-                    <RiFundsFill />{" "}
+                    <RiFundsFill />{' '}
                     <span className="md:hidden lg:block">Placeholder 2</span>
                   </li>
                 </NavLink>
                 <NavLink
                   to="_"
                   className={({ isActive }) =>
-                    isActive ? "bg-[#E4E4E4] text-text rounded-lg" : ""
+                    isActive ? 'bg-[#E4E4E4] text-text rounded-lg' : ''
                   }
                 >
                   <li className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large">
-                    <TbWorldUp />{" "}
+                    <TbWorldUp />{' '}
                     <span className="md:hidden lg:block">Placeholder 3</span>
                   </li>
                 </NavLink>
@@ -94,7 +102,7 @@ const LandlordDashboard = () => {
                   // onClick={handleSignOut}
                   className="dashboard-link md:dashboard-link-medium lg:dashboard-link-large text-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
                 >
-                  <BiLogOut />{" "}
+                  <BiLogOut />{' '}
                   <span className="md:hidden lg:block">Logout</span>
                 </li>
               </ul>

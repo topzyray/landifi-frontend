@@ -78,6 +78,7 @@ const LandlordProfile = () => {
         address: response.address,
         location: response.location,
       });
+      localStorage.setItem('user', JSON.stringify(response));
       setPageLevelLoader(false);
     } else {
       toast.error('Error fetching user data', {
@@ -210,24 +211,26 @@ const LandlordProfile = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-full md:max-w-md mx-auto">
-      <div className="w-full max-w-[25rem] flex items-center justify-start space-x-4">
-        {/* Profile Picture */}
-        <div className='flex justify-center sm:justify-start'>
-          <div className="h-16 w-16 overflow-hidden rounded-full border border-gray-300">
-            <img
-              src={currentUser?.image?.secure_url || PlaceholderProfile}
-              alt="profile"
-              className="h-full w-full object-cover"
-            />
+      <div className="mt-0 lg:mt-4 flex justify-center items-center">
+        <div className="w-full max-w-[25rem] flex items-center justify-start gap-3">
+          {/* Profile Picture */}
+          <div className="">
+            <div className="h-16 w-16 overflow-hidden rounded-full border border-gray-300">
+              <img
+                src={currentUser?.image?.secure_url || PlaceholderProfile}
+                alt="profile"
+                className="h-full w-full object-cover"
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Name and Email */}
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900">
-            {user?.firstName} {user?.lastName}
-          </h2>
-          <p className="text-gray-600 text-sm">{user?.email}</p>
+          {/* Name and Email */}
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">
+              {user?.firstName} {user?.lastName}
+            </h2>
+            <p className="text-gray-600 text-sm">{user?.email}</p>
+          </div>
         </div>
       </div>
 
@@ -409,15 +412,17 @@ const LandlordProfile = () => {
         </form>
       </div>
 
-      <div className="w-full max-w-[25rem]">
-        <button
-          onClick={() => setOpenPasswordChangeModal(true)}
-          type="button"
-          className="mt-6 w-full
+      <div className="mt-2 flex justify-center items-center">
+        <div className="w-full max-w-[25rem]">
+          <button
+            onClick={() => setOpenPasswordChangeModal(true)}
+            type="button"
+            className="mt-6 w-full
          btn btn-blue"
-        >
-          Change Password
-        </button>
+          >
+            Change Password
+          </button>
+        </div>
       </div>
 
       <ChangePasswordModal

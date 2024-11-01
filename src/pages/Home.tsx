@@ -38,7 +38,7 @@ const Home = () => {
         </p>
       </div>
       <div className="">
-        <div className="bg-white py-10 md:py-20">
+        <div className="bg-white py-10 md:py-20 px-4 lg:px-32">
         <p className="mb-8 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">
           Available Properties
         </p>

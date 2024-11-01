@@ -1,6 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { FaRegCircleUser } from 'react-icons/fa6';
 import { MdLogout } from 'react-icons/md';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { useContext } from 'react';

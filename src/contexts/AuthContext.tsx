@@ -4,11 +4,11 @@ import {
   useState,
   useEffect,
   ReactNode,
-} from "react";
-import PageLevelLoader from "../components/loaders/PageLevelLoader";
-import { ImageObjectType } from "../utils/types";
+} from 'react';
+import PageLevelLoader from '../components/loaders/PageLevelLoader';
+import { ImageObjectType } from '../utils/types';
 
-export type UserRole = "landlord" | "tenant" | "admin";
+export type UserRole = 'landlord' | 'tenant' | 'admin';
 
 export interface User {
   _id: string;
@@ -39,22 +39,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem('user');
+    console.log(storedUser);
+
     if (storedUser) {
       setUser(JSON.parse(storedUser) as User);
     }
     setLoading(false); // Set loading to false once user is set
-  }, []);
+  }, [user]);
 
   const logout = () => {
     // Clear user state and local storage
     setUser(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
 
     // Redirect to login page
-    window.location.href = "/";
+    window.location.href = '/';
   };
 
   if (loading)
@@ -74,7 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
