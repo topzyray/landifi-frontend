@@ -16,6 +16,7 @@ export interface User {
   firstName: string;
   lastName: string;
   userType: UserRole;
+  userKind?: string;
   about?: string;
   phone?: string;
   age?: number;

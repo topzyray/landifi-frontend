@@ -134,26 +134,6 @@ const UpdateLeaseProperty = () => {
     }
   };
 
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value, type, checked } = event.target;
-
-  //   setFormData((prevFormData) => {
-  //     if (name === "amenities") {
-  //       // Toggle amenities: add if checked, remove if unchecked
-  //       const updatedAmenities = checked
-  //         ? [...(prevFormData.amenities || []), value]
-  //         : prevFormData.amenities.filter((item: string) => item !== value);
-
-  //       return { ...prevFormData, amenities: updatedAmenities };
-  //     } else if (type === "checkbox") {
-  //       // Handle other checkboxes like `isFurnished`
-  //       return { ...prevFormData, [name]: checked };
-  //     } else {
-  //       return { ...prevFormData, [name]: value };
-  //     }
-  //   });
-  // };
-
   // Handle image changes
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -258,6 +238,16 @@ const UpdateLeaseProperty = () => {
                 <p className="text-sm font-semibold text-left md:text-center uppercase">
                   Property ID: {propertyDetailsData._id}
                 </p>
+
+                {/* <input
+                  type="text"
+                  name="occupant"
+                  id="occupant"
+                  placeholder="Occupant"
+                  className="input"
+                  value={formData.occupant}
+                  onChange={handleChange}
+                /> */}
 
                 <input
                   type="text"
@@ -449,7 +439,7 @@ const UpdateLeaseProperty = () => {
                           id={amenity}
                           name="amenities"
                           type="checkbox"
-                          className="accent-gray-600 mr-1"
+                          className="checkbox mr-1"
                           value={amenity}
                           checked={formData.amenities.includes(amenity)}
                           onChange={handleChange}
@@ -465,21 +455,26 @@ const UpdateLeaseProperty = () => {
                   </section>
                 </section>
 
-                <section className="md:flex md:items-center md:gap-0.5 mt-1">
-                  <input
-                    id="isFurnished"
-                    name="isFurnished"
-                    type="checkbox"
-                    className="accent-gray-600 mr-1"
-                    checked={formData.isFurnished}
-                    onChange={handleChange}
-                  />
-                  <label
-                    htmlFor="isFurnished"
-                    className="text-justify leading-0"
-                  >
-                    Furnished
-                  </label>
+                <section className="input">
+                  <p className="font-semibold mb-1 text-lg underline">
+                    Furnish status
+                  </p>
+                  <section className="md:flex md:items-center md:gap-0.5 mt-1">
+                    <input
+                      id="isFurnished"
+                      name="isFurnished"
+                      type="checkbox"
+                      className="checkbox mr-1"
+                      checked={formData.isFurnished}
+                      onChange={handleChange}
+                    />
+                    <label
+                      htmlFor="isFurnished"
+                      className="text-justify leading-0"
+                    >
+                      Property is furnished
+                    </label>
+                  </section>
                 </section>
 
                 <section className="flex flex-col gap-1">

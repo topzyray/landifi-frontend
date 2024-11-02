@@ -340,7 +340,7 @@ const AddLeaseProperty = () => {
               <p className="font-semibold mb-1 text-lg underline">
                 Amenities/Facilities
               </p>
-              <section className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3 ">
+              <section className="grid grid-cols-2 gap-0.5 md:gap-1">
                 {amenities.map((amenity: string) => (
                   <section
                     key={amenity}
@@ -350,7 +350,7 @@ const AddLeaseProperty = () => {
                       id={amenity}
                       name="amenities"
                       type="checkbox"
-                      className="accent-gray-600 mr-1"
+                      className="checkbox mr-1"
                       value={amenity}
                       checked={formData.amenities.includes(amenity)}
                       onChange={handleChange}
@@ -363,18 +363,23 @@ const AddLeaseProperty = () => {
               </section>
             </section>
 
-            <section className="md:flex md:items-center md:gap-0.5 mt-1">
-              <input
-                id="isFurnished"
-                name="isFurnished"
-                type="checkbox"
-                className="accent-gray-600 mr-1"
-                checked={formData.isFurnished}
-                onChange={handleChange}
-              />
-              <label htmlFor="isFurnished" className="text-justify leading-0">
-                Furnished
-              </label>
+            <section className="input">
+              <p className="font-semibold mb-1 text-lg underline">
+                Furnish status
+              </p>
+              <section className="md:flex md:items-center md:gap-0.5 mt-1">
+                <input
+                  id="isFurnished"
+                  name="isFurnished"
+                  type="checkbox"
+                  className="checkbox mr-1"
+                  checked={formData.isFurnished}
+                  onChange={handleChange}
+                />
+                <label htmlFor="isFurnished" className="text-justify leading-0">
+                  Property is furnished
+                </label>
+              </section>
             </section>
 
             <button

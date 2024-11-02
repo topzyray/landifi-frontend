@@ -383,7 +383,7 @@ const UpdateSaleProperty = () => {
                     id="isNegotiable"
                     name="isNegotiable"
                     type="checkbox"
-                    className="accent-gray-600 mr-1"
+                    className="checkbox mr-1"
                     checked={formData.isNegotiable}
                     onChange={handleChange}
                   />

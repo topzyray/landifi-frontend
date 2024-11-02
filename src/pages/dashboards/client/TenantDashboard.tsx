@@ -33,7 +33,7 @@ const TenantDashboard = () => {
 
         <div className="flex items-center gap-4 lg:gap-8">
           <p className="font-semibold lg:text-lg border border-gray-400 px-1 rounded">
-            {user?.firstName}
+            Role: {user?.userKind}
           </p>
           <NavLink to={`/dashboard/${user?.userType}/profile`}>
             <p
