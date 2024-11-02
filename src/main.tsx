@@ -12,7 +12,6 @@ import Login from "./pages/auth/Login.tsx";
 import Register from "./pages/auth/Register.tsx";
 import NewEmailVerificationRequest from "./pages/auth/NewEmailVerificationRequest.tsx";
 import LandlordDashboard from "./pages/dashboards/landlord/LandlordDashboard.tsx";
-import Overview from "./pages/dashboards/landlord/Overview.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import ProtectedRoute from "./components/Protected.tsx";
 import UnprotectedRoute from "./components/UnprotectedRoute.tsx";
@@ -30,6 +29,10 @@ import PropertyOwner from "./pages/property_details/Owner.tsx";
 import ErrorBoundary from "./pages/ErrorBoundary.tsx";
 import LandlordProfile from "./pages/dashboards/landlord/LandlordProfile.tsx";
 import LandlordPropertyDetails from "./pages/dashboards/landlord/LandlordPropertyDetails.tsx";
+import TenantDashboard from "./pages/dashboards/client/TenantDashboard.tsx";
+import TenantProfile from "./pages/dashboards/client/TenantProfile.tsx";
+import TenantOverview from "./pages/dashboards/client/TenantOverview.tsx";
+import LandlordOverview from "./pages/dashboards/landlord/LandlordOverview.tsx";
 
 const router = createBrowserRouter([
   {
@@ -131,7 +134,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Overview />,
+        element: <LandlordOverview />,
       },
       {
         path: "leaseproperty",
@@ -156,6 +159,24 @@ const router = createBrowserRouter([
       {
         path: "properties/:propertyId",
         element: <LandlordPropertyDetails />,
+      },
+    ],
+  },
+  {
+    path: "dashboard/tenant",
+    element: (
+      <ProtectedRoute requiredRole="tenant">
+        <TenantDashboard />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <TenantOverview />,
+      },
+      {
+        path: "profile",
+        element: <TenantProfile />,
       },
     ],
   },

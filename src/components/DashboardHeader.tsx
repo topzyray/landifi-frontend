@@ -3,12 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useContext } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { landlordDashboardNav } from "../utils/data";
+import { landlordDashboardNav, tenantDashboardNav } from "../utils/data";
 import { GlobalContext } from "../contexts/GlobalContext";
 
 const DashboardHeader = () => {
   const { showNavModal, setShowNavModal } = useContext(GlobalContext);
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   return (
     <>
       {/* Sidebar for medium screens and above */}
@@ -16,7 +16,12 @@ const DashboardHeader = () => {
         <div className="flex">
           <div className="relative flex flex-col gap-4">
             <ul className="flex flex-col gap-1.5 font-semibold uppercase">
-              {landlordDashboardNav.map((link) => (
+              {(user && user.userType == "landlord"
+                ? landlordDashboardNav
+                : user && user.userType == "tenant"
+                ? tenantDashboardNav
+                : []
+              ).map((link) => (
                 <NavLink
                   key={link.id}
                   to={link.path}
@@ -86,7 +91,12 @@ const DashboardHeader = () => {
               onClick={(e) => e.stopPropagation()}
               className="h-full max-w-max flex flex-col pl-4 pr-10 py-6 space-y-4 bg-[#ECECEC] uppercase"
             >
-              {landlordDashboardNav.map((link) => (
+              {(user && user.userType == "landlord"
+                ? landlordDashboardNav
+                : user && user.userType == "tenant"
+                ? tenantDashboardNav
+                : []
+              ).map((link) => (
                 <NavLink
                   key={link.id}
                   onClick={() => setShowNavModal(false)}

@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContext";
 import PlaceholderProfile from "../../../assets/images/placeholder-profile.jpeg";
 
-const LandlordDashboard = () => {
+const TenantDashboard = () => {
   const { logout, user } = useAuth();
   const { setShowNavModal } = useContext(GlobalContext);
   const date = new Date().toDateString();
@@ -114,4 +114,4 @@ const LandlordDashboard = () => {
   );
 };
 
-export default LandlordDashboard;
+export default TenantDashboard;

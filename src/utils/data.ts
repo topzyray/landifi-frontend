@@ -41,6 +41,30 @@ export const landlordDashboardNav = [
   },
 ];
 
+export const tenantDashboardNav = [
+  {
+    id: 1,
+    icon: BiSolidDashboard,
+    label: "Overview",
+    path: "/dashboard/tenant",
+    end: true,
+  },
+  {
+    id: 2,
+    icon: FaRegCircleUser,
+    label: "Profile",
+    path: "/dashboard/tenant/profile",
+    end: false,
+  },
+  {
+    id: 3,
+    icon: TbWorldUp,
+    label: "Main Site",
+    path: "/",
+    end: false,
+  },
+];
+
 export const amenities = [
   // Indoor Amenities
   "Dishwasher",

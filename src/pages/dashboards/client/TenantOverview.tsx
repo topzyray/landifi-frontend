@@ -13,69 +13,69 @@ import { CgDanger } from "react-icons/cg";
 import ComponentLevelLoader from "../../../components/loaders/ComponentLevelLoader";
 import { getErrorMessage } from "../../../utils/helpers";
 
-const Overview = () => {
-  const [confirmPropertyDeletion, setConfirmPropertyDeletion] = useState({
-    status: false,
-    propertyId: "",
-  });
-  const [landlordProperties, setLandlordProperties] = useState<
-    LeaseProperty[] | SaleProperty[] | []
-  >([]);
-  const { user } = useAuth();
-  const {
-    pageLevelLoader,
-    setPageLevelLoader,
-    componentLevelLoader,
-    setComponentLevelLoader,
-  } = useContext(GlobalContext);
+const TenantOverview = () => {
+  // const [confirmPropertyDeletion, setConfirmPropertyDeletion] = useState({
+  //   status: false,
+  //   propertyId: "",
+  // });
+  // const [landlordProperties, setLandlordProperties] = useState<
+  //   LeaseProperty[] | SaleProperty[] | []
+  // >([]);
+  // const { user } = useAuth();
+  // const {
+  //   pageLevelLoader,
+  //   setPageLevelLoader,
+  //   componentLevelLoader,
+  //   setComponentLevelLoader,
+  // } = useContext(GlobalContext);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const fetchAllPropertiesForLandlord = () => {
-    setPageLevelLoader(true);
-    getAllLandlordProperties()
-      .then((res) => {
-        setPageLevelLoader(false);
-        setLandlordProperties(res);
-      })
-      .catch((err) => {
-        setPageLevelLoader(false);
-      });
-  };
+  // const fetchAllPropertiesForLandlord = () => {
+  //   setPageLevelLoader(true);
+  //   getAllLandlordProperties()
+  //     .then((res) => {
+  //       setPageLevelLoader(false);
+  //       setLandlordProperties(res);
+  //     })
+  //     .catch((err) => {
+  //       setPageLevelLoader(false);
+  //     });
+  // };
 
-  useEffect(() => {
-    fetchAllPropertiesForLandlord();
-  }, []);
+  // useEffect(() => {
+  //   fetchAllPropertiesForLandlord();
+  // }, []);
 
-  const handleDeleteProperty = async (productId: string) => {
-    setComponentLevelLoader({ loading: true, id: productId });
-    deletePropertyById(productId)
-      .then((res) => {
-        toast.success(res, {
-          position: "top-right" as ToastPosition,
-        });
-        setComponentLevelLoader({ loading: false, id: "" });
-        setConfirmPropertyDeletion((prev) => ({
-          ...prev,
-          status: false,
-          propertyId: "",
-        }));
-        fetchAllPropertiesForLandlord();
-      })
-      .catch((err) => {
-        setComponentLevelLoader({ loading: false, id: "" });
-        setConfirmPropertyDeletion((prev) => ({
-          ...prev,
-          status: false,
-          propertyId: "",
-        }));
+  // const handleDeleteProperty = async (productId: string) => {
+  //   setComponentLevelLoader({ loading: true, id: productId });
+  //   deletePropertyById(productId)
+  //     .then((res) => {
+  //       toast.success(res, {
+  //         position: "top-right" as ToastPosition,
+  //       });
+  //       setComponentLevelLoader({ loading: false, id: "" });
+  //       setConfirmPropertyDeletion((prev) => ({
+  //         ...prev,
+  //         status: false,
+  //         propertyId: "",
+  //       }));
+  //       fetchAllPropertiesForLandlord();
+  //     })
+  //     .catch((err) => {
+  //       setComponentLevelLoader({ loading: false, id: "" });
+  //       setConfirmPropertyDeletion((prev) => ({
+  //         ...prev,
+  //         status: false,
+  //         propertyId: "",
+  //       }));
 
-        const errorMessage = getErrorMessage(err);
-        toast.error(errorMessage, {
-          position: "top-right" as ToastPosition,
-        });
-      });
-  };
+  //       const errorMessage = getErrorMessage(err);
+  //       toast.error(errorMessage, {
+  //         position: "top-right" as ToastPosition,
+  //       });
+  //     });
+  // };
 
   return (
     <div className="">
@@ -87,9 +87,9 @@ const Overview = () => {
 
       <div className="py-10 lg:py-20">
         <p className="mb-8 font-bold text-2xl sm:text-3xl lg:text-4xl text-center">
-          All My Listings ({landlordProperties.length})
+          Leased Properties
         </p>
-        <div className="px-6 flex justify-center items-center flex-wrap gap-3">
+        {/* <div className="px-6 flex justify-center items-center flex-wrap gap-3">
           {landlordProperties.length === 0 && pageLevelLoader && (
             <PageLevelLoader
               loading={pageLevelLoader && landlordProperties.length === 0}
@@ -186,10 +186,10 @@ const Overview = () => {
               No property for the user. Please create property.
             </p>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
 };
 
-export default Overview;
+export default TenantOverview;
