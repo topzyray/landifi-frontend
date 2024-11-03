@@ -136,8 +136,8 @@ export const footerNavs = [
       },
       {
         id: 2,
-        label: "Buy Properties",
-        path: "/buy",
+        label: "Properties",
+        path: "/properties",
       },
       {
         id: 3,

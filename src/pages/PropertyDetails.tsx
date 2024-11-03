@@ -33,10 +33,12 @@ const PropertyDetails = () => {
 
   return (
     <div className="h-full w-full flex flex-col justify-between items-stretch">
-      <div className="py-10 sm:py-16 lg:py-20 w-full bg-[url('assets/images/side-view-woman-working-as-real-estate-agent_23-2151064988.avif')] bg-cover bg-no-repeat bg-center flex justify-center items-center">
-        <p className="backdrop-blur font-bold text-2xl md:text-4xl lg:text-5xl text-white">
-          Property Details Page
-        </p>
+      <div className="w-full h-full py-10 sm:py-16 lg:py-20 bg-[url('assets/images/side-view-woman-working-as-real-estate-agent_23-2151064988.avif')] bg-cover bg-no-repeat bg-center flex justify-center items-center">
+        <div className="w-full h-full backdrop-blur-sm flex items-center justify-center rounded-xl px-2 md:px-4">
+          <p className="font-bold text-2xl md:text-4xl lg:text-5xl  text-center text-transparent bg-clip-text bg-[url('assets/images/flat-lay-real-estate-concept_53876-14502.avif')] bg-cover bg-no-repeat bg-center uppercase drop-shadow-[-3px_-3px_1.2px_rgba(0,0,0,0.8)]">
+            Property Details Page
+          </p>
+        </div>
       </div>
       {pageLevelLoader ? (
         <div className="mt-32">

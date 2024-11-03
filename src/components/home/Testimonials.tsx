@@ -40,16 +40,16 @@ const Testimonial = () => {
             spaceBetween: 40,
           },
         }}
-        className="mySwiper h-[510px] lg:h-[19rem] lg:pb-6 overflow-hidden"
+        className="mySwiper overflow-hidden"
       >
         {testimonials.map((testimonial) => {
           return (
-            <SwiperSlide key={testimonial.id} className=" h-[100%]">
+            <SwiperSlide key={testimonial.id} className="h-full shadow border">
               {({ isActive }) => (
-                <div className=" max-w-[800px] lg:w-full h-full flex flex-col lg:flex-row rounded-xl ring-inset ring-1 ring-slate-300 shadow-lg ">
+                <div className="max-w-[800px] lg:w-full  flex flex-row">
                   <div
-                    className={`w-full min-h-[256px] lg:h-auto flex flex-col justify-center items-center gap-2 bg-orange-500 text-white text-2xl lg:text-3xl font-semibold rounded-t-xl lg:rounded-l-xl lg:rounded-tr-none  ${
-                      isActive ? "lg:w-1/3" : "lg:w-[45%]"
+                    className={`w-full min-h-[256px] lg:h-auto flex flex-col justify-center items-center gap-2 bg-black/70 text-white text-2xl lg:text-3xl font-semibold ${
+                      isActive ? "lg:w-[40%]" : "lg:w-[35%]"
                     }`}
                   >
                     <img
@@ -63,16 +63,18 @@ const Testimonial = () => {
                     </div>
                   </div>
                   <div
-                    className={`bg-white flex flex-col justify-center gap-4 w-full h-1/2 lg:h-auto text-center lg:text-justify input ${
+                    className={`bg-white/90 flex justify-center items-center w-full px-4 ${
                       isActive ? "lg:w-2/3" : " lg:w-[55%] overflow-hidden"
                     }`}
                   >
-                    <h3 className="text-xl lg:text-2xl font-bold">
-                      {testimonial.title}
-                    </h3>
-                    <p className="text-sm lg:text-base font-normal">
-                      {testimonial.text}
-                    </p>
+                    <div>
+                      <h3 className="text-xl lg:text-2xl font-bold">
+                        {testimonial.title}
+                      </h3>
+                      <p className="text-sm lg:text-base font-normal">
+                        {testimonial.text}
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}

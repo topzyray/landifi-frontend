@@ -19,7 +19,7 @@ const Header = () => {
         <Link
           onClick={() => setShowNavModal(false)}
           to="/"
-          className="text-orange-700 font-bold text-xl md:text-xl lg:text-2xl hover:underline drop-shadow-[0px_1.2px_1.2px_rgba(0,0,0,0.8)] uppercase"
+          className="text-orange-600 font-bold text-xl md:text-xl lg:text-2xl hover:underline drop-shadow-[0px_1.2px_1.2px_rgba(0,0,0,0.8)] uppercase"
         >
           Landifi
         </Link>

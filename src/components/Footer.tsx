@@ -4,12 +4,7 @@ import Newsletter from "./Newsletter";
 
 const Footer = () => {
   return (
-    // <footer className="bg-orange-600/90 text-white flex justify-center items-center px-4 py-10 lg:px-[5rem] lg:py-[5rem]">
-    //   <p className="font-bold text-center lg:text-lg">
-    //     &copy; Copyright. Landifi Inc. All right reserved.
-    //   </p>
-    // </footer>
-    <section className="w-full shadow-lg bg-orange-600/90 text-white px-4 py-10 lg:px-[5rem] lg:py-[5rem]">
+    <section className="w-full shadow-lg bg-black/70 text-white px-4 py-10 lg:px-[5rem] lg:py-[5rem]">
       <section className="grid place-items-stretch grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-10 font-semibold">
         <section className="lg:row-start-1 lg:col-start-1 lg:col-span-6 mb-4 lg:mb-0">
           <Newsletter />
@@ -40,7 +35,7 @@ const Footer = () => {
 
         <section className="lg:row-start-2 col-span-full text-center place-self-center">
           <p className="text-base font-normal">
-            © 2023. Landifi Inc. All right reserved.
+            © 2024. Landifi Inc. All right reserved.
           </p>
         </section>
       </section>

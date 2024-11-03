@@ -89,59 +89,68 @@ const ContactUs = () => {
       : false;
   };
   return (
-    <div className="w-full flex items-start justify-center">
-      <div className="w-full max-w-screen-sm mt-10 lg:mt-20 px-5">
-        <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
-          <p className="mb-8 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">
-            Contact Us Form
+    <div>
+      <div className="py-10 sm:py-16 lg:py-20 w-full bg-[url('assets/images/side-view-woman-working-as-real-estate-agent_23-2151064988.avif')] bg-cover bg-no-repeat bg-center flex justify-center items-center">
+        <div className="backdrop-blur-sm flex items-center justify-center rounded-xl w-full h-full px-2 md:px-4">
+          <p className="font-bold text-2xl md:text-4xl lg:text-5xl  text-center text-transparent bg-clip-text bg-[url('assets/images/flat-lay-real-estate-concept_53876-14502.avif')] bg-cover bg-no-repeat bg-center uppercase drop-shadow-[-3px_-3px_1.2px_rgba(0,0,0,0.8)]">
+            Contact Us Page
           </p>
+        </div>
+      </div>
+      <div className="w-full flex items-start justify-center">
+        <div className="w-full max-w-screen-sm mt-10 lg:mt-20 px-5">
+          <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
+            <p className="mb-8 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">
+              Contact Us Form
+            </p>
 
-          <input
-            type="text"
-            placeholder="First name"
-            className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
-            value={formData.firstName}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
-            value={formData.lastName}
-            onChange={handleChange}
-          />
-          <input
-            type="email"
-            placeholder="Enter email"
-            className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Description"
-            rows={4}
-            className="input"
-            value={formData.description}
-            onChange={handleChange}
-          />
-          <button
-            type="submit"
-            className="border px-3 py-1.5 md:py-2 rounded bg-gray-600 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
-            disabled={!validateFormInput()}
-          >
-            {componentLevelLoader && componentLevelLoader.loading ? (
-              <ComponentLevelLoader
-                text="Loading"
-                color="#ffffff"
-                loading={componentLevelLoader && componentLevelLoader.loading}
-              />
-            ) : (
-              "Submit Form"
-            )}
-          </button>
-        </form>
+            <input
+              type="text"
+              placeholder="First name"
+              className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+              value={formData.firstName}
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+            <input
+              type="email"
+              placeholder="Enter email"
+              className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Description"
+              rows={4}
+              className="input"
+              value={formData.description}
+              onChange={handleChange}
+            />
+            <button
+              type="submit"
+              className="border px-3 py-1.5 md:py-2 rounded bg-gray-600 text-white font-medium hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
+              disabled={!validateFormInput()}
+            >
+              {componentLevelLoader && componentLevelLoader.loading ? (
+                <ComponentLevelLoader
+                  text="Loading"
+                  color="#ffffff"
+                  loading={componentLevelLoader && componentLevelLoader.loading}
+                />
+              ) : (
+                "Submit Form"
+              )}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
