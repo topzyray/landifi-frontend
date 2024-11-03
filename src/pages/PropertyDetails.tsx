@@ -32,7 +32,7 @@ const PropertyDetails = () => {
   }, []);
 
   return (
-    <div className="bg-white">
+    <div className="h-full w-full flex flex-col justify-between items-stretch">
       <div className="py-10 sm:py-16 lg:py-20 w-full bg-[url('assets/images/side-view-woman-working-as-real-estate-agent_23-2151064988.avif')] bg-cover bg-no-repeat bg-center flex justify-center items-center">
         <p className="backdrop-blur font-bold text-2xl md:text-4xl lg:text-5xl text-white">
           Property Details Page
