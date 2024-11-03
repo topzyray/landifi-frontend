@@ -46,7 +46,7 @@ const Properties = () => {
             <p className="mb-8 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">
               All Available Listings
             </p>
-            <div className="w-full px-6 py-6 flex justify-center items-center flex-wrap gap-3 rounded">
+            <div className="w-full py-6 flex justify-center items-center flex-wrap gap-3 rounded">
               {pageLevelLoader ? (
                 <PageLevelLoader
                   loading={pageLevelLoader && allProperties.length === 0}
@@ -65,6 +65,14 @@ const Properties = () => {
                 </p>
               )}
             </div>
+            {allProperties && allProperties.length > 0 && (
+              <div className="flex justify-center">
+                <div className="flex justify-between items-center gap-4">
+                  <button className="btn btn-primary-outline">Prev</button>
+                  <button className="btn btn-primary">Next</button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

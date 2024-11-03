@@ -48,7 +48,7 @@ const PropertyDetails = () => {
         <PropertyProvider
           data={propertyDetailsData as LeaseProperty | SaleProperty}
         >
-          <div className="px-6 py-6 my-8 lg:py-10 flex justify-center items-center flex-wrap gap-3">
+          <div className="py-6 my-8 lg:py-10 flex justify-center items-center flex-wrap gap-3">
             <ProductDetailsComponent />
           </div>
         </PropertyProvider>

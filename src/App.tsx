@@ -18,13 +18,13 @@ function App() {
         <div className="fixed right-2 bottom-4 flex flex-col gap-2">
           <FaQuestionCircle
             onClick={() => setToggleChat(true)}
-            className="text-[2.7rem] text-green-600 border-2 rounded-full shadow-2xl bg-white cursor-pointer transition-all ease-in-out duration-500 hover:scale-125 hover:animate-pulse"
+            className="text-4xl md:text-[2.7rem] text-green-600 border-2 rounded-full shadow-2xl bg-white cursor-pointer transition-all ease-in-out duration-500 hover:scale-125 hover:animate-pulse"
           />
           <FaArrowAltCircleUp
             onClick={() => {
               window.scrollTo(0, 0);
             }}
-            className="text-[2.7rem] text-orange-600 border-2 rounded-full shadow-2xl bg-white cursor-pointer transition-all ease-in-out duration-500 hover:scale-125 hover:animate-pulse"
+            className="text-4xl md:text-[2.7rem] text-orange-600 border-2 rounded-full shadow-2xl bg-white cursor-pointer transition-all ease-in-out duration-500 hover:scale-125 hover:animate-pulse"
           />
         </div>
         {toggleChat && (

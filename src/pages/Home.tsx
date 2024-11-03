@@ -1,14 +1,15 @@
-import { Fragment, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import PropertyCard from "../components/PropertyCard";
 import { GlobalContext } from "../contexts/GlobalContext";
 import { getAllProperties } from "../services/property";
 import { LeaseProperty, SaleProperty } from "../utils/types";
 import PageLevelLoader from "../components/loaders/PageLevelLoader";
 import Testimonials from "../components/home/Testimonials";
-import PatternLeft from "../../assets/icons/testimonialPatternLeft.svg";
-import PatternRight from "../../assets/icons/testimonialPatternRight.svg";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const {
     allProperties,
     setAllProperties,
@@ -54,22 +55,32 @@ const Home = () => {
               />
             ) : allProperties && allProperties.length > 0 ? (
               allProperties.map((property) => (
-                <Fragment key={property._id}>
-                  <PropertyCard
-                    data={property as LeaseProperty | SaleProperty}
-                  />
-                </Fragment>
+                <div key={property._id}>
+                  <div>
+                    <PropertyCard
+                      data={property as LeaseProperty | SaleProperty}
+                    />
+                  </div>
+                </div>
               ))
             ) : (
               <p className="font-semibold text-lg sm:text-xl input">
                 No property added yet.
               </p>
             )}
+            {allProperties && allProperties.length > 0 && (
+              <button
+                onClick={() => navigate("properties")}
+                className="btn btn-primary-outline"
+              >
+                See All
+              </button>
+            )}
           </div>
         </div>
       </div>
-      <div className="">
-        <div className="bg-white py-10 md:py-20 px-4 lg:px-32">
+      <div className="bg-gray-300">
+        <div className="py-10 md:py-20 px-4 lg:px-32">
           <p className="mb-8 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">
             Who We Are!
           </p>
