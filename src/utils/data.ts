@@ -123,3 +123,107 @@ export const amenities = [
   // Others
   "Others",
 ];
+
+export const footerNavs = [
+  {
+    id: 1,
+    header: "Explore",
+    menu: [
+      {
+        id: 1,
+        label: "Archives",
+        path: "/archives",
+      },
+      {
+        id: 2,
+        label: "Buy Properties",
+        path: "/buy",
+      },
+      {
+        id: 3,
+        label: "Mortgage Calculator",
+        path: "/calc",
+      },
+    ],
+  },
+  {
+    id: 2,
+    header: "Quick Links",
+    menu: [
+      {
+        id: 1,
+        label: "About Us",
+        path: "/about",
+      },
+      {
+        id: 2,
+        label: "Contact Us",
+        path: "/contact",
+      },
+      {
+        id: 3,
+        label: "FAQ",
+        path: "/faq",
+      },
+    ],
+  },
+  {
+    id: 3,
+    header: "Resources",
+    menu: [
+      {
+        id: 1,
+        label: "News",
+        path: "/news",
+      },
+      {
+        id: 2,
+        label: "Glossary",
+        path: "/glossary",
+      },
+      {
+        id: 3,
+        label: "Guides",
+        path: "/guide",
+      },
+    ],
+  },
+];
+
+export const testimonials = [
+  {
+    id: 1,
+    firstName: "Ajide",
+    initials: "H.",
+    title: "This is just a placeholder",
+    text: "Properties at Landifi are quite amazing. It was awakening experience for me in the art of real estates.",
+  },
+  {
+    id: 2,
+    firstName: "Evan",
+    initials: "N.",
+    title: "It was a wonderful experience",
+    text: "Properties at Landifi are quite amazing. It was awakening experience for me in the art of real estates.",
+  },
+  {
+    id: 3,
+    firstName: "Tope",
+    initials: "T.",
+    title: "It was the best",
+    text: "Landifi should be called The Life Safer. “I want your commitment not your money”. While some people charge much for what they don’t know. Landifi is the best real estate platform I have ever known.",
+  },
+  {
+    id: 4,
+    firstName: "Paul",
+    initials: "A.",
+    title: "Best platform ever",
+    text: "Landifi has been wonderful and will always be because they are genius in the services they offer. There strategy is the best. Landifi is the best platform ever.",
+  },
+  {
+    id: 5,
+    firstName: "Precilla",
+    initials: "A.",
+    title: "It was insightful",
+    text: "Landifi has been wonderful and will always be because they are genius in the services they offer. There strategy is the best. Landifi is the best platform ever.",
+  },
+];

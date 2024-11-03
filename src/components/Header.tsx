@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { MdLogout } from "react-icons/md";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { Fragment, useContext } from "react";
+import { useContext } from "react";
 import NavLinks from "./header/NavLinks";
 import { SiInstagram } from "react-icons/si";
 import { SlSocialFacebook, SlSocialLinkedin } from "react-icons/sl";
@@ -19,7 +19,7 @@ const Header = () => {
         <Link
           onClick={() => setShowNavModal(false)}
           to="/"
-          className="text-orange-700 font-bold text-2xl md:text-2xl lg:text-3xl hover:underline drop-shadow-[0px_1.2px_1.2px_rgba(0,0,0,0.8)] uppercase"
+          className="text-orange-700 font-bold text-xl md:text-xl lg:text-2xl hover:underline drop-shadow-[0px_1.2px_1.2px_rgba(0,0,0,0.8)] uppercase"
         >
           Landifi
         </Link>

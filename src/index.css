@@ -99,3 +99,31 @@
     @apply flex-row justify-start text-left gap-3 pl-3 text-sm hover:underline;
   }
 }
+
+/* Testimonial Carousel */
+.swiper-pagination {
+  margin-bottom: -0.95rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  color: white;
+  background: #fa6806;
+}
+
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #fa6806;
+  border: 1px solid #fa6806;
+}
+
+.swiper-pagination-bullet-active {
+  width: 30px;
+  height: 8px;
+  transition: width 0.5s;
+  border-radius: 6px;
+  background: #fa6806;
+  border: 1px solid transparent;
+}

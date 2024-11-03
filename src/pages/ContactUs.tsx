@@ -89,7 +89,7 @@ const ContactUs = () => {
       : false;
   };
   return (
-    <div className="w-full h-screen flex items-start justify-center ">
+    <div className="w-full flex items-start justify-center">
       <div className="w-full max-w-screen-sm mt-10 lg:mt-20 px-5">
         <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
           <p className="mb-8 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">

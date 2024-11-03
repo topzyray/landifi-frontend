@@ -112,8 +112,8 @@ const ProductDetailsComponent = ({
               <div className="flex items-center gap-2">
                 <h1 className={`text-lg lg:text-2xl font-bold`}>
                   {(data as LeaseProperty)?.annualRent
-                    ? `$${(data as LeaseProperty)?.annualRent}/year`
-                    : `$${(data as SaleProperty)?.salePrice}`}
+                    ? `₦${(data as LeaseProperty)?.annualRent}/year`
+                    : `₦${(data as SaleProperty)?.salePrice}`}
                 </h1>
               </div>
 

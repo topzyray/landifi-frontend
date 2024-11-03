@@ -10,7 +10,7 @@ export const GlobalContext = createContext({} as GlobalContextType);
 export const GlobalProvider = ({ children }: GlobalContextProviderProps) => {
   const [showNavModal, setShowNavModal] = useState<boolean>(false);
   const [allProperties, setAllProperties] = useState<Property[] | []>([]);
-  const [pageLevelLoader, setPageLevelLoader] = useState<boolean>(true);
+  const [pageLevelLoader, setPageLevelLoader] = useState<boolean>(false);
   const [componentLevelLoader, setComponentLevelLoader] = useState({
     loading: false,
     id: "",

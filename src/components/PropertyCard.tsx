@@ -35,7 +35,7 @@ const PropertyCard = ({
       : `/properties/${data?._id}`;
 
   return (
-    <div className="w-full sm:w-max shadow hover:shadow-orange-600 hover:cursor-pointer">
+    <div className="w-full sm:w-max shadow hover:shadow-orange-600/50 hover:cursor-pointer hover:scale-105 transition-all ease-in-out duration-300">
       <div className="w-full">
         <Link to={propertyDetailsLink}>
           <div className="h-44 w-full sm:w-60 relative">
@@ -78,8 +78,8 @@ const PropertyCard = ({
                   Price:{" "}
                   <span className="text-blue-600 font-bold">
                     {(data as LeaseProperty).annualRent
-                      ? `$${(data as LeaseProperty).annualRent} / year`
-                      : `$${(data as SaleProperty).salePrice}`}
+                      ? `₦${(data as LeaseProperty).annualRent} / year`
+                      : `₦${(data as SaleProperty).salePrice}`}
                   </span>
                 </p>
                 <p className="capitalize">{data.type}</p>
