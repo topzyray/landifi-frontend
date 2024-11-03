@@ -33,6 +33,7 @@ import TenantDashboard from "./pages/dashboards/client/TenantDashboard.tsx";
 import TenantProfile from "./pages/dashboards/client/TenantProfile.tsx";
 import TenantOverview from "./pages/dashboards/client/TenantOverview.tsx";
 import LandlordOverview from "./pages/dashboards/landlord/LandlordOverview.tsx";
+import ContactUs from "./pages/ContactUs.tsx";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
             ],
           },
         ],
+      },
+      {
+        path: "contact",
+        element: <ContactUs />,
       },
     ],
   },

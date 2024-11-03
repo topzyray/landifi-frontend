@@ -14,12 +14,12 @@ const Header = () => {
   const { logout, user } = useAuth();
 
   return (
-    <header className="bg-white shadow sticky z-40 top-0 flex justify-between items-center px-3 py-4 lg:px-[5rem] uppercase">
+    <header className="bg-white shadow sticky z-40 top-0 flex justify-between items-center px-4 py-4 lg:px-[5rem] uppercase">
       <h1 className="">
         <Link
           onClick={() => setShowNavModal(false)}
           to="/"
-          className="text-orange-700 font-bold text-lg hover:underline uppercase"
+          className="text-orange-700 font-bold text-2xl md:text-2xl lg:text-3xl hover:underline drop-shadow-[0px_1.2px_1.2px_rgba(0,0,0,0.8)] uppercase"
         >
           Landifi
         </Link>
@@ -45,7 +45,7 @@ const Header = () => {
       {/* </div> */}
 
       {/* Medium and Large screen nav */}
-      <ul className="hidden md:flex items-center gap-8 lg:gap-12 ">
+      <ul className="hidden md:flex items-center gap-5 lg:gap-12 ">
         <li className="text-base font-medium hover:text-orange-600 cursor-pointer group relative">
           <NavLink
             to="/"
@@ -133,7 +133,7 @@ const Header = () => {
                 <NavLinks handleMenu={() => setShowNavModal(false)} />
                 <li onClick={() => setShowNavModal(false)}>
                   <NavLink
-                    to="/contact"
+                    to="contact"
                     className="inline-flex text-sm hover:text-orange-600 cursor-pointer"
                   >
                     Contact
