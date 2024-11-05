@@ -8,6 +8,7 @@ import { SiInstagram } from "react-icons/si";
 import { SlSocialFacebook, SlSocialLinkedin } from "react-icons/sl";
 import { GlobalContext } from "../contexts/GlobalContext";
 import PlaceholderProfile from "../assets/images/placeholder-profile.jpeg";
+import ToggleTheme from "./ToggleTheme";
 
 const Header = () => {
   const { showNavModal, setShowNavModal } = useContext(GlobalContext);
@@ -105,6 +106,7 @@ const Header = () => {
             </Link>
           </div>
         )}
+        <ToggleTheme />
       </nav>
 
       {showNavModal && (

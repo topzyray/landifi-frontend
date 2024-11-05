@@ -41,6 +41,8 @@ export interface SaleProperty extends Property {
 }
 
 export type GlobalContextType = {
+  toggleTheme: boolean;
+  setToggleTheme: React.Dispatch<React.SetStateAction<boolean>>;
   showNavModal: boolean;
   setShowNavModal: React.Dispatch<React.SetStateAction<boolean>>;
   allProperties: Property[] | [];

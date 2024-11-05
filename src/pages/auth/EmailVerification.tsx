@@ -65,6 +65,7 @@ const EmailVerification = () => {
             type="text"
             placeholder="Enter OTP"
             className="border border-gray-400 px-3 py-1.5 md:py-2 rounded outline-none"
+            maxLength={6}
             value={formData.verificationOTP}
             onChange={(e) =>
               setFormData({

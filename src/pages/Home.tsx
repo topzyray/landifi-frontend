@@ -44,7 +44,7 @@ const Home = () => {
         </div>
       </div>
       <div className="">
-        <div className="py-10 md:py-20 px-4 lg:px-32">
+        <div className="py-10 md:py-20 lg:py-32 px-4 lg:px-32">
           <p className="mb-8 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">
             Featured Properties
           </p>
@@ -65,7 +65,7 @@ const Home = () => {
               ))
             ) : (
               <p className="font-semibold text-lg sm:text-xl input">
-                No property added yet.
+                No featured listing yet. Please check later.
               </p>
             )}
             {allProperties && allProperties.length > 0 && (
@@ -79,8 +79,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="bg-gray-300">
-        <div className="py-10 md:py-20 px-4 lg:px-32">
+      <div className="bg-gray-300 dark:invert">
+        <div className="py-10 md:py-20 lg:py-32 px-4 lg:px-32">
           <p className="mb-8 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">
             Who We Are!
           </p>
@@ -120,7 +120,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="py-10">
+      <div className="py-10 md:py-20 lg:py-32">
         <p className="mb-4 font-bold text-3xl sm:text-4xl lg:text-5xl text-center">
           Testimonials
         </p>

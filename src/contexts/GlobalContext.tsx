@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   GlobalContextProviderProps,
   GlobalContextType,
@@ -8,6 +8,7 @@ import {
 export const GlobalContext = createContext({} as GlobalContextType);
 
 export const GlobalProvider = ({ children }: GlobalContextProviderProps) => {
+  const [toggleTheme, setToggleTheme] = useState<boolean>(false);
   const [showNavModal, setShowNavModal] = useState<boolean>(false);
   const [allProperties, setAllProperties] = useState<Property[] | []>([]);
   const [pageLevelLoader, setPageLevelLoader] = useState<boolean>(false);
@@ -15,6 +16,12 @@ export const GlobalProvider = ({ children }: GlobalContextProviderProps) => {
     loading: false,
     id: "",
   });
+
+  useEffect(() => {
+    if (toggleTheme !== null) toggleTheme;
+  }, [toggleTheme]);
+
+  console.log(toggleTheme);
 
   return (
     <GlobalContext.Provider
@@ -27,6 +34,8 @@ export const GlobalProvider = ({ children }: GlobalContextProviderProps) => {
         setPageLevelLoader,
         componentLevelLoader,
         setComponentLevelLoader,
+        toggleTheme,
+        setToggleTheme,
       }}
     >
       {children}

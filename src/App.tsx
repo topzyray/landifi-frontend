@@ -3,14 +3,22 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { FaArrowAltCircleUp, FaQuestionCircle } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { GlobalContext } from "./contexts/GlobalContext";
 
 function App() {
   const [toggleChat, setToggleChat] = useState(false);
+  const { toggleTheme } = useContext(GlobalContext);
 
   return (
     <>
-      <div className="">
+      <div
+        className={
+          toggleTheme
+            ? "bg-[#E0E0E0] text-[#1E1E1E]"
+            : "bg-[#1E1E1E] text-[#E0E0E0]"
+        }
+      >
         <Header />
         <main className="w-full min-h-screen flex flex-col justify-between">
           <Outlet />
@@ -28,7 +36,10 @@ function App() {
           />
         </div>
         {toggleChat && (
-          <div className="fixed right-2 bottom-16 flex flex-col gap-2 bg-white px-4 py-4 rounded shadow-lg border">
+          <div
+            draggable={toggleChat}
+            className="fixed z-50 right-2 bottom-16 flex flex-col gap-2 bg-white px-4 py-4 rounded shadow-lg border"
+          >
             <div className="">
               <form className="flex flex-col gap-4">
                 <p className="font-medium text-xl text-center">Chat with us</p>

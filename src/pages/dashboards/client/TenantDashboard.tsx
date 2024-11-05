@@ -8,6 +8,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 import { useContext } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContext";
 import PlaceholderProfile from "../../../assets/images/placeholder-profile.jpeg";
+import ToggleTheme from "../../../components/ToggleTheme";
 
 const TenantDashboard = () => {
   const { logout, user } = useAuth();
@@ -31,7 +32,7 @@ const TenantDashboard = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 lg:gap-8">
+        <div className="flex items-center gap-4 lg:gap-5">
           <p className="font-semibold lg:text-lg border border-gray-400 px-1 rounded">
             Role: {user?.userKind}
           </p>
@@ -51,6 +52,7 @@ const TenantDashboard = () => {
           <p onClick={logout}>
             <MdLogout className="text-red-700 text-2xl lg:text-3xl hover:shadow hover:cursor-pointer" />
           </p>
+          <ToggleTheme />
         </div>
       </div>
       <div className="bg-white md:flex md:justify-between md:items-start w-full h-full">
