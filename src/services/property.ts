@@ -1,4 +1,4 @@
-import AxiosInstance from "./axiosInstance";
+import AxiosInstance from './axiosInstance';
 
 export const createProperty = async (endpoint: string, data: any) => {
   try {
@@ -64,6 +64,15 @@ export const getAllLandlordProperties = async () => {
 export const getLandlordPropertyById = async (id: string) => {
   try {
     const response = await AxiosInstance.get(`/landlords/allproperties/${id}`);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const savePropertyForTenant = async (id: string) => {
+  try {
+    const response = await AxiosInstance.post(`/tenants/saveproperty`, id);
     return response.data;
   } catch (err) {
     return err;

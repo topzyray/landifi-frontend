@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { GlobalContext } from "../contexts/GlobalContext";
+import { useContext } from 'react';
+import { GlobalContext } from '../contexts/GlobalContext';
 
 const ToggleTheme = () => {
   const { toggleTheme, setToggleTheme } = useContext(GlobalContext);
-  console.log(toggleTheme);
+  // console.log(toggleTheme);
 
   return (
     <label
