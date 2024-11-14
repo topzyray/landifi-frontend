@@ -4,7 +4,7 @@ import { getPropertyById } from "../services/property";
 import { LeaseProperty, SaleProperty } from "../utils/types";
 import { useParams } from "react-router-dom";
 import PageLevelLoader from "../components/loaders/PageLevelLoader";
-import ProductDetailsComponent from "../components/ProductDetailsComponent";
+import ProductDetailsComponent from "../components/PropertyDetailsComponent";
 import { PropertyProvider } from "../contexts/PropertyContext";
 
 const PropertyDetails = () => {

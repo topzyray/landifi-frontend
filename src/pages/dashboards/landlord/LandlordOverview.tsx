@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { Fragment, useContext, useEffect, useState } from "react";
-import { useAuth } from "../../../contexts/AuthContext";
 import { getAllLandlordProperties } from "../../../services/property";
 import { GlobalContext } from "../../../contexts/GlobalContext";
 import PageLevelLoader from "../../../components/loaders/PageLevelLoader";
@@ -21,7 +20,6 @@ const LandlordOverview = () => {
   const [landlordProperties, setLandlordProperties] = useState<
     LeaseProperty[] | SaleProperty[] | []
   >([]);
-  const { user } = useAuth();
   const {
     pageLevelLoader,
     setPageLevelLoader,
@@ -38,7 +36,7 @@ const LandlordOverview = () => {
         setPageLevelLoader(false);
         setLandlordProperties(res);
       })
-      .catch((err) => {
+      .catch(() => {
         setPageLevelLoader(false);
       });
   };

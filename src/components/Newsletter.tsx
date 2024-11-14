@@ -11,8 +11,7 @@ const Newsletter = () => {
     email: "",
   });
 
-  const { componentLevelLoader, setComponentLevelLoader } =
-    useContext(GlobalContext);
+  const { componentLevelLoader } = useContext(GlobalContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({

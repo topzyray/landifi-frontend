@@ -12,6 +12,8 @@ import {
 import PageLevelLoader from "../../../components/loaders/PageLevelLoader";
 import { CiSquareRemove } from "react-icons/ci";
 import PlaceholderProfile from "../../../assets/images/placeholder-profile.jpeg";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 interface FormData {
   image: File | null;
@@ -103,6 +105,14 @@ const TenantProfile = () => {
     setUpdateUserFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  // Special handler for the phone input, since it works differently
+  const handlePhoneChange = (value: string) => {
+    setUpdateUserFormData((prev) => ({
+      ...prev,
+      phone: value, // 'value' will include the phone number with country code
     }));
   };
 
@@ -209,6 +219,7 @@ const TenantProfile = () => {
   if (pageLevelLoader) {
     return <PageLevelLoader loading={pageLevelLoader} />;
   }
+  console.log(updateUserFormData.phone);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-full md:max-w-md mx-auto">
@@ -343,7 +354,7 @@ const TenantProfile = () => {
             onChange={handleUpdateDataChange}
           />
 
-          <input
+          {/* <input
             type="text"
             name="phone"
             id="phone"
@@ -351,6 +362,23 @@ const TenantProfile = () => {
             className="input"
             value={updateUserFormData.phone ?? ""}
             onChange={handleUpdateDataChange}
+          /> */}
+
+          <PhoneInput
+            country={"ng"}
+            enableSearch={true}
+            value={updateUserFormData.phone ?? ""}
+            onChange={handlePhoneChange}
+            containerClass="w-full h-[2.5rem] md:h-[2.8rem] border border-gray-400 rounded"
+            inputStyle={{
+              width: "100%",
+              height: "100%",
+              // padding: "20px",
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              borderRadius: "5px",
+              border: "none",
+            }}
           />
 
           <input

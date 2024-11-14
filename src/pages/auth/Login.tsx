@@ -11,7 +11,7 @@ const initialFormData = {
 
 const Login = () => {
   const { login } = useLogin();
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState(initialFormData);
   const { componentLevelLoader, setComponentLevelLoader } =
     useContext(GlobalContext);
@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setComponentLevelLoader({ loading: true, id: "" });
-    setError(null);
+    // setError(null);
 
     try {
       const response = await login({ ...formData });
@@ -49,7 +49,7 @@ const Login = () => {
 
       // Redirect or perform other post-login actions
     } catch (err: any) {
-      setError(err.message);
+      // setError(err.message);
       setComponentLevelLoader({ loading: false, id: "" });
     }
   };

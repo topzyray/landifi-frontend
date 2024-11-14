@@ -9,6 +9,15 @@ export const getUserById = async (userId: string) => {
   }
 };
 
+export const getSavedPropertyForTenant = async (userId: string) => {
+  try {
+    const response = await AxiosInstance.get(`/tenants/${userId}`);
+    return response.data;
+  } catch (err: any) {
+    return err;
+  }
+};
+
 export const updateUserPassword = async (data: any) => {
   try {
     const response = await AxiosInstance.put(`/auth/change-password`, data);

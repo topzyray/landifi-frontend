@@ -2,9 +2,7 @@ import { LeaseProperty, SaleProperty } from "../utils/types";
 import PropertyDetailLayout from "../pages/property_details/PropertyDetailLayout";
 import Navbar from "../pages/property_details/Navbar";
 import { usePropertyContext } from "../contexts/PropertyContext";
-import ComponentLevelLoader from "./loaders/ComponentLevelLoader";
-import { useContext, useState } from "react";
-import { GlobalContext } from "../contexts/GlobalContext";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import RentPropertyButton from "./action_buttons/RentPropertyButton";
 import PurchasePropertyButton from "./action_buttons/PurchasePropertyButton";
@@ -19,13 +17,12 @@ type PropertyDetailComponentProps = {
   dataProp?: PropertyDetailsDataType;
 };
 
-const ProductDetailsComponent = ({
+const PropertyDetailsComponent = ({
   dataProp,
 }: PropertyDetailComponentProps) => {
   let data: LeaseProperty | SaleProperty;
   const { propertyDetailsData: contextData } = usePropertyContext();
   data = contextData || dataProp;
-  const { componentLevelLoader } = useContext(GlobalContext);
   const [productImage, setProductImage] = useState({
     url: data?.images[0]?.secure_url,
     id: data?.images[0]?.public_id,
@@ -159,4 +156,4 @@ const ProductDetailsComponent = ({
   );
 };
 
-export default ProductDetailsComponent;
+export default PropertyDetailsComponent;

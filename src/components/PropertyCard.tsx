@@ -1,8 +1,12 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LeaseProperty, SaleProperty } from '../utils/types';
-import ComponentLevelLoader from './loaders/ComponentLevelLoader';
-import { useAuth } from '../contexts/AuthContext';
-import { savePropertyForTenant } from '../services/property';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { LeaseProperty, SaleProperty } from "../utils/types";
+import ComponentLevelLoader from "./loaders/ComponentLevelLoader";
+import { useAuth } from "../contexts/AuthContext";
+import { savePropertyForTenant } from "../services/property";
+import { useContext } from "react";
+import { GlobalContext } from "../contexts/GlobalContext";
+import { toast, ToastPosition } from "react-toastify";
+import { getErrorMessage } from "../utils/helpers";
 
 interface PropertyCardProps {
   data: LeaseProperty | SaleProperty;
@@ -25,12 +29,13 @@ const PropertyCard = ({
   onDelete,
 }: PropertyCardProps) => {
   const { user } = useAuth();
+  const { setComponentLevelLoader } = useContext(GlobalContext);
   const navigate = useNavigate();
   const location = useLocation(); // Get the current location
   const isInLandlordDashboard = location.pathname.startsWith(
-    '/dashboard/landlord'
+    "/dashboard/landlord"
   );
-  const isInTenantDashboard = location.pathname.startsWith('/dashboard/tenant');
+  const isInTenantDashboard = location.pathname.startsWith("/dashboard/tenant");
   const propertyDetailsLink =
     isLandlord && isInLandlordDashboard
       ? `/dashboard/landlord/properties/${data?._id}`
@@ -40,7 +45,19 @@ const PropertyCard = ({
 
   const handleSaveProperty = async (id: string) => {
     const response = await savePropertyForTenant(id);
-    console.log(response);
+    setComponentLevelLoader({ loading: true, id });
+    if (response._id) {
+      toast.success("Property safed successfully!", {
+        position: "top-right" as ToastPosition,
+      });
+      setComponentLevelLoader({ loading: false, id: "" });
+    } else {
+      const errorMessage = getErrorMessage(response);
+      toast.error(errorMessage, {
+        position: "top-right" as ToastPosition,
+      });
+      setComponentLevelLoader({ loading: false, id: "" });
+    }
   };
 
   return (
@@ -58,7 +75,7 @@ const PropertyCard = ({
           <div className="absolute top-0 m-2 rounded-full bg-dark-blue">
             <p
               className={`rounded-full px-2 p-1 text-[9px] font-bold uppercase tracking-wide text-white sm:py-1 sm:px-3 ${
-                data?.category === 'Sale' ? 'bg-orange-600' : 'bg-blue-600'
+                data?.category === "Sale" ? "bg-orange-600" : "bg-blue-600"
               }`}
             >
               {data?.category}
@@ -67,11 +84,11 @@ const PropertyCard = ({
 
           <div
             className={`absolute top-2 right-2 px-2 py-1 rounded-full text-[9px] font-semibold text-white uppercase ${
-              data?.status === 'Available'
-                ? 'bg-green-500'
-                : data?.status === 'Leased'
-                ? 'bg-yellow-500'
-                : 'bg-red-500'
+              data?.status === "Available"
+                ? "bg-green-500"
+                : data?.status === "Leased"
+                ? "bg-yellow-500"
+                : "bg-red-500"
             }`}
           >
             {data?.status}
@@ -79,15 +96,31 @@ const PropertyCard = ({
 
           <div
             className={`${
-              user && user.userType == 'landlord' && 'hidden'
+              user && user.userType == "landlord" && "hidden"
             } absolute bottom-2 right-2 px-2 py-1 rounded-full text-[9px] font-semibold text-white uppercase bg-red-600`}
           >
-            {user && user.userType == 'tenant' ? (
-              <p onClick={() => handleSaveProperty(data._id)}>Save</p>
-            ) : user?.userType == 'landlord' ? (
-              ''
+            {user && user.userType == "tenant" ? (
+              <p onClick={() => handleSaveProperty(data._id)}>
+                {componentLevelLoader &&
+                componentLevelLoader.loading &&
+                componentLevelLoader.id == data._id ? (
+                  <ComponentLevelLoader
+                    text="Saving"
+                    color="red"
+                    loading={
+                      componentLevelLoader &&
+                      componentLevelLoader.loading &&
+                      componentLevelLoader.id == data._id
+                    }
+                  />
+                ) : (
+                  <span>Save</span>
+                )}
+              </p>
+            ) : user?.userType == "landlord" ? (
+              ""
             ) : (
-              <p onClick={() => navigate('/auth/login')}>Save</p>
+              <p onClick={() => navigate("/auth/login")}>Login to save</p>
             )}
           </div>
         </div>
@@ -97,7 +130,7 @@ const PropertyCard = ({
               <h2 className="text-xl font-bold text-gray-800">{data.title}</h2>
               <div className="flex justify-between items-center text-sm text-gray-700">
                 <p className="font-semibold">
-                  Price:{' '}
+                  Price:{" "}
                   <span className="text-blue-600 font-bold">
                     {(data as LeaseProperty).annualRent
                       ? `₦${(data as LeaseProperty).annualRent} / year`
@@ -110,7 +143,7 @@ const PropertyCard = ({
                 <span className="font-semibold">Location:</span> {data.location}
               </p>
               <p className="text-gray-600 text-sm">
-                <span className="font-semibold">Landlord:</span>{' '}
+                <span className="font-semibold">Landlord:</span>{" "}
                 {data.landlord.firstName} {data.landlord.lastName}
               </p>
             </div>
@@ -133,7 +166,7 @@ const PropertyCard = ({
                   loading={componentLevelLoader && componentLevelLoader.loading}
                 />
               ) : (
-                'Delete'
+                "Delete"
               )}
             </button>
           </div>

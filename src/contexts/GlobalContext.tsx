@@ -1,20 +1,20 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from "react";
 import {
   GlobalContextProviderProps,
   GlobalContextType,
   Property,
-} from '../utils/types';
+} from "../utils/types";
 
 export const GlobalContext = createContext({} as GlobalContextType);
 
 export const GlobalProvider = ({ children }: GlobalContextProviderProps) => {
-  const [toggleTheme, setToggleTheme] = useState<boolean>(false);
+  const [toggleTheme, setToggleTheme] = useState<boolean>(true);
   const [showNavModal, setShowNavModal] = useState<boolean>(false);
   const [allProperties, setAllProperties] = useState<Property[] | []>([]);
   const [pageLevelLoader, setPageLevelLoader] = useState<boolean>(false);
   const [componentLevelLoader, setComponentLevelLoader] = useState({
     loading: false,
-    id: '',
+    id: "",
   });
 
   useEffect(() => {

@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import AxiosInstance from "../../../services/axiosInstance";
 import { toast, ToastPosition } from "react-toastify";
 import { amenities } from "../../../utils/data";
 import { GlobalContext } from "../../../contexts/GlobalContext";
@@ -87,8 +86,6 @@ const AddLeaseProperty = () => {
   // TODO: Update this function to accommodate new feilds
   const validateFormInput = () => {
     return formData &&
-      // formData.amenities &&
-      // formData.amenities.length > 0 &&
       formData.images &&
       formData.images.length > 0 &&
       formData.title &&
@@ -222,7 +219,6 @@ const AddLeaseProperty = () => {
             >
               <option value="">Listing Category</option>
               <option value="Lease">Lease</option>
-              {/* <option value="Sale">Sale</option> */}
             </select>
 
             <select

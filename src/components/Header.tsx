@@ -15,7 +15,7 @@ const Header = () => {
   const { logout, user } = useAuth();
 
   return (
-    <header className="bg-white dark:bg-[#1E1E1E] dark:text-[#E0E0E0] shadow sticky z-40 top-0 flex justify-between items-center px-4 py-4 lg:px-[5rem] uppercase">
+    <header className="bg-white shadow sticky z-40 top-0 flex justify-between items-center px-4 py-4 lg:px-[5rem] uppercase">
       <h1 className="">
         <Link
           onClick={() => setShowNavModal(false)}

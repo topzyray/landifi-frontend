@@ -7,7 +7,7 @@ import PageLevelLoader from "../../../components/loaders/PageLevelLoader";
 import { PropertyProvider } from "../../../contexts/PropertyContext";
 import ProductDetailsComponent, {
   PropertyDetailsDataType,
-} from "../../../components/ProductDetailsComponent";
+} from "../../../components/PropertyDetailsComponent";
 
 const LandlordPropertyDetails = () => {
   const [propertyDetailsData, setPropertyDetailsData] = useState<
